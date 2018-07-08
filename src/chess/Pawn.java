@@ -1,5 +1,5 @@
 package chess;
 
-public class Pawn {
+public class Pawn extends Piece {
 
 }

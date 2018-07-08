@@ -1,5 +1,5 @@
 package chess;
 
-public class Piece {
+public abstract class Piece {
 
 }
