@@ -12,7 +12,26 @@ public class Model {
 		player2 = new Player("player2", Team.BLACK);
 		currentPlayer = player1;
 		
-		//add stuff to populate board
+		board[0][0] = new Rook(Team.BLACK);
+		board[0][1] = new Knight(Team.BLACK);
+		board[0][2] = new Bishop(Team.BLACK);
+		board[0][3] = new Queen(Team.BLACK);
+		board[0][4] = new King(Team.BLACK);
+		board[0][5] = new Bishop(Team.BLACK);
+		board[0][6] = new Knight(Team.BLACK);
+		board[0][7] = new Rook(Team.BLACK);
+		board[7][0] = new Rook(Team.WHITE);
+		board[7][1] = new Knight(Team.WHITE);
+		board[7][2] = new Bishop(Team.WHITE);
+		board[7][3] = new King(Team.WHITE);
+		board[7][4] = new Queen(Team.WHITE);
+		board[7][5] = new Bishop(Team.WHITE);
+		board[7][6] = new Knight(Team.WHITE);
+		board[7][7] = new Rook(Team.WHITE);
+		for (int i = 0; i < 8; i++) {
+			board[1][i] = new Pawn(Team.BLACK);
+			board[6][i] = new Pawn(Team.WHITE);
+		}
 	}
 	
 	public Player currentPlayer() {
