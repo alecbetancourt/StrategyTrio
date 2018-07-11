@@ -10,11 +10,12 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
-
-
-//Panel displayed after a player has won, will improve look later
+/**
+ * Panel displayed when the game is over. Displayed the winning
+ * player's name and has a rematch button.
+ * @author Parker
+ *
+ */
 public class WinPanel extends JPanel{
 	private String pName;
 	private JButton rematchButton;
@@ -22,10 +23,14 @@ public class WinPanel extends JPanel{
 	private ButtonListener listen;
 	private GridBagConstraints con;
 	
+	/**
+	 * Constructor for the panel. Formats the layout using a gridbag
+	 * and adds in the rematch button and message
+	 * @param name
+	 */
 	public WinPanel(String name) {
-	rematch = false;
+	setRematch(false);
 	setBackground(Color.CYAN);
-	//setLayout(new GridLayout(2,1));
 	setLayout(new GridBagLayout());
 	con = new GridBagConstraints();
 	con.gridx =0;
@@ -43,11 +48,32 @@ public class WinPanel extends JPanel{
 	add(rematchButton,con);
 	}
 	
+	/**
+	 * If the users want to play another game
+	 * @return true if they want to rematch, false if not
+	 */
+	public boolean isRematch() {
+		return rematch;
+	}
+
+	/**
+	 * Set the rematch boolean
+	 * @param rematch True is yes, false if no
+	 */
+	public void setRematch(boolean rematch) {
+		this.rematch = rematch;
+	}
+
+	/**
+	 * Action listener for rematch button
+	 * @author Parker
+	 */
 	private class ButtonListener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
+			if(arg0.getSource() == rematchButton)
+				setRematch(true);
 			
 		}
 		

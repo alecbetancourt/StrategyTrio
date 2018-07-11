@@ -15,7 +15,6 @@ import javax.swing.JPanel;
  * @author Parker
  *
  */
-//needs work
 public class SwitchPanel extends JPanel{
 	private String pName;
 	private JButton ready;
