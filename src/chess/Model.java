@@ -79,7 +79,23 @@ public class Model {
 	}
 	
 	public boolean isWinner() {
-		//either keep a list of captured pieces to reference or use flags to determine if kings are on board
-		return false;
+		boolean black = false;
+		boolean white = false;
+		for (int row = 0; row < 8; row++) {
+			for (int col = 0; col < 8; col++) {
+				if (board[row][col] != null && board[row][col].team() == "BLACK" && board[row][col].type() == "King") {
+					black = true;
+				}
+				if (board[row][col] != null && board[row][col].team() == "WHITE" && board[row][col].type() == "King") {
+					white = true;
+				}
+			}
+		}
+		if ((black == true && white == false) || (black == false && white == true)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
