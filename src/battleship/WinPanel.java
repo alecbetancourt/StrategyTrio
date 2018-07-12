@@ -13,8 +13,9 @@ import javax.swing.JPanel;
 /**
  * Panel displayed when the game is over. Displayed the winning
  * player's name and has a rematch button.
+ * 
  * @author Parker
- *
+ * @version 0.1
  */
 public class WinPanel extends JPanel{
 	private String pName;

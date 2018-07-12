@@ -2,7 +2,7 @@ package battleship;
 
 import java.awt.Color;
 
-import javax.swing.ImageIcon;
+//import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 /**
@@ -10,20 +10,21 @@ import javax.swing.JButton;
  * boards. 
  * 
  * @author Parker
+ * @version 0.1
  */
 public class BattleButton extends JButton {
 	private boolean hasShip = false;
 	private boolean hit = false;
 	private boolean miss = false;
 	private Ship ship;
-	private ImageIcon hitIcon, missIcon;
+//	private ImageIcon hitIcon, missIcon;
 	
 	/**
 	 * Constructor that sets all buttons background to blue
 	 */
 	public BattleButton() {
 		setBackground(Color.BLUE);
-		hitIcon = new ImageIcon("src/battleship/hit.png");
+//		hitIcon = new ImageIcon("src/battleship/hit.png");
 	}
 	
 	/**

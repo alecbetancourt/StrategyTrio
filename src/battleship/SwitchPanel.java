@@ -12,8 +12,9 @@ import javax.swing.JPanel;
 
 /******
  * Panel used between turns so players on the same computer can't see each others board
+ * 
  * @author Parker
- *
+ * @version 0.1
  */
 public class SwitchPanel extends JPanel{
 	private String pName;
@@ -22,6 +23,11 @@ public class SwitchPanel extends JPanel{
 	private ButtonListener listen;
 	private GridBagConstraints con;
 	
+	/**
+	 * Constructor for the panel that displays a players name with a message and 
+	 * a ready button.
+	 * @param name the players name to be displayed
+	 */
 	public SwitchPanel(String name) {
 		isReady = false;
 		setBackground(Color.CYAN);
@@ -43,22 +49,48 @@ public class SwitchPanel extends JPanel{
 		
 		
 	}
+	/**
+	 * Get the players name
+	 * @return String of player name
+	 */
 	public String getpName() {
 		return pName;
 	}
 
+	/**
+	 * Set the name to display on the screen
+	 * @param pName player's name to set to
+	 */
 	public void setpName(String pName) {
 		this.pName = pName;
 	}
+	
+	/**
+	 * Whether or not the player has hit the ready button.
+	 * @return True if they hit the button, false if not.
+	 */
 	public boolean isReady() {
 		return isReady;
 	}
+	/**
+	 * Set whether player is ready or not. Used to reset panel before a 
+	 * switch normally.
+	 * @param isRready True is they are ready, false if not.
+	 */
 	public void setReady(boolean isRready) {
 		this.isReady = isRready;
 	}
 	
+	/**
+	 * Listener for the ready button.
+	 * @author Parker
+	 *
+	 */
 	private class ButtonListener implements ActionListener {
 
+		/**
+		 * Responds to button clicks on ready button
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(e.getSource() == ready) {

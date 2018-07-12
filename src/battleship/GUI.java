@@ -1,6 +1,5 @@
 package battleship;
 
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +12,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
-
+/**
+ * Frame for the battleship game, consisting of a pair of panels
+ * data between boards is transfered through this class. The game is
+ * largely ran through this class.
+ * 
+ * @author Parker
+ * @version 0.1
+ */
 public class GUI extends JFrame implements ActionListener{
 
 	private Board p1;
@@ -26,25 +32,31 @@ public class GUI extends JFrame implements ActionListener{
 	private JMenuItem newGameItem;
 	private JMenuItem closeItem;
 	private JMenuItem mainMenuItem;
-	
+
 	private JPanel[] holder;
 
 	private SwitchPanel p1Switch;
 	private SwitchPanel p2Switch;
-	
+
 	private WinPanel end;
 
 	private boolean hasWon;
 	private String name1;
 	private String name2;
-	
+
 	private String winner;
-	
+
+	/**
+	 * Constructor that calls the createMenus and NewGame methods.
+	 */
 	public GUI() {
 		createMenus();		
 		newGame();
 	}
 
+	/**
+	 * Creates Menu and adds actionlistener to each item.
+	 */
 	public void createMenus() {
 		//Will work on actionlistener later
 		option = new JMenu("Menu");
@@ -63,13 +75,16 @@ public class GUI extends JFrame implements ActionListener{
 		option.add(closeItem);
 	}
 
+	/**
+	 * Begins the battleship game. Creates and adds the game panels and frame. 
+	 * Then the game starts with placeships() and playGame().
+	 */
 	public void newGame() {	
 		getNames();
 
 		p1 = new Board(name1);
 		p2 = new Board(name2);
 
-		//Opponent "top" board
 		p1O = new OppBoard(name2);
 		p2O = new OppBoard(name1);
 
@@ -83,16 +98,14 @@ public class GUI extends JFrame implements ActionListener{
 		for(int i =0; i <2; i++) {
 			holder[i] = new JPanel();
 			add(holder[i]);
+			holder[i].setLayout(new GridLayout(1,1));
 		}
-		holder[0].setLayout(new GridLayout(1,1));
-		holder[1].setLayout(new GridLayout(1,1));
 		holder[1].add(p1);
 		holder[0].add(p1O);
-		
-		//for testing switch/win panels
-//		holder[1].add(p1Switch);
-//		holder[0].add(new WinPanel("Parker"));
 
+		//for testing switch/win panels
+		//		holder[1].add(p1Switch);
+		//		holder[0].add(new WinPanel("Parker"));
 
 		setTitle("Battleship");
 		setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);      
@@ -100,10 +113,15 @@ public class GUI extends JFrame implements ActionListener{
 		setSize (1500,1000);
 		setVisible(true);
 		hasWon = false;
+
 		placeShips();
 		playGame();
 	}
 
+	/**
+	 * Takes user input for player names, set to default Player X if
+	 * no response is given.
+	 */
 	public void getNames() {
 		name1 = JOptionPane.showInputDialog (null, "What is Player 1's name?");
 		try{
@@ -113,23 +131,26 @@ public class GUI extends JFrame implements ActionListener{
 		catch(NullPointerException ex) {
 			name1 = "Player 1";
 		}
-		
+
 		name2 = JOptionPane.showInputDialog (null, "What is Player 2's name?");
 		try{
 			if(name2.equals(""))
-			name2 = "Player 2";
+				name2 = "Player 2";
 		}
 		catch(NullPointerException ex) {
 			name2 = "Player 2";
 		}
 	}
 
-
+	/**
+	 * Loop of players selecting a target and firing until a player
+	 * has won.
+	 */
 	public void playGame() {
 		int x,y;
 		boolean hit;
 		hasWon = false;
-		//infinite loop right now need to make a function to determine if game is over
+		
 		while(!hasWon) {
 
 			p1O.enableFire();
@@ -143,10 +164,10 @@ public class GUI extends JFrame implements ActionListener{
 			//get Targeted coordinates
 			x = p1O.getTargetX();
 			y = p1O.getTargetY();
-			
+
 			//check user board for hit
 			hit = p2.hitMiss(x, y);
-			
+
 			//mark square on opponent board
 			p1O.markSquare(hit, x, y);
 			p1O.updateStatus(p2.getStatus());
@@ -170,14 +191,15 @@ public class GUI extends JFrame implements ActionListener{
 				hasWon = p1.isLost();
 				if(!hasWon)
 					switchP1();
-				
+
 				//Googled this solution because loop was not updating. May have to change
+				//IDEA: add in timer and have it exit the game when it hits zero for r #2 to solve issue
 				try {
 					Thread.yield();
 				} catch (Exception interruptedEx) {
 					// Log the interruption somewhere.
 				}
-				
+
 
 			}
 		}
@@ -190,6 +212,10 @@ public class GUI extends JFrame implements ActionListener{
 		winScreen(winner);
 	}
 
+	/**
+	 * Displays a win screen on the top panel for the winning player.
+	 * @param winner the winner's name
+	 */
 	public void winScreen(String winner) {
 		end = new WinPanel(winner);
 		holder[0].removeAll();
@@ -197,6 +223,10 @@ public class GUI extends JFrame implements ActionListener{
 		revalidate();
 		repaint();
 	}
+	
+	/**
+	 * Allows players to place their ships, starting with player 1.
+	 */
 	public void placeShips() {
 		//player 1 places ships
 		while(!p1.isReady()) {
@@ -218,14 +248,15 @@ public class GUI extends JFrame implements ActionListener{
 		switchP1();
 	}
 
-
+	/**
+	 * Displays a switch screen for player 1 after player 2's turn until they select ready.
+	 */
 	public void switchP2() {
 		holder[1].removeAll();
 		holder[1].add(p2Switch);
 		revalidate();
 		repaint();
-		
-		//waiting for p2 to hit ready
+
 		while(!p2Switch.isReady()) {
 			//Googled this solution because loop was not updating
 			try {
@@ -243,6 +274,9 @@ public class GUI extends JFrame implements ActionListener{
 		repaint();
 	}
 
+	/**
+	 * Displays a switch screen for player 1 after player 2's turn until they select ready.
+	 */
 	public void switchP1() {
 		holder[1].removeAll();
 		holder[1].add(p1Switch);
@@ -266,11 +300,13 @@ public class GUI extends JFrame implements ActionListener{
 		repaint();
 	}
 
+	/**
+	 * Responding to an action
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//Need to work on listener for menus
 		if(e.getSource() == newGameItem) {
-			//dispose current frame, create new
 
 		}
 
@@ -282,8 +318,9 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 
-
-
+	/**
+	 * Driver for the battleship project
+	 */
 	public static void main(String[] args) {
 		new GUI();
 	}

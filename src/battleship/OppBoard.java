@@ -10,6 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+/**
+ * Class for the opponent's board where user's target tand fire uopn opponent's ships
+ * The board is made up of button type's and uses a 12x11 gridlayout.
+ * 
+ * @author Parker
+ * @version 0.1
+ */
 public class OppBoard extends JPanel {
 
 
@@ -23,7 +30,12 @@ public class OppBoard extends JPanel {
 	private boolean enabled;
 	private BattleButton target;
 
-
+	/**
+	 * Constructor for the board, initializes the board creation and 
+	 * disables fire until called upon by the GUI. 
+	 * 
+	 * @param name for the player name
+	 */
 	public OppBoard(String name) {
 
 		fired = false;
@@ -40,9 +52,10 @@ public class OppBoard extends JPanel {
 		
 		
 	}
-	public void testSwitch() {
-		
-	}
+	
+	/**
+	 * Creates and formats the user board where ships are placed.
+	 */
 	public void createBoard() {
 		for(int i =0; i< 11; i++) {
 			for(int j =0; j <11; j++) {
@@ -85,6 +98,9 @@ public class OppBoard extends JPanel {
 		add(fire);
 	}
 
+	/**
+	 * Resets target coordinates and enables selection and firing.
+	 */
 	public void enableFire() {
 		enabled = true;
 		targetX = targetY = -1;
@@ -93,79 +109,112 @@ public class OppBoard extends JPanel {
 		fire.setEnabled(true);
 	}
 
+	/**
+	 * disables target selection and the fire button
+	 */
 	public void disableFire() {
 		enabled = false;
-
 	}
 
+	/**
+	 *  @return user targeted x-coordinate
+	 */
 	public int getTargetX(){
 		return targetX;
 	}
 
+	/**
+	 *  @return user targeted x-coordinate
+	 */
 	public int getTargetY(){
 		return targetY;
 	}
 
+	/**
+	 * Whether or not the fired button has been pressed with a target
+	 * @return True if user has fired, false if not
+	 */
 	public boolean isFired() {
 		return fired;
 	}
-
+	/**
+	 * Whether or not the user has properly selected a target and
+	 * hit the fired button.
+	 * @param fired True if the fired, false if not.
+	 */
 	public void setFired(boolean fired) {
 		this.fired = fired;
 	}
 
+	/**
+	 * Marks button as hit of miss depending on the boolean hit using the 
+	 * respective BattleButton function
+	 * @param hit whether the move was a hit or not
+	 * @param x x-coordinate of target
+	 * @param y y-coordinate of target
+	 */
 	public void markSquare(boolean hit, int x, int y) {
 		if(hit)
-			hit(x,y);
+			opp[x][y].setHit(true);
 		else
-			miss(x,y);
-	}
-	public void hit(int x, int y) {
-		opp[x][y].setHit(true);
-		opp[x][y].setBackground(Color.RED);
-	}
-
-	public void miss(int x, int y) {
-		opp[x][y].setMiss(true);
-		opp[x][y].setBackground(Color.WHITE);
+			opp[x][y].setMiss(true);
 	}
 	
+	/**
+	 * Updates the game status displayed on the screen.
+	 * @param text the message to be displayed
+	 */
 	public void updateStatus(String text) {
+		//Easiest way to do this because most messages are taken from opponent board
 		if(status.getText().equals("You lose")) {
-			//doesnt work probably something with getText
 			status.setText("You Win!");
 		}
 		else
 			status.setText(text);
 	}
 
+	/**
+	 * Listener for the board and fired button.
+	 * @author Parker
+	 * @version 0.1
+	 */
 	private class ButtonListener implements ActionListener {
+		/**
+		 * Responds to button presses. only usable when enabled is true. Players must first
+		 * select a square which will light up as yellow on the screen then press the fire
+		 * button to fire a shot.
+		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(enabled) {
 				if(e.getSource() == fire) {
 					if(targetX != -1 && targetY != -1) {
+						//Turns button orange on fire, doesnt really show however
 						opp[targetX][targetY].setBackground(Color.ORANGE);
 						fire.setEnabled(false);
 						disableFire();
 						target = null;
+						//moves to next player turn after this
 						setFired(true);
 					}
 				}
 				else{
 					for(int i =0; i< 10; i++) {
-
 						for(int j =0; j <10; j++) {
 							if(e.getSource() == opp[i][j]) {
+								//resets selection
 								if(target != null) {
 									target.revertColor();
 								}
 								targetX = i;
 								targetY = j;
 								target = opp[i][j];
+								
+								//Displays selected square in 'A1, B2, C3,.." format
 								int c = (i+65);
 								status.setText((char)c +"" + (j+1) + " selected");
-
+								
+								//highlights selected button
 								if(targetX != -1 && targetY != -1)
 									opp[targetX][targetY].setBackground(Color.YELLOW);
 							}
