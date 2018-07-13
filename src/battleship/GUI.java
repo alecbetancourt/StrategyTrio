@@ -22,6 +22,10 @@ import javax.swing.JPanel;
  */
 public class GUI extends JFrame implements ActionListener{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -763859861758304376L;
 	private Board p1;
 	private OppBoard p1O;
 	private Board p2;
