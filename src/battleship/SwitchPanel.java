@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ public class SwitchPanel extends JPanel{
 	private boolean isReady;
 	private ButtonListener listen;
 	private GridBagConstraints con;
+	private ImageIcon rdyIcon;
 	
 	/**
 	 * Constructor for the panel that displays a players name with a message and 
@@ -38,11 +40,15 @@ public class SwitchPanel extends JPanel{
 		pName = name;
 		add(new JLabel(pName + "'s turn"),con);
 		
-		con.ipadx = 100;
-		con.ipady = 60;
+		con.ipadx = 50;
+		con.ipady = 30;
 		con.gridy++;
+		
+		
 		listen = new ButtonListener();
-		ready = new JButton("Ready");
+		ready = new JButton();
+		rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
+		ready.setIcon(rdyIcon);
 		ready.setBackground(Color.BLUE);
 		ready.addActionListener(listen);
 		add(ready,con);

@@ -5,6 +5,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ public class HelpPanel extends JPanel implements ActionListener{
 	private JButton chess;
 	private JButton exit;
 	private boolean exitStatus;
+	private ImageIcon helpMenu;
+	private ImageIcon mainMenu;
 
 	//Html tags necessary for Jlabel formating, \n doesnt work.
 	private final String bHelp = "<html><center> Enter in player names <br/> "
@@ -39,35 +42,39 @@ public class HelpPanel extends JPanel implements ActionListener{
 	
 	private GridBagConstraints con;
 	
-	public HelpPanel() {
+	public HelpPanel(ImageIcon bShipLogo, ImageIcon chessLogo) {
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
 		addButtons();
+		bShip.setIcon(bShipLogo);
+		chess.setIcon(chessLogo);
 		exitStatus = false;
 	}
 	public boolean getExit() {
 		return exitStatus;
 	}
 	public void addButtons() {
-		message = new JLabel("Help Menu");
+		helpMenu = new ImageIcon("src/MainMenu/helpMenuLogo.png");
+		message = new JLabel();
+		message.setIcon(helpMenu);
 		con.gridx =0;
 		con.gridy =0;
 		add(message,con);
-		con.ipadx = 300;
-		con.ipady = 200;
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridy++;
-		bShip = new JButton("Battleship");
+		bShip = new JButton();
 		bShip.addActionListener(this);
 		add(bShip,con);
 		
 		con.gridy++;
-		chess = new JButton("Chess");
+		chess = new JButton();
 		chess.addActionListener(this);
 		add(chess,con);
-				
+			
 		con.gridy++;
-		exit = new JButton("Main Menu");
+		mainMenu = new ImageIcon("src/MainMenu/mmLogo.png");
+		exit = new JButton();
+		exit.setIcon(mainMenu);
 		exit.addActionListener(this);
 		add(exit,con);
 	}

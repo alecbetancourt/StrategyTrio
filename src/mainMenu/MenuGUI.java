@@ -39,6 +39,10 @@ public class MenuGUI extends JFrame implements ActionListener {
 	private ImageIcon logo;
 	private ImageIcon battleLogo;
 	private ImageIcon chessLogo;
+	private ImageIcon helpLogo;
+	private ImageIcon exitLogo;
+	
+	private battleship.GUI battleGUI;
 
 
 	public MenuGUI() {
@@ -48,10 +52,12 @@ public class MenuGUI extends JFrame implements ActionListener {
 		logo = new ImageIcon("src/MainMenu/logo.png");
 		battleLogo = new ImageIcon("src/MainMenu/bShipLogo.png");
 		chessLogo = new ImageIcon("src/MainMenu/chessLogo.png");
+		helpLogo = new ImageIcon("src/MainMenu/helpLogo.png");
+		exitLogo = new ImageIcon("src/MainMenu/exitLogo.png");
 		
 		con.gridx =0;
 		con.gridy =0;
-		con.ipady = 200;
+		con.ipady = 100;
 		message = new JLabel();
 		message.setIcon(logo);
 		screen.add(message,con);
@@ -72,6 +78,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		con.ipady = 0;
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridy++;
+		
 		bShip = new JButton();
 		bShip.setIcon(battleLogo);
 		bShip.addActionListener(this);
@@ -83,25 +90,24 @@ public class MenuGUI extends JFrame implements ActionListener {
 		chess.addActionListener(this);
 		screen.add(chess,con);
 
-		con.ipady = 100;
 		con.gridy++;
-		help = new JButton("Help");
+		help = new JButton();
+		help.setIcon(helpLogo);
 		help.addActionListener(this);
 		screen.add(help, con);
-
+		
 		con.gridy++;
-		exit = new JButton("Exit");
+		exit = new JButton();
+		exit.setIcon(exitLogo);
 		exit.addActionListener(this);
 		screen.add(exit,con);
 	}
 
 	public void addMenus() {
-		//Will work on actionlistener later
 		option = new JMenu("Menu");
 		closeItem = new JMenuItem("Quit");
 		closeItem.addActionListener(this);
 
-		//Menu buttons are dead for now
 		menus = new JMenuBar();
 		menus.add(option);
 		option.add(closeItem);
@@ -113,8 +119,11 @@ public class MenuGUI extends JFrame implements ActionListener {
 			System.exit(0);
 		//doesnt work,gui wont update, probably an issue with package/import
 		if(e.getSource() == bShip) {
-			remove(screen);
-			add(new battleship.GUI());			
+			battleGUI = new battleship.GUI();
+			//add(new battleship.GUI());
+
+			this.setContentPane(battleGUI);
+			battleGUI.setVisible(true);
 			revalidate();
 			repaint();
 		}
@@ -128,7 +137,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		}
 		if(e.getSource() == help) {
 			this.remove(screen);
-			hPanel = new HelpPanel();
+			hPanel = new HelpPanel(battleLogo, chessLogo);
 			add(hPanel);
 			revalidate();
 			repaint();

@@ -50,12 +50,13 @@ public class GUI extends JFrame implements ActionListener{
 
 	private String winner;
 
+
 	/**
 	 * Constructor that calls the createMenus and NewGame methods.
 	 */
 	public GUI() {
 		createMenus();		
-		newGame();
+		newGame(false);
 	}
 
 	/**
@@ -82,9 +83,11 @@ public class GUI extends JFrame implements ActionListener{
 	/**
 	 * Begins the battleship game. Creates and adds the game panels and frame. 
 	 * Then the game starts with placeships() and playGame().
+	 * @param rematch True if the game is a rematch, false if not
 	 */
-	public void newGame() {	
-		getNames();
+	public void newGame(Boolean rematch) {	
+		if(!rematch)
+			getNames();
 
 		p1 = new Board(name1);
 		p2 = new Board(name2);
@@ -108,16 +111,18 @@ public class GUI extends JFrame implements ActionListener{
 		holder[0].add(p1O);
 
 		//for testing switch/win panels
-		//		holder[1].add(p1Switch);
-		//		holder[0].add(new WinPanel("Parker"));
+//				holder[1].add(p1Switch);
+//				end = new WinPanel("pork");
+//				holder[0].add(end);
 
-		setTitle("Battleship");
-		setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);      
-		setJMenuBar(menus);
-		setSize (1500,1000);
-		setVisible(true);
+		if(!rematch) {
+			setTitle("Battleship");
+			setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);      
+			setJMenuBar(menus);
+			setSize (1500,1000);
+			setVisible(true);
+		}
 		hasWon = false;
-
 		placeShips();
 		playGame();
 	}
@@ -154,7 +159,7 @@ public class GUI extends JFrame implements ActionListener{
 		int x,y;
 		boolean hit;
 		hasWon = false;
-		
+
 		while(!hasWon) {
 
 			p1O.enableFire();
@@ -226,8 +231,21 @@ public class GUI extends JFrame implements ActionListener{
 		holder[0].add(end);
 		revalidate();
 		repaint();
+		while(!end.isRematch()) {
+			try {
+				Thread.yield();
+			} catch (Exception interruptedEx) {
+				// Log the interruption somewhere.
+			}
+		}
+		holder[0].removeAll();
+		holder[1].removeAll();
+		newGame(true);
+		revalidate();
+		repaint();
+
 	}
-	
+
 	/**
 	 * Allows players to place their ships, starting with player 1.
 	 */

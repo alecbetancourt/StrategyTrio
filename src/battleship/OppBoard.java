@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -29,6 +30,7 @@ public class OppBoard extends JPanel {
 	private int targetX,targetY;
 	private boolean enabled;
 	private BattleButton target;
+	private ImageIcon fireLogo;
 
 	/**
 	 * Constructor for the board, initializes the board creation and 
@@ -91,7 +93,9 @@ public class OppBoard extends JPanel {
 		add(new JLabel(""));
 		add(new JLabel(""));
 		add(status);
-		fire = new JButton("FIRE!");
+		fire = new JButton();
+		fireLogo = new ImageIcon("src/battleship/fireLogo.png");
+		fire.setIcon(fireLogo);
 		fire.setBackground(Color.RED);
 		fire.addActionListener(listen);
 		setBackground(Color.CYAN);
