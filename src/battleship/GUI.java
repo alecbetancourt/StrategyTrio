@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -35,7 +36,7 @@ public class GUI extends JFrame implements ActionListener{
 	private JMenu option;
 	private JMenuItem newGameItem;
 	private JMenuItem closeItem;
-	private JMenuItem mainMenuItem;
+	//private JMenuItem mainMenuItem;
 
 	private JPanel[] holder;
 
@@ -49,7 +50,7 @@ public class GUI extends JFrame implements ActionListener{
 	private String name2;
 
 	private String winner;
-
+	
 
 	/**
 	 * Constructor that calls the createMenus and NewGame methods.
@@ -63,12 +64,12 @@ public class GUI extends JFrame implements ActionListener{
 	 * Creates Menu and adds actionlistener to each item.
 	 */
 	public void createMenus() {
-		//Will work on actionlistener later
+
 		option = new JMenu("Menu");
 		newGameItem = new JMenuItem("New Game");
 		newGameItem.addActionListener(this);
-		mainMenuItem = new JMenuItem("Main Menu");
-		mainMenuItem.addActionListener(this);
+//		mainMenuItem = new JMenuItem("Main Menu");
+//		mainMenuItem.addActionListener(this);
 		closeItem = new JMenuItem("Quit");
 		closeItem.addActionListener(this);
 
@@ -76,8 +77,9 @@ public class GUI extends JFrame implements ActionListener{
 		menus = new JMenuBar();
 		menus.add(option);
 		option.add(newGameItem);
-		option.add(mainMenuItem);
+		//option.add(mainMenuItem);
 		option.add(closeItem);
+
 	}
 
 	/**
@@ -86,8 +88,10 @@ public class GUI extends JFrame implements ActionListener{
 	 * @param rematch True if the game is a rematch, false if not
 	 */
 	public void newGame(Boolean rematch) {	
-		if(!rematch)
+		if(!rematch) {
 			getNames();
+			holder = new JPanel[2];
+		}
 
 		p1 = new Board(name1);
 		p2 = new Board(name2);
@@ -101,30 +105,35 @@ public class GUI extends JFrame implements ActionListener{
 		setLayout(new GridLayout(2,1));
 
 		holder = new JPanel[2];
-
-		for(int i =0; i <2; i++) {
-			holder[i] = new JPanel();
-			add(holder[i]);
-			holder[i].setLayout(new GridLayout(1,1));
+		if(!rematch) {
+			holder = new JPanel[2];
+			for(int i =0; i <2; i++) {
+				holder[i] = new JPanel();
+				add(holder[i]);
+				holder[i].setLayout(new GridLayout(1,1));
+			}
 		}
 		holder[1].add(p1);
 		holder[0].add(p1O);
 
 		//for testing switch/win panels
-//				holder[1].add(p1Switch);
-//				end = new WinPanel("pork");
-//				holder[0].add(end);
+//						holder[1].add(p1Switch);
+//						end = new WinPanel("pork");
+//						holder[0].add(end);
+
 
 		if(!rematch) {
 			setTitle("Battleship");
-			setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);      
+			this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);      
 			setJMenuBar(menus);
 			setSize (1500,1000);
 			setVisible(true);
 		}
+		revalidate();
+		repaint();
 		hasWon = false;
-		placeShips();
-		playGame();
+//		placeShips();
+		//playGame();
 	}
 
 	/**
@@ -327,9 +336,13 @@ public class GUI extends JFrame implements ActionListener{
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//Need to work on listener for menus
+		//Does not work right now
 		if(e.getSource() == newGameItem) {
-
+			holder[0].removeAll();
+			holder[1].removeAll();
+			newGame(true);
+			revalidate();
+			repaint();
 		}
 
 		if(e.getSource() == closeItem) {

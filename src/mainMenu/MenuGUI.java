@@ -119,13 +119,12 @@ public class MenuGUI extends JFrame implements ActionListener {
 			System.exit(0);
 		//doesnt work,gui wont update, probably an issue with package/import
 		if(e.getSource() == bShip) {
+			dispose();
 			battleGUI = new battleship.GUI();
-			//add(new battleship.GUI());
-
-			this.setContentPane(battleGUI);
-			battleGUI.setVisible(true);
 			revalidate();
 			repaint();
+			
+			
 		}
 		//Doesnt work, gui wont update, probably an issue with package/import
 		if(e.getSource() == chess) {
@@ -133,7 +132,6 @@ public class MenuGUI extends JFrame implements ActionListener {
 			this.setContentPane(new chess.View());
 			revalidate();
 			repaint();
-
 		}
 		if(e.getSource() == help) {
 			this.remove(screen);
