@@ -1,11 +1,14 @@
 package mainMenu;
 
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -32,17 +35,25 @@ public class MenuGUI extends JFrame implements ActionListener {
 	private JMenuItem closeItem;
 
 	private HelpPanel hPanel;
+	
+	private ImageIcon logo;
+	private ImageIcon battleLogo;
+	private ImageIcon chessLogo;
 
 
 	public MenuGUI() {
 		screen = new JPanel();
 		screen.setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
-
+		logo = new ImageIcon("src/MainMenu/logo.png");
+		battleLogo = new ImageIcon("src/MainMenu/bShipLogo.png");
+		chessLogo = new ImageIcon("src/MainMenu/chessLogo.png");
+		
 		con.gridx =0;
 		con.gridy =0;
-
-		message = new JLabel("Select a Game");
+		con.ipady = 200;
+		message = new JLabel();
+		message.setIcon(logo);
 		screen.add(message,con);
 
 		addButtons();
@@ -57,19 +68,22 @@ public class MenuGUI extends JFrame implements ActionListener {
 	}
 
 	public void addButtons() {
-		con.ipadx = 300;
-		con.ipady = 200;
+		con.ipadx = 0;
+		con.ipady = 0;
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridy++;
-		bShip = new JButton("Battleship");
+		bShip = new JButton();
+		bShip.setIcon(battleLogo);
 		bShip.addActionListener(this);
 		screen.add(bShip,con);
 
 		con.gridy++;
-		chess = new JButton("Chess");
+		chess = new JButton();
+		chess.setIcon(chessLogo);
 		chess.addActionListener(this);
 		screen.add(chess,con);
 
+		con.ipady = 100;
 		con.gridy++;
 		help = new JButton("Help");
 		help.addActionListener(this);
