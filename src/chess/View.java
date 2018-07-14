@@ -4,16 +4,48 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+/**
+ * JPanel for the chess game.
+ * @author Parker
+ *
+ */
 public class View extends JPanel {
+	/**
+	 * View ID.
+	 */
+	private static final long serialVersionUID = -2223695223616731728L;
+	/**
+	 * The model for the chess game.
+	 */
 	private Model model;
+	/**
+	 * The board for the game.
+	 */
 	private JButton[][] board;
+	/**
+	 * The current move.
+	 */
 	private Move move;
-	private ImageIcon pawnIconW, pawnIconB, rookIconW, rookIconB, knightIconW, knightIconB, bishopIconW, bishopIconB,
+	/**
+	 * All of the chess piece icons.
+	 */
+	private ImageIcon pawnIconW, pawnIconB, rookIconW, 
+	rookIconB, knightIconW, knightIconB, bishopIconW, bishopIconB,
 			queenIconW, queenIconB, kingIconW, kingIconB;
-	private static final Color BROWN = new Color(205,133,63);
-	private static final Color TAN = new Color(210,180,140);
+	/**
+	 * Brown used for background tiles.
+	 */
+	private static final Color BROWN = new Color(205, 133, 63);
+	/**
+	 * Tan used for background tiles.
+	 */
+	private static final Color TAN = new Color(210, 180, 140);
 	
-	public static void main(String[] args) {
+	/**
+	 * Creats the Jframe and chess panel.
+	 * @param args for main
+	 */
+	public static void main(final String[] args) {
 		JFrame frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new View());
@@ -22,6 +54,9 @@ public class View extends JPanel {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Creates the board and all pieces/icons.
+	 */
 	public View() {
 		model = new Model();
 		board = new JButton[8][8];
@@ -46,8 +81,7 @@ public class View extends JPanel {
 				board[row][col] = new JButton();
 				if ((row + col) % 2 == 0) {
 	                board[row][col].setBackground(BROWN);
-	            }
-				else {
+	            } else {
 	                board[row][col].setBackground(TAN);
 	            }
 				board[row][col].addActionListener(listener);
@@ -57,42 +91,54 @@ public class View extends JPanel {
 		updateBoard();
 	}
 	
+	/**
+	 * Listener for board buttons.
+	 * @author Alec
+	 *
+	 */
 	private class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
+		/**
+		 * Respond to button clicks.
+		 * @param event what was pressed.
+		 */
+		public void actionPerformed(final ActionEvent event) {
 			for (int row = 0; row < 8; row++) {
 				for (int col = 0; col < 8; col++) {
 					Object source = event.getSource();
 					if (board[row][col] == source) {
-						if (move.fromRow == -1 && model.pieceAt(row, col) != null &&
-							model.pieceAt(row, col).team() == model.currentPlayer().team()) {
-							System.out.print("Piece selected: " + model.pieceAt(row, col).team() + " ");
+						if (move.fromRow == -1 && model.pieceAt(row, col) != null 
+								&& model.pieceAt(row, col).team().
+								equals(model.currentPlayer().team())) {
+							System.out.print("Piece selected: " 
+								+ model.pieceAt(row, col).team() + " ");
 							System.out.println(model.pieceAt(row, col).type());
 							move.fromRow = row;
 							move.fromColumn = col;
-						}
-						else if (move.fromRow != -1) {
+						} else if (move.fromRow != -1) {
 							move.toRow = row;
 							move.toColumn = col;
 							System.out.println(move);
-							if (move.toRow == move.fromRow && move.toColumn == move.fromColumn) {
+							if (move.toRow == move.fromRow && move.toColumn 
+									== move.fromColumn) {
 								move = new Move();
-							}
-							else if (model.isValidMove(move) == true) {
+							} else if (model.isValidMove(move)) {
 								model.move(move);
 								move = new Move();
 								System.out.println("Valid " + move);
 								if (model.isWinner()) {
 									model.wipeBoard();
-									JOptionPane.showMessageDialog(null, model.currentPlayer().name() + "has won!");
+									JOptionPane.showMessageDialog(null,	model.
+											currentPlayer().name() 
+											+ "has won!");
 								}
 								model.nextTurn();
+							} else {
+								JOptionPane.showMessageDialog(null, 
+										"This is not a valid move");
 							}
-							else {
-								JOptionPane.showMessageDialog(null, "This is not a valid move");
-							}
-						}
-						else {
-							JOptionPane.showMessageDialog(null, "This is not a valid selection");
+						} else {
+							JOptionPane.showMessageDialog(null, 
+									"This is not a valid selection");
 						}
 						//if choosing
 						//if moving
@@ -107,6 +153,9 @@ public class View extends JPanel {
 		}
 	}
 	
+	/**
+	 * Update the look of the board after a move.
+	 */
 	private void updateBoard() {
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
@@ -131,8 +180,8 @@ public class View extends JPanel {
 						board[row][col].setIcon(kingIconB);
 						break;
 					}
-				}
-				else if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "WHITE") {
+				} else if (model.pieceAt(row, col) != null 
+						&& model.pieceAt(row, col).team() == "WHITE") {
 					switch (model.pieceAt(row, col).type()) {
 					case "Pawn":
 						board[row][col].setIcon(pawnIconW);
@@ -153,8 +202,7 @@ public class View extends JPanel {
 						board[row][col].setIcon(kingIconW);
 						break;
 					}
-				}
-				else {
+				} else {
 					board[row][col].setIcon(null);
 				}
 			}

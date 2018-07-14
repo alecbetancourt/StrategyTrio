@@ -17,25 +17,40 @@ import javax.swing.JPanel;
  * @author Parker
  * @version 0.1
  */
-public class WinPanel extends JPanel{
+public class WinPanel extends JPanel {
+	/**
+	 * The name of the winning player.
+	 */
 	private String pName;
+	/**
+	 * Button for the rematch option.
+	 */
 	private JButton rematchButton;
+	/**
+	 * True if the rematch button has been hit.
+	 */
 	private boolean rematch;
+	/**
+	 * Listener for the rematch button.
+	 */
 	private ButtonListener listen;
+	/**
+	 * Constraints used for formating.
+	 */
 	private GridBagConstraints con;
 	
 	/**
 	 * Constructor for the panel. Formats the layout using a gridbag
 	 * and adds in the rematch button and message
-	 * @param name
+	 * @param name the winning player name
 	 */
-	public WinPanel(String name) {
+	public WinPanel(final String name) {
 	setRematch(false);
 	setBackground(Color.CYAN);
 	setLayout(new GridBagLayout());
 	con = new GridBagConstraints();
-	con.gridx =0;
-	con.gridy =0;
+	con.gridx = 0;
+	con.gridy = 0;
 	pName = name;
 	add(new JLabel(pName + " has won"), con);
 	
@@ -46,11 +61,11 @@ public class WinPanel extends JPanel{
 	rematchButton = new JButton("Rematch?");
 	rematchButton.addActionListener(listen);
 	rematchButton.setBackground(Color.BLUE);
-	add(rematchButton,con);
+	add(rematchButton, con);
 	}
 	
 	/**
-	 * If the users want to play another game
+	 * If the users want to play another game.
 	 * @return true if they want to rematch, false if not
 	 */
 	public boolean isRematch() {
@@ -58,23 +73,24 @@ public class WinPanel extends JPanel{
 	}
 
 	/**
-	 * Set the rematch boolean
+	 * Set the rematch boolean.
 	 * @param rematch True is yes, false if no
 	 */
-	public void setRematch(boolean rematch) {
+	public void setRematch(final boolean rematch) {
 		this.rematch = rematch;
 	}
 
 	/**
-	 * Action listener for rematch button
+	 * Action listener for rematch button.
 	 * @author Parker
 	 */
-	private class ButtonListener implements ActionListener{
+	private class ButtonListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent arg0) {
-			if(arg0.getSource() == rematchButton)
+		public void actionPerformed(final ActionEvent arg0) {
+			if (arg0.getSource() == rematchButton) {
 				setRematch(true);
+			}
 			
 		}
 		

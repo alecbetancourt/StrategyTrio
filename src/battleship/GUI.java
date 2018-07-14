@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -21,34 +20,82 @@ import javax.swing.JPanel;
  * @author Parker
  * @version 0.1
  */
-public class GUI extends JFrame implements ActionListener{
+public class GUI extends JFrame implements ActionListener {
 
 	/**
-	 * 
+	 * ID for GUI.
 	 */
 	private static final long serialVersionUID = -763859861758304376L;
+	/**
+	 * Player 1's user board.
+	 */
 	private Board p1;
+	/**
+	 * Player 1's opponent board.
+	 */
 	private OppBoard p1O;
+	/**
+	 * Player 2's user board.
+	 */
 	private Board p2;
+	/**
+	 * Player 2's opponent board.
+	 */
 	private OppBoard p2O;
 
+	/**
+	 * Menu bar for option.
+	 */
 	private JMenuBar menus;
+	/**
+	 * Menu for options.
+	 */
 	private JMenu option;
-	private JMenuItem newGameItem;
+	/**
+	 * New Game option for menu.
+	 */
+	//private JMenuItem newGameItem;
+	/**
+	 * close option for menu.
+	 */
 	private JMenuItem closeItem;
 	//private JMenuItem mainMenuItem;
 
+	/**
+	 * Holder for 2 panels/boards.
+	 */
 	private JPanel[] holder;
 
+	/**
+	 * Switch panel for  before player 1's turn.
+	 */
 	private SwitchPanel p1Switch;
+	/**
+	 * Switch panel for  before player 2's turn.
+	 */
 	private SwitchPanel p2Switch;
 
+	/**
+	 * Panel for the winner.
+	 */
 	private WinPanel end;
 
+	/**
+	 * Whether or not the game is ongoing.
+	 */
 	private boolean hasWon;
+	/**
+	 * Player 1' name.
+	 */
 	private String name1;
+	/**
+	 * Player 2's name.
+	 */
 	private String name2;
 
+	/**
+	 * the name of the game winner.
+	 */
 	private String winner;
 	
 
@@ -66,29 +113,30 @@ public class GUI extends JFrame implements ActionListener{
 	public void createMenus() {
 
 		option = new JMenu("Menu");
-		newGameItem = new JMenuItem("New Game");
-		newGameItem.addActionListener(this);
+		//newGameItem = new JMenuItem("New Game");
+		//newGameItem.addActionListener(this);
 //		mainMenuItem = new JMenuItem("Main Menu");
 //		mainMenuItem.addActionListener(this);
 		closeItem = new JMenuItem("Quit");
 		closeItem.addActionListener(this);
 
-		//Menu buttons are dead for now
+		//New game/ main menu for R#2
 		menus = new JMenuBar();
 		menus.add(option);
-		option.add(newGameItem);
+		//option.add(newGameItem);
 		//option.add(mainMenuItem);
 		option.add(closeItem);
 
 	}
 
 	/**
-	 * Begins the battleship game. Creates and adds the game panels and frame. 
+	 * Begins the battleship game. Creates and adds the game panels
+	 *  and frame. 
 	 * Then the game starts with placeships() and playGame().
 	 * @param rematch True if the game is a rematch, false if not
 	 */
-	public void newGame(Boolean rematch) {	
-		if(!rematch) {
+	public void newGame(final boolean rematch) {	
+		if (!rematch) {
 			getNames();
 			holder = new JPanel[2];
 		}
@@ -102,15 +150,13 @@ public class GUI extends JFrame implements ActionListener{
 		p1Switch = new SwitchPanel(name1);
 		p2Switch = new SwitchPanel(name2);
 
-		setLayout(new GridLayout(2,1));
+		setLayout(new GridLayout(2, 1));
 
-		holder = new JPanel[2];
-		if(!rematch) {
-			holder = new JPanel[2];
-			for(int i =0; i <2; i++) {
+		if (!rematch) {
+			for (int i = 0; i < 2; i++) {
 				holder[i] = new JPanel();
 				add(holder[i]);
-				holder[i].setLayout(new GridLayout(1,1));
+				holder[i].setLayout(new GridLayout(1, 1));
 			}
 		}
 		holder[1].add(p1);
@@ -122,11 +168,12 @@ public class GUI extends JFrame implements ActionListener{
 //						holder[0].add(end);
 
 
-		if(!rematch) {
+		if (!rematch) {
 			setTitle("Battleship");
-			this.setDefaultCloseOperation (JFrame.EXIT_ON_CLOSE);      
+			this.setDefaultCloseOperation(JFrame.
+					EXIT_ON_CLOSE);      
 			setJMenuBar(menus);
-			setSize (1500,1000);
+			setSize(1500, 1000);
 			setVisible(true);
 		}
 		revalidate();
@@ -141,21 +188,23 @@ public class GUI extends JFrame implements ActionListener{
 	 * no response is given.
 	 */
 	public void getNames() {
-		name1 = JOptionPane.showInputDialog (null, "What is Player 1's name?");
-		try{
-			if(name1.equals(""))
+		name1 = JOptionPane.showInputDialog(null,
+				"What is Player 1's name?");
+		try {
+			if (name1.equals("")) {
 				name1 = "Player 1";
-		}
-		catch(NullPointerException ex) {
+			}
+		} catch (NullPointerException ex) {
 			name1 = "Player 1";
 		}
 
-		name2 = JOptionPane.showInputDialog (null, "What is Player 2's name?");
-		try{
-			if(name2.equals(""))
+		name2 = JOptionPane.showInputDialog(null, 
+				"What is Player 2's name?");
+		try {
+			if (name2.equals("")) {
 				name2 = "Player 2";
-		}
-		catch(NullPointerException ex) {
+			}
+		} catch (NullPointerException ex) {
 			name2 = "Player 2";
 		}
 	}
@@ -165,14 +214,14 @@ public class GUI extends JFrame implements ActionListener{
 	 * has won.
 	 */
 	public void playGame() {
-		int x,y;
+		int x, y;
 		boolean hit;
 		hasWon = false;
 
-		while(!hasWon) {
+		while (!hasWon) {
 
 			p1O.enableFire();
-			while(!p1O.isFired()) {
+			while (!p1O.isFired()) {
 				try {
 					Thread.yield();
 				} catch (Exception interruptedEx) {
@@ -190,10 +239,10 @@ public class GUI extends JFrame implements ActionListener{
 			p1O.markSquare(hit, x, y);
 			p1O.updateStatus(p2.getStatus());
 			hasWon = p2.isLost();
-			if(!hasWon) {
+			if (!hasWon) {
 				switchP2();
 				p2O.enableFire();
-				while(!p2O.isFired()) {
+				while (!p2O.isFired()) {
 					try {
 						Thread.yield();
 					} catch (Exception interruptedEx) {
@@ -207,11 +256,12 @@ public class GUI extends JFrame implements ActionListener{
 				p2O.markSquare(hit, x, y);
 				p2O.updateStatus(p1.getStatus());
 				hasWon = p1.isLost();
-				if(!hasWon)
+				if (!hasWon) {
 					switchP1();
+				}
 
-				//Googled this solution because loop was not updating. May have to change
-				//IDEA: add in timer and have it exit the game when it hits zero for r #2 to solve issue
+				//IDEA: add in timer and have it exit the 
+				//game when it hits zero for r #2 to solve issue
 				try {
 					Thread.yield();
 				} catch (Exception interruptedEx) {
@@ -223,10 +273,11 @@ public class GUI extends JFrame implements ActionListener{
 		}
 		p1O.disableFire();
 		p2O.disableFire();
-		if(p1.isLost())
+		if (p1.isLost()) {
 			winner = name2;
-		else
+		} else {
 			winner = name1;
+		}
 		winScreen(winner);
 	}
 
@@ -234,13 +285,13 @@ public class GUI extends JFrame implements ActionListener{
 	 * Displays a win screen on the top panel for the winning player.
 	 * @param winner the winner's name
 	 */
-	public void winScreen(String winner) {
+	public void winScreen(final String winner) {
 		end = new WinPanel(winner);
 		holder[0].removeAll();
 		holder[0].add(end);
 		revalidate();
 		repaint();
-		while(!end.isRematch()) {
+		while (!end.isRematch()) {
 			try {
 				Thread.yield();
 			} catch (Exception interruptedEx) {
@@ -260,7 +311,8 @@ public class GUI extends JFrame implements ActionListener{
 	 */
 	public void placeShips() {
 		//player 1 places ships
-		while(!p1.isReady()) {
+		
+		while (!p1.isReady()) {
 			try {
 				Thread.yield();
 			} catch (Exception interruptedEx) {
@@ -269,7 +321,7 @@ public class GUI extends JFrame implements ActionListener{
 		}
 
 		switchP2();
-		while(!p2.isReady()) {
+		while (!p2.isReady()) {
 			try {
 				Thread.yield();
 			} catch (Exception interruptedEx) {
@@ -280,7 +332,8 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * Displays a switch screen for player 1 after player 2's turn until they select ready.
+	 * Displays a switch screen for player 1 after 
+	 * player 2's turn until they select ready.
 	 */
 	public void switchP2() {
 		holder[1].removeAll();
@@ -288,7 +341,7 @@ public class GUI extends JFrame implements ActionListener{
 		revalidate();
 		repaint();
 
-		while(!p2Switch.isReady()) {
+		while (!p2Switch.isReady()) {
 			//Googled this solution because loop was not updating
 			try {
 				Thread.yield();
@@ -306,7 +359,8 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * Displays a switch screen for player 1 after player 2's turn until they select ready.
+	 * Displays a switch screen for player 1 after player 2's 
+	 * turn until they select ready.
 	 */
 	public void switchP1() {
 		holder[1].removeAll();
@@ -314,7 +368,7 @@ public class GUI extends JFrame implements ActionListener{
 		revalidate();
 		repaint();
 
-		while(!p1Switch.isReady()) {
+		while (!p1Switch.isReady()) {
 			//Googled this solution because loop was not updating
 			try {
 				Thread.yield();
@@ -332,20 +386,20 @@ public class GUI extends JFrame implements ActionListener{
 	}
 
 	/**
-	 * Responding to an action
+	 * Responding to an action.
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		//Does not work right now
-		if(e.getSource() == newGameItem) {
-			holder[0].removeAll();
-			holder[1].removeAll();
-			newGame(true);
-			revalidate();
-			repaint();
-		}
+//		if (e.getSource() == newGameItem) {
+//			holder[0].removeAll();
+//			holder[1].removeAll();
+//			newGame(true);
+//			revalidate();
+//			repaint();
+//		}
 
-		if(e.getSource() == closeItem) {
+		if (e.getSource() == closeItem) {
 			this.dispose();
 			revalidate();
 			repaint();
@@ -354,9 +408,10 @@ public class GUI extends JFrame implements ActionListener{
 
 
 	/**
-	 * Driver for the battleship project
+	 * Driver for the battleship project.
+	 * @param args arguments for main
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		new GUI();
 	}
 }

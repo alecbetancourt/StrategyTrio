@@ -12,33 +12,56 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /******
- * Panel used between turns so players on the same computer can't see each others board
+ * Panel used between turns so players on the same computer 
+ * can't see each others board.
  * 
  * @author Parker
  * @version 0.1
  */
-public class SwitchPanel extends JPanel{
+public class SwitchPanel extends JPanel {
+	/**
+	 *  ID for switch Panel.
+	 */
+	private static final long serialVersionUID = -445184213108078047L;
+	/**
+	 * String for the players name.
+	 */
 	private String pName;
+	/**
+	 * Ready button.
+	 */
 	private JButton ready;
+	/**
+	 * Whether or not the player has hit the ready button.
+	 */
 	private boolean isReady;
+	/**
+	 * Listener for the ready button.
+	 */
 	private ButtonListener listen;
+	/**
+	 * Constraints for gridbag formating.
+	 */
 	private GridBagConstraints con;
+	/**
+	 * Icon for the ready button.
+	 */
 	private ImageIcon rdyIcon;
 	
 	/**
-	 * Constructor for the panel that displays a players name with a message and 
-	 * a ready button.
+	 * Constructor for the panel that displays a players name with a
+	 * message and a ready button.
 	 * @param name the players name to be displayed
 	 */
-	public SwitchPanel(String name) {
+	public SwitchPanel(final String name) {
 		isReady = false;
 		setBackground(Color.CYAN);
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
-		con.gridx =0;
-		con.gridy =0;
+		con.gridx = 0;
+		con.gridy = 0;
 		pName = name;
-		add(new JLabel(pName + "'s turn"),con);
+		add(new JLabel(pName + "'s turn"), con);
 		
 		con.ipadx = 50;
 		con.ipady = 30;
@@ -51,12 +74,12 @@ public class SwitchPanel extends JPanel{
 		ready.setIcon(rdyIcon);
 		ready.setBackground(Color.BLUE);
 		ready.addActionListener(listen);
-		add(ready,con);
+		add(ready, con);
 		
 		
 	}
 	/**
-	 * Get the players name
+	 * Get the players name.
 	 * @return String of player name
 	 */
 	public String getpName() {
@@ -64,10 +87,10 @@ public class SwitchPanel extends JPanel{
 	}
 
 	/**
-	 * Set the name to display on the screen
+	 * Set the name to display on the screen.
 	 * @param pName player's name to set to
 	 */
-	public void setpName(String pName) {
+	public void setpName(final String pName) {
 		this.pName = pName;
 	}
 	
@@ -83,7 +106,7 @@ public class SwitchPanel extends JPanel{
 	 * switch normally.
 	 * @param isRready True is they are ready, false if not.
 	 */
-	public void setReady(boolean isRready) {
+	public void setReady(final boolean isRready) {
 		this.isReady = isRready;
 	}
 	
@@ -95,11 +118,11 @@ public class SwitchPanel extends JPanel{
 	private class ButtonListener implements ActionListener {
 
 		/**
-		 * Responds to button clicks on ready button
+		 * Responds to button clicks on ready button.
 		 */
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource() == ready) {
+		public void actionPerformed(final ActionEvent e) {
+			if (e.getSource() == ready) {
 				isReady = true;
 			}
 		}

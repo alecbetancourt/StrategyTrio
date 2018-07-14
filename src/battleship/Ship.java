@@ -11,9 +11,27 @@ import javax.swing.JButton;
  * @author Parker
  * @version 0.1
  */
-public class Ship extends JButton{
+public class Ship extends JButton {
+	
+	/**
+	 * Ship ID.
+	 */
+	private static final long serialVersionUID = -546938238859432123L;
+	/**
+	 * The name of the ship.
+	 */
 	private String name;
-	private int size, hits;
+	/**
+	 * The size of the ship.
+	 */
+	private int size;
+	/**
+	 * How many times the ship has been hit.
+	 */
+	private int hits;
+	/**
+	 * Whether or not the ship has been placed.
+	 */
 	private boolean used;	
 	
 	/**
@@ -21,7 +39,7 @@ public class Ship extends JButton{
 	 * @param name the name of the ship
 	 * @param size how many hits the ship can take before it sinks
 	 */
-	public Ship(String name, int size) {
+	public Ship(final String name, final int size) {
 		this.name = name;
 		this.size = size;
 		used = false;
@@ -29,7 +47,7 @@ public class Ship extends JButton{
 	}
 	
 	/**
-	 * Get the name of the ship
+	 * Get the name of the ship.
 	 * @return String for ship name
 	 */
 	public String getName() {
@@ -37,15 +55,15 @@ public class Ship extends JButton{
 	}
 
 	/**
-	 * Set the name of the ship
+	 * Set the name of the ship.
 	 * @param name the name for the ship
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
-	 * How many hits the ship can take
+	 * How many hits the ship can take.
 	 * @return int of how many hits remaining.
 	 */
 	public int getSSize() {
@@ -56,7 +74,7 @@ public class Ship extends JButton{
 	 * Set the amount of shots the ship can take before sinking.
 	 * @param size the number of shots to set to.
 	 */
-	public void setSize(int size) {
+	public void setSize(final int size) {
 		this.size = size;
 	}
 
@@ -72,12 +90,16 @@ public class Ship extends JButton{
 	 * To indicate whether the ship has been placed or possible removed.
 	 * @param used true if added false if removed
 	 */
-	public void setUsed(boolean used) {
+	public void setUsed(final boolean used) {
 		this.used = used;
 	}
 
+	/**
+	 * Whether or not a ship can still be hit.
+	 * @return True if it was sunk false if not.
+	 */
 	public boolean isDestroyed() {
-		if(hits == size) {
+		if (hits == size) {
 			setBackground(Color.RED);
 			return true;
 		}
@@ -86,15 +108,16 @@ public class Ship extends JButton{
 	}
 	
 	/**
-	 * Increase the amount of hits and update the color of the ship
+	 * Increase the amount of hits and update the color of the ship.
 	 */
 	public void hit() {
 		hits++;
 		//switch to orange to alert player 
-		if(size - hits == 1)
+		if (size - hits == 1) {
 			setBackground(Color.ORANGE);
-		else
+		} else {
 			setBackground(Color.YELLOW);
+		}
 	}
 
 }

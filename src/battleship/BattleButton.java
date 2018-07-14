@@ -13,22 +13,37 @@ import javax.swing.JButton;
  * @version 0.1
  */
 public class BattleButton extends JButton {
-	private boolean hasShip = false;
-	private boolean hit = false;
-	private boolean miss = false;
-	private Ship ship;
-//	private ImageIcon hitIcon, missIcon;
-	
 	/**
-	 * Constructor that sets all buttons background to blue
+	 * BattleButton ID.
+	 */
+	private static final long serialVersionUID = 7317966084678253303L;
+	/**
+	 * Whether or not the Button contains a ship. 
+	 */
+	private boolean hasShip = false;
+	/**
+	 * Whether or not the button has been guessed and hit.
+	 */
+	private boolean hit = false;
+	/**
+	 * Whether or not the button has been guessed and missed.
+	 */
+	private boolean miss = false;
+	/**
+	 * The ship that occupies the button, null if none.
+	 */
+	private Ship ship;
+	//	private ImageIcon hitIcon, missIcon;
+
+	/**
+	 * Constructor that sets all buttons background to blue.
 	 */
 	public BattleButton() {
 		setBackground(Color.BLUE);
-//		hitIcon = new ImageIcon("src/battleship/hit.png");
 	}
-	
+
 	/**
-	 * If a ship has been placed on the button
+	 * If a ship has been placed on the button.
 	 * @return True if the button has a ship, False if not
 	 */
 	public boolean isHasShip() {
@@ -40,16 +55,17 @@ public class BattleButton extends JButton {
 	 * ship was removed from a square.
 	 * @param hasShip True is a ship was placed, False if not
 	 */
-	public void setHasShip(boolean hasShip) {
+	public void setHasShip(final boolean hasShip) {
 		this.hasShip = hasShip;
-		if(hasShip) 
+		if (hasShip) {
 			setBackground(Color.GRAY);	
-		else 
-			setBackground(Color.BLUE);	
+		} else {
+			setBackground(Color.BLUE);
+		}
 	}
 
 	/**
-	 * If the button was guessed and it was a hit
+	 * If the button was guessed and it was a hit.
 	 * @return True if it was hit, false if not
 	 */
 	public boolean isHit() {
@@ -59,18 +75,18 @@ public class BattleButton extends JButton {
 	/**
 	 * Set the hit boolean. Disables and colors the button red if
 	 * it is true.
-	 * @param hit
+	 * @param hit if the ship was hit
 	 */
-	public void setHit(boolean hit) {
+	public void setHit(final boolean hit) {
 		this.hit = hit;
-		if(hit) {
+		if (hit) {
 			setBackground(Color.RED);
 			setEnabled(false);
 		}
 	}
 
 	/**
-	 * If the button was guessed and it was a miss
+	 * If the button was guessed and it was a miss.
 	 * @return True if it was missed, false if not
 	 */
 	public boolean isMiss() {
@@ -80,44 +96,45 @@ public class BattleButton extends JButton {
 	/**
 	 * Set the miss boolean. Disables and colors the button white if
 	 * it is true.
-	 * @param miss
+	 * @param miss if the shot was missed
 	 */
-	public void setMiss(boolean miss) {
+	public void setMiss(final boolean miss) {
 		this.miss = miss;
-		if(miss) {
+		if (miss) {
 			setBackground(Color.WHITE);
 			setEnabled(false);
 		}
 	}
-	
+
 	/**
-	 * Set the ship that has been placed on the button
+	 * Set the ship that has been placed on the button.
 	 * @param ship type that has been placed
 	 */
-	public void setShip(Ship ship) {
+	public void setShip(final Ship ship) {
 		this.ship = ship;
 	}
-	
+
 	/**
-	 * Get the ship placed on this button
+	 * Get the ship placed on this button.
 	 * @return the ship placed or null if none
 	 */
 	public Ship getShip() {
 		return ship;
 	}
-	
+
 	/**
 	 * Reverts a buttons color to usual. Used after a button has been
 	 * highlighted after selection.
 	 */
 	public void revertColor() {
-		if(miss)
+		if (miss) {
 			setBackground(Color.WHITE);
-		else if(hit)
+		} else if (hit) {
 			setBackground(Color.RED);
-		else if(hasShip)
+		} else if (hasShip) {
 			setBackground(Color.GRAY);
-		else
+		} else {
 			setBackground(Color.BLUE);
+		}
 	}
 }

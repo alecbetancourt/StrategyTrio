@@ -1,7 +1,6 @@
 package battleship;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,23 +21,61 @@ import javax.swing.border.MatteBorder;
  */
 public class Board extends JPanel {
 
+	/**
+	 *  ID for board.
+	 */
+	private static final long serialVersionUID = 2015116678863509370L;
+	/**
+	 * 2-D array for the user board.
+	 */
 	private BattleButton[][] user;
+	/**
+	 * Listener for ships and board buttons.
+	 */
 	private ButtonListener listen;
 
+	/**
+	 * Ship type carrier, hits 5.
+	 */
 	private Ship carrier;
+	/**
+	 * Ship type battleship, hits 4.
+	 */
 	private Ship battleship;
+	/**
+	 * Ship type submarine, hits 3.
+	 */
 	private Ship submarine;
+	/**
+	 * Ship type cruiser, hits 3.
+	 */
 	private Ship cruiser;
+	/**
+	 * Ship type destroyer, hits 2.
+	 */
 	private Ship destroyer;
 
+	/**
+	 * String for the current status of the game.
+	 */
 	private JLabel status;
+	/**
+	 * Name of player who's board it is.
+	 */
 	private JLabel pName;
 
+	/**
+	 * Whether or not all the ships have been placed.
+	 */
 	private boolean ready;
+	/**
+	 * If all the users ships have been sunk or not.
+	 */
 	private boolean lost;
+	/**
+	 * The number of ships the user has left.
+	 */
 	private int shipCount;
-
-	private GridBagConstraints con;
 
 	/**
 	 * Constructor for the board, initializes the board creation and 
@@ -46,16 +83,17 @@ public class Board extends JPanel {
 	 * 
 	 * @param name for the player name
 	 */
-	public Board(String name) {
+	public Board(final String name) {
 		user = new BattleButton[10][10];
 		listen = new ButtonListener();
 
 		setReady(false);
 		shipCount = 5;
 		setBackground(Color.CYAN);
-		setLayout(new GridLayout(12,11));
+		setLayout(new GridLayout(12, 11)); 
 
-		status = new JLabel("Place Your Battleships", SwingConstants.CENTER);
+		status = new JLabel("Place Your Battleships", 
+				SwingConstants.CENTER);
 		pName = new JLabel(name, SwingConstants.CENTER);
 		createBoard();		
 		createShips();
@@ -74,26 +112,23 @@ public class Board extends JPanel {
 	 * Creates and formats the user board where ships are placed.
 	 */
 	public void createBoard() {
-		for(int i =0; i< 11; i++) {
-			for(int j =0; j <11; j++) {
+		for (int i = 0; i < 11; i++) {
+			for (int j = 0; j < 11; j++) {
 				//blank square at 0,0
-				if(j==0 && i== 0) {
+				if (j == 0 && i == 0) {
 					add(new JLabel(""));
-				}
-				//formatting x-axis
-				else if(i ==0 ) {
-					add(new JLabel("" + (j), SwingConstants.CENTER));
-				}
-				//formatting y-axis
-				else if(j== 0) {
-					int c = 64+i;
-					String s = Character.toString((char)c);
-					add(new JLabel(s,SwingConstants.CENTER));
-				}
-				else {
-					user[i-1][j-1] = new BattleButton();
-					user[i-1][j-1].addActionListener(listen);
-					add(user[i-1][j-1]);
+				} else if (i == 0) {
+					add(new JLabel("" + (j), 
+							SwingConstants.CENTER));
+				} else if (j == 0) {
+					int c = (64 + i);
+					String s = Character.toString((char) c);
+					add(new JLabel(s,
+							SwingConstants.CENTER));
+				} else {
+					user[i - 1][j - 1] = new BattleButton();
+					user[i - 1][j - 1].addActionListener(listen);
+					add(user[i - 1][j - 1]);
 
 				}
 			}
@@ -133,7 +168,7 @@ public class Board extends JPanel {
 		submarine.addActionListener(listen);
 		submarine.setBackground(Color.GRAY);
 		submarine.setLabel("Submarine (3)");
-		add(submarine,con);
+		add(submarine);
 
 		cruiser.addActionListener(listen);
 		cruiser.setBackground(Color.GRAY);
@@ -157,35 +192,32 @@ public class Board extends JPanel {
 	 * @param tShip the ship that was placed
 	 * @throws Exception for overlapping ship placement
 	 */
-	public void fillHor(int x1, int x2, int y, Ship tShip) {
+	public void fillHor(final int x1, final int x2, final int y, final Ship tShip) {
 		int tX1, tX2;
 		//finds lower coordinate for loop
-		if(x1 > x2) {
-			tX1 =x2;
+		if (x1 > x2) {
+			tX1 = x2;
 			tX2 = x1;
-		}
-		else {
+		} else {
 			tX1 = x1;
 			tX2 = x2;
 		}
 
 		//Checks for ship overlap
-		for(int i=tX1; i<(tX2+1); i++) {
-			if(user[i][y].isHasShip()) {
+		for (int i = tX1; i < (tX2 + 1); i++) {
+			if (user[i][y].isHasShip()) {
 				throw new IllegalArgumentException();
 			}
 		}
-		for(int i=tX1; i<(tX2+1); i++) {
+		for (int i = tX1; i < (tX2 + 1); i++) {
 
 			//outlines the ship on the user board
-			if(i== tX1) {
-				user[i][y].setBorder(new MatteBorder(1,1,0,1, Color.BLACK));
-			}
-			else if(i == tX2) {
-				user[i][y].setBorder(new MatteBorder(0,1,1,1, Color.BLACK));
-			}
-			else {
-				user[i][y].setBorder(new MatteBorder(0,1,0,1, Color.BLACK));
+			if (i == tX1) {
+				user[i][y].setBorder(new MatteBorder(1, 1, 0, 1, Color.BLACK));
+			} else if (i == tX2) {
+				user[i][y].setBorder(new MatteBorder(0, 1, 1, 1, Color.BLACK));
+			} else {
+				user[i][y].setBorder(new MatteBorder(0, 1, 0, 1, Color.BLACK));
 			}
 			user[i][y].setHasShip(true);
 			user[i][y].setEnabled(false);
@@ -203,33 +235,30 @@ public class Board extends JPanel {
 	 * @param tShip the ship that was placed
 	 * @throws Exception for overlapping ship placement
 	 */
-	public void fillVert(int y1, int y2, int x, Ship tShip) {
+	public void fillVert(final int y1, final int y2, final int x, final Ship tShip) {
 		int tY1, tY2;
 		//finds lower coordinate for loop
-		if(y1 > y2) {
-			tY1 =y2;
+		if (y1 > y2) {
+			tY1 = y2;
 			tY2 = y1;
-		}
-		else {
+		} else {
 			tY1 = y1;
 			tY2 = y2;
 		}
 		//Checks for ship overlap
-		for(int i=tY1; i<(tY2+1); i++) {
-			if(user[x][i].isHasShip()) {
+		for (int i = tY1; i < (tY2 + 1); i++) {
+			if (user[x][i].isHasShip()) {
 				throw new IllegalArgumentException();
 			}
 		}
-		for(int i=tY1; i<(tY2+1); i++) {
+		for (int i = tY1; i < (tY2 + 1); i++) {
 			//outlines the ship on the user board
-			if(i== tY1) {
-				user[x][i].setBorder(new MatteBorder(1,1,1,0, Color.BLACK));
-			}
-			else if(i == tY2) {
-				user[x][i].setBorder(new MatteBorder(1,0,1,1, Color.BLACK));
-			}
-			else {
-				user[x][i].setBorder(new MatteBorder(1,0,1,0, Color.BLACK));
+			if (i == tY1) {
+				user[x][i].setBorder(new MatteBorder(1, 1, 1, 0, Color.BLACK));
+			} else if (i == tY2) {
+				user[x][i].setBorder(new MatteBorder(1, 0, 1, 1, Color.BLACK));
+			} else {
+				user[x][i].setBorder(new MatteBorder(1, 0, 1, 0, Color.BLACK));
 			}
 			//Colors and disables button
 			user[x][i].setHasShip(true);
@@ -250,60 +279,54 @@ public class Board extends JPanel {
 	 * @param tShip the ship placed
 	 * @return true if ship was placed, false if not
 	 */
-	public boolean placeShip(int x1, int x2, int y1, int y2, Ship tShip) {
+	public boolean placeShip(final int x1, final int x2, final int y1, final int y2, final Ship tShip) {
 		//if ship is placed vertically
-		if(x1 == x2) {
-			if(y1 == y2)
+		if (x1 == x2) {
+			if (y1 == y2) {
 				return false;
-			//if placement was not the same size as the ship
-			else if(Math.abs((y1-y2)) != (tShip.getSSize()-1))
+			} else if (Math.abs((y1 - y2)) != (tShip.getSSize() - 1)) {
 				return false;
-			else {
-				try{
-					fillVert(y1,y2,x1,tShip);
-				}
-				//if the fill method found a ship overlap
-				catch (Exception e) {
+			} else {
+				try {
+					fillVert(y1, y2, x1, tShip); 
+				} catch (Exception e) {
 					status.setText("Invalid Placement");
 					return false;
 				}
 				return true;
 			}
-		}
-		//if ship is placed horizontally
-		else if(y1 == y2) {
-			if(x1 == x2)
+		} else if (y1 == y2) {
+			if (x1 == x2) {
 				return false;
-			else if(Math.abs((x1-x2)) != (tShip.getSSize()-1))
+			} else if (Math.abs((x1 - x2)) != (tShip.getSSize() - 1)) {
 				return false;
-			else {
-				try{
-					fillHor(x1,x2,y1,tShip);
-				}
-				catch (Exception e) {
+			} else {
+				try {
+					fillHor(x1, x2, y1, tShip); 
+				} catch (Exception e) {
 					status.setText("Invalid Placement");
 					return false;
 				}
 				return true;
 			}
-		}
-		//If user selected invalid locations for ship
-		else
+		} else {
 			return false;
+		}
 	}
 
 	/**
-	 * Returns if player has placed their ships
+	 * Returns if player has placed their ships.
+	 * @return boolean if the player is ready or not
 	 */
 	public boolean isReady() {
 		return ready;
 	}
 
 	/**
-	 * Set the ready boolean
+	 * Set the ready boolean.
 	 * @param ready if the player is ready or not
 	 */
-	public void setReady(boolean ready) {
+	public void setReady(final boolean ready) {
 		this.ready = ready;
 	}
 
@@ -312,8 +335,8 @@ public class Board extends JPanel {
 	 * have been placed.
 	 */
 	public void disableButtons() {
-		for(int i =0; i< 10; i++) {
-			for(int j =0; j <10; j++) {
+		for (int i = 0; i < 10; i++) {
+			for (int j = 0; j < 10; j++) {
 				user[i][j].setEnabled(false);
 			}
 		}
@@ -329,15 +352,17 @@ public class Board extends JPanel {
 	 * @param y y-coordinate guessed by opponent
 	 * @return true if the guess was a hit, false if it was a miss
 	 */
-	public boolean hitMiss(int x, int y) {
-		if(user[x][y].isHasShip()) {	
+	public boolean hitMiss(final int x, final int y) {
+		if (user[x][y].isHasShip()) {	
 			user[x][y].setHit(true);
 			user[x][y].getShip().hit();
-			status.setText(user[x][y].getShip().getName() + " hit!");
-			if(user[x][y].getShip().isDestroyed()) {
-				status.setText(user[x][y].getShip().getName() + " sunk!");
+			status.setText(user[x][y].getShip().getName()
+					+ " hit!");
+			if (user[x][y].getShip().isDestroyed()) {
+				status.setText(user[x][y].getShip().
+						getName() + " sunk!");
 				shipCount--;
-				if(shipCount == 0) {
+				if (shipCount == 0) {
 					lost = true;
 					status.setText("You lose");
 				}
@@ -351,7 +376,7 @@ public class Board extends JPanel {
 	}
 
 	/**
-	 * Returns the current number of ships remaining
+	 * Returns the current number of ships remaining.
 	 * @return number of user ships left
 	 */
 	public int getShipCount() {
@@ -359,15 +384,15 @@ public class Board extends JPanel {
 	}
 
 	/**
-	 * Set the number of ships the user has remaining
+	 * Set the number of ships the user has remaining.
 	 * @param shipCount the number of user ships left.
 	 */
-	public void setShipCount(int shipCount) {
+	public void setShipCount(final int shipCount) {
 		this.shipCount = shipCount;
 	}
 
 	/**
-	 * Whether or not the User has ships remaining
+	 * Whether or not the User has ships remaining.
 	 * @return true is all ships are destroyed, false if not
 	 */
 	public boolean isLost() {
@@ -375,10 +400,10 @@ public class Board extends JPanel {
 	}
 
 	/**
-	 * Set the lost boolean
+	 * Set the lost boolean.
 	 * @param lost True if lost, false if not
 	 */
-	public void setLost(boolean lost) {
+	public void setLost(final boolean lost) {
 		this.lost = lost;
 	}
 
@@ -393,77 +418,101 @@ public class Board extends JPanel {
 	 */
 	private class ButtonListener implements ActionListener {
 		//tracking variables for location and ship type
-		Ship tShip = null;
-		int x1 =-1;
-		int y1 =-1;
-		int x2 =-1;
-		int y2 =-1;
-		int shipCount = 5;
-		BattleButton select = null;
+		/**
+		 * The ship selected by the player.
+		 */
+		private Ship tShip = null;
+		/**
+		 * the first x-coordinate.
+		 */
+		private int x1 = -1;
+		/**
+		 * the first y-coordinate.
+		 */
+		private int y1 = -1;
+		/**
+		 * the second x-coordinate.
+		 */
+		private int x2 = -1;
+		/**
+		 * the second y-coordinate.
+		 */
+		private int y2 = -1;
+		/**
+		 * the number of ships left to place.
+		 */
+		private int shipCount = 5;
+		/**
+		 * the selected battlebutton.
+		 */
+		private BattleButton select = null;
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(final ActionEvent e) {
 
-			if(e.getSource() instanceof Ship) {
-				if(tShip != null) {
+			if (e.getSource() instanceof Ship) {
+				if (tShip != null) {
 					//unhighlights selected ship
 					tShip.setBackground(Color.GRAY);
-					if(select != null)
+					if (select != null) {
 						//unhighlights selected square
 						select.setBackground(Color.BLUE);
+					}
 				}
 
 				//highlights ship when selected
-				tShip = (Ship)e.getSource();
+				tShip = (Ship) e.getSource();
 				tShip.setBackground(Color.DARK_GRAY);
 
 				//reset location on ship selection
-				x1 = x2 = y1 = y2 = -1;
+				x1 = -1;
+				x2 = -1;
+				y1 = -1;
+				y2 = -1;
 			}
 
-			if(e.getSource() instanceof BattleButton) {
+			if (e.getSource() instanceof BattleButton) {
 				//if a ship has been selected
-				if(tShip != null) {
-					for(int i =0; i< 10; i++) {
-						for(int j =0; j <10; j++) {
-							if(e.getSource() == user[i][j]) {
+				if (tShip != null) {
+					for (int i = 0; i < 10; i++) {
+						for (int j = 0; j < 10; j++) {
+							if (e.getSource() == user[i][j]) {
 								//if this is the first square selected
-								if(x1 == -1 && y1 == -1) {
+								if (x1 == -1 && y1 == -1) {
 									x1 = i;
 									y1 = j;
 									select = user[x1][y1];
 									select.setBackground(Color.GRAY);
-								}
-								//if this is the second square selected
-								else {
+								} else {
 									select.setBackground(Color.BLUE);
 									x2 = i;
-									y2 =j;
+									y2 = j;
 									//attempts to place the ship
-									if(placeShip(x1,x2,y2,y1,tShip)) {
-										status.setText(tShip.getName() + " placed");
+									if (placeShip(x1, x2, y2, y1, tShip)) {
+										status.setText(tShip.getName() + " "
+												+ "placed");
 										tShip.setBackground(Color.GRAY);
 										tShip.setEnabled(false);
-										shipCount --;
+										shipCount--;
 										//if all ships have been placed
-										if(shipCount == 0) {
+										if (shipCount == 0) {
 											disableButtons();
 											setReady(true);
 										}
-									}
-									//if a ship could not be placed
-									else {
+									} else {
 										tShip.setBackground(Color.GRAY);
 										status.setText("Invalid placement!");
 									}
-									x1=x2=y1=y2=-1;
+									x1 = -1;
+									x2 = -1;
+									y1 = -1;
+									y2 = -1;
 									tShip = null;
 								}
 							}
 						}
 					}
 				}
-			}
-			else {
+			} else {
 				status.setText("Select a Ship!");
 			}
 		}
