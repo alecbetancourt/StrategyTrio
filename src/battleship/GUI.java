@@ -132,8 +132,8 @@ public class GUI extends JFrame implements ActionListener{
 		revalidate();
 		repaint();
 		hasWon = false;
-//		placeShips();
-		//playGame();
+		placeShips();
+		playGame();
 	}
 
 	/**
