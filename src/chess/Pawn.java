@@ -34,7 +34,7 @@ public class Pawn extends Piece {
 			return false;
 		}
 		
-		//move vertically
+		//if moving vertically
 		if (move.fromColumn == move.toColumn && board[move.toRow][move.toColumn] == null) {
 			//move one space
 			if ((board[move.fromRow][move.fromColumn].team() == "BLACK" 
@@ -43,7 +43,7 @@ public class Pawn extends Piece {
 				&& move.fromRow - 1 == move.toRow)) {
 				valid = true;
 			}
-			//move 2 spaces if first move
+			//piece can move 2 spaces if first move
 			if ((board[move.fromRow][move.fromColumn].team() == "BLACK" 
 					&& move.fromRow == 1 && move.toRow == 3) 
 					|| (board[move.fromRow][move.fromColumn].team() == "WHITE" 
@@ -53,9 +53,9 @@ public class Pawn extends Piece {
 				}
 			}
 		}
-		//move diagonally if and only if capture
+		//if move diagonally if and only if capture
 		if (Math.abs(move.toRow - move.fromRow) == 1 && Math.abs(move.toColumn - move.fromColumn) == 1
-			&& board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].team() != team()) {
+			&& board[move.toRow][move.toColumn] != null && !(board[move.toRow][move.toColumn].team().equals(team()))) {
 			if (board[move.fromRow][move.fromColumn].team() == "BLACK" && move.fromRow + 1 == move.toRow) {
 				valid = true;
 			}

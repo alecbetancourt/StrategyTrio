@@ -33,9 +33,10 @@ public class King extends Piece {
 			return false;
 		}
 		
-		//check that abs(rowdiff or col diff) = 1
+		//check that king is only moving one space in any direction
 		if (Math.abs(move.toRow - move.fromRow) <= 1 && Math.abs(move.toColumn - move.fromColumn) <= 1
-			&& (board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].team() != team())) {
+			&& (board[move.toRow][move.toColumn] == null
+			|| !(board[move.toRow][move.toColumn].team().equals(team())))) {
 			return true;
 		}
 		return false;

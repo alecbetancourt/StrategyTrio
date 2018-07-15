@@ -35,7 +35,7 @@ public class Queen extends Piece {
 		}
 		
 		//check final space that piece will occupy
-		if (board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].team() != team()) {
+		if (board[move.toRow][move.toColumn] == null || !(board[move.toRow][move.toColumn].team().equals(team()))) {
             valid = true;
 		}
 		

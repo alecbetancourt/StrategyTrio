@@ -64,28 +64,6 @@ public class Rook extends Piece {
           		}
   			}
   		}
-        /*
-        if (Math.abs(move.toRow - move.fromRow) > 1) {
-        	int offset = (move.toRow - move.fromRow) / Math.abs(move.toRow - move.fromRow);
-        	for (int i = move.fromRow + offset; i != move.toRow; i += offset) {
-        		if (board[i][move.fromColumn] == null) {
-                    valid = true;
-        		} else {
-        			return false;
-        		}
-        	}
-        } else if (Math.abs(move.toColumn - move.fromColumn) > 1) {
-        	int offset = (move.toColumn - move.fromColumn) / Math.abs(move.toColumn - move.fromColumn);
-        	for (int i = move.fromRow + offset; i != move.toRow; i += offset) {
-        		if (board[i][move.fromColumn] == null) {
-                    valid = true;
-        		} else {
-        			return false;
-        		}
-        	}
-        }
-        */
-        
 		return valid;
 	}
 }

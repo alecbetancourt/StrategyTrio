@@ -8,6 +8,9 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -34,6 +37,14 @@ public class View extends JPanel {
 	 */
 	private Move move;
 	/**
+	 * Menu item to create new game.
+	 */
+	private JMenuItem newGame;
+    /**
+     * Menu item to quit game.
+     */
+	private JMenuItem quitGame;
+	/**
 	 * All of the chess piece icons.
 	 */
 	private ImageIcon pawnIconW, pawnIconB, rookIconW, 
@@ -48,16 +59,33 @@ public class View extends JPanel {
 	 */
 	private static final Color TAN = new Color(210, 180, 140);
 	
-	//Will likely be deleted in favor of master UI in release 2
+	//will likely be deleted in favor of master UI in release 2
 	//add new game/quit function in menu options
 	/**
-	 * Creats the Jframe and chess panel.
+	 * Creates the JFrame and chess panel.
 	 * @param args for main
 	 */
 	public static void main(final String[] args) {
-		JFrame frame = new JFrame("Chess");
+		JMenuBar menus;
+        JMenu fileMenu;
+        JMenuItem quitGame;
+        JMenuItem newGame;
+
+        JFrame frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.add(new View());
+        
+        // Creates and adds menu options to file menu which is then added to menu bar
+        fileMenu = new JMenu("File");
+        quitGame = new JMenuItem("Quit");
+        newGame = new JMenuItem("New Game");
+
+        fileMenu.add(newGame);
+        fileMenu.add(quitGame);
+        menus = new JMenuBar();
+        frame.setJMenuBar(menus);
+        menus.add(fileMenu);
+		
+		frame.add(new View(quitGame, newGame));
 	    frame.pack();
 		frame.setSize(800, 800);
 		frame.setVisible(true);
@@ -65,11 +93,16 @@ public class View extends JPanel {
 	
 	/**
 	 * Creates the board and all pieces/icons.
+	 * 
+	 * @param pquitGame quit game menu item.
+	 * @param pnewGame new game menu item
 	 */
-	public View() {
+	public View(final JMenuItem pquitGame, final JMenuItem pnewGame) {
 		model = new Model();
 		board = new JButton[8][8];
 		move = new Move();
+		newGame = pnewGame;
+        quitGame = pquitGame;
 		pawnIconW = new ImageIcon("src/chess/pawnIconW.png");
 		pawnIconB = new ImageIcon("src/chess/pawnIconB.png");
 		rookIconW = new ImageIcon("src/chess/rookIconW.png");
@@ -97,6 +130,11 @@ public class View extends JPanel {
 				add(board[row][col]);
 			}
 		}
+		
+		//add listeners to menu items
+		quitGame.addActionListener(listener);
+        newGame.addActionListener(listener);
+		
 		updateBoard();
 	}
 	
@@ -111,12 +149,12 @@ public class View extends JPanel {
 		 * @param event what was pressed.
 		 */
 		public void actionPerformed(final ActionEvent event) {
+			Object source = event.getSource();
 			for (int row = 0; row < 8; row++) {
 				for (int col = 0; col < 8; col++) {
-					Object source = event.getSource();
 					if (board[row][col] == source) {
 						if (move.fromRow == -1 && model.pieceAt(row, col) != null
-							&& model.pieceAt(row, col).team() == model.currentPlayer().team()) {
+							&& model.pieceAt(row, col).team().equals(model.currentPlayer().team())) {
 							System.out.print("Piece selected: " + model.pieceAt(row, col).team() + " ");
 							System.out.println(model.pieceAt(row, col).type());
 							move.fromRow = row;
@@ -146,6 +184,16 @@ public class View extends JPanel {
 					}
 				}
 			}
+			//reset model if new game option is selected
+            if (source == newGame) {    
+            	model = new Model();
+            }
+            
+            //quit game if menu option was selected
+            if (source == quitGame) {
+                //either exit to main menu or exit jvm completely
+            	System.exit(0);
+            }
 			updateBoard();
 		}
 	}

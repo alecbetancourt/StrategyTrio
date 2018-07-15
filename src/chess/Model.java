@@ -75,7 +75,6 @@ public class Model {
 		}
 	}
 	
-	//might delete if not used?
 	/**
 	 * Clears the board.
 	 */

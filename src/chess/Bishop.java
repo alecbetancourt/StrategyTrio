@@ -8,7 +8,7 @@ package chess;
 public class Bishop extends Piece {
 	/**
 	 * Bishop constructor.
-	 * @param team which team the piece belongs to.
+	 * @param team the team the piece belongs to.
 	 */
 	public Bishop(final Team team) {
 		super(team);
@@ -35,7 +35,7 @@ public class Bishop extends Piece {
 		}
 		
 		//check final space that piece will occupy
-		if (board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].team() != team()) {
+		if (board[move.toRow][move.toColumn] == null || !(board[move.toRow][move.toColumn].team().equals(team()))) {
             valid = true;
 		}
 		
@@ -63,8 +63,6 @@ public class Bishop extends Piece {
           		}
   			}
   		}
-		//check that only moving diag
-		//check spaces inbetween dual offset
 		return valid;
 	}
 }

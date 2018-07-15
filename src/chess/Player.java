@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.*;
+//import java.util.ArrayList;
 
 /**
  * Class for the individual players.
@@ -19,15 +19,18 @@ public class Player {
 	/**
 	 * The score.
 	 */
-	private int score;
+	//release 2
+	//private int score;
 	/**
 	 * What pieces the player has captured.
 	 */
-	private ArrayList<Piece> capturedPieces = new ArrayList<Piece>();
+	//might not use
+	//private ArrayList<Piece> capturedPieces = new ArrayList<Piece>();
 	/**
 	 * The last move the player made.
 	 */
-	private Move move;
+	//might not use
+	//private Move move;
 	
 	/**
 	 * Player constructor.
