@@ -10,6 +10,10 @@ public class Queen extends Piece {
 	}
 	
 	public boolean isValidMove(Move move, Piece[][] board) {
+		if (!super.isValidMove(move, board)) {
+			return false;
+		}
+		//check if moving like rook or bishop
 		return false;
 	}
 }

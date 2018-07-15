@@ -11,7 +11,7 @@ public class Rook extends Piece {
 	
 	public boolean isValidMove(Move move, Piece[][] board) {
 		boolean valid = false;
-		if (super.isValidMove(move, board) == false) {
+		if (!super.isValidMove(move, board)) {
 			return false;
 		}
 		
@@ -26,24 +26,38 @@ public class Rook extends Piece {
         }
         
         //check intermediate spaces if moving multiple spaces
-        if (Math.abs(move.toRow-move.fromRow) > 1) {
-        	int offset = (move.toRow-move.fromRow)/Math.abs(move.toRow-move.fromRow);
-        	for (int i = move.fromRow + offset; i != move.toRow; i += offset) {
-        		if (board[i][move.fromColumn] == null)
+        if (Math.abs(move.toRow - move.fromRow) > 1 || Math.abs(move.toColumn - move.fromColumn) > 1) {
+			int rowOffset = (move.toRow - move.fromRow) / Math.abs(move.toRow - move.fromRow);
+			int colOffset = (move.toColumn - move.fromColumn) / Math.abs(move.toColumn - move.fromColumn);
+			for (int i = 1; i < Math.abs(move.fromRow - move.toRow); i++) {
+				if (board[move.fromRow + (i * rowOffset)][move.fromColumn + (i * colOffset)] == null) {
                     valid = true;
-        		else
+        		} else {
         			return false;
+        		}
+			}
+		}
+        /*
+        if (Math.abs(move.toRow - move.fromRow) > 1) {
+        	int offset = (move.toRow - move.fromRow) / Math.abs(move.toRow - move.fromRow);
+        	for (int i = move.fromRow + offset; i != move.toRow; i += offset) {
+        		if (board[i][move.fromColumn] == null) {
+                    valid = true;
+        		} else {
+        			return false;
+        		}
+        	}
+        } else if (Math.abs(move.toColumn - move.fromColumn) > 1) {
+        	int offset = (move.toColumn - move.fromColumn) / Math.abs(move.toColumn - move.fromColumn);
+        	for (int i = move.fromRow + offset; i != move.toRow; i += offset) {
+        		if (board[i][move.fromColumn] == null) {
+                    valid = true;
+        		} else {
+        			return false;
+        		}
         	}
         }
-        else if (Math.abs(move.toColumn-move.fromColumn) > 1) {
-        	int offset = (move.toColumn-move.fromColumn)/Math.abs(move.toColumn-move.fromColumn);
-        	for (int i = move.fromRow + offset; i != move.toRow; i += offset) {
-        		if (board[i][move.fromColumn] == null)
-                    valid = true;
-        		else
-        			return false;
-        	}
-        }
+        */
         
 		return valid;
 	}

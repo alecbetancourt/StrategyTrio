@@ -1,18 +1,27 @@
 package chess;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class View extends JPanel {
 	private Model model;
 	private JButton[][] board;
 	private Move move;
 	private ImageIcon pawnIconW, pawnIconB, rookIconW, rookIconB, knightIconW, knightIconB, bishopIconW, bishopIconB,
-			queenIconW, queenIconB, kingIconW, kingIconB;
+	queenIconW, queenIconB, kingIconW, kingIconB;
 	private static final Color BROWN = new Color(205,133,63);
 	private static final Color TAN = new Color(210,180,140);
 	
+	//Will likely be deleted in favor of master UI in release 2
+	//add new game/quit function in menu options
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,8 +55,7 @@ public class View extends JPanel {
 				board[row][col] = new JButton();
 				if ((row + col) % 2 == 0) {
 	                board[row][col].setBackground(BROWN);
-	            }
-				else {
+	            } else {
 	                board[row][col].setBackground(TAN);
 	            }
 				board[row][col].addActionListener(listener);
@@ -63,43 +71,33 @@ public class View extends JPanel {
 				for (int col = 0; col < 8; col++) {
 					Object source = event.getSource();
 					if (board[row][col] == source) {
-						if (move.fromRow == -1 && model.pieceAt(row, col) != null &&
-							model.pieceAt(row, col).team() == model.currentPlayer().team()) {
+						if (move.fromRow == -1 && model.pieceAt(row, col) != null
+							&& model.pieceAt(row, col).team() == model.currentPlayer().team()) {
 							System.out.print("Piece selected: " + model.pieceAt(row, col).team() + " ");
 							System.out.println(model.pieceAt(row, col).type());
 							move.fromRow = row;
 							move.fromColumn = col;
-						}
-						else if (move.fromRow != -1) {
+						} else if (move.fromRow != -1) {
 							move.toRow = row;
 							move.toColumn = col;
 							System.out.println(move);
 							if (move.toRow == move.fromRow && move.toColumn == move.fromColumn) {
 								move = new Move();
-							}
-							else if (model.isValidMove(move) == true) {
+							} else if (model.isValidMove(move)) {
 								model.move(move);
 								move = new Move();
 								System.out.println("Valid " + move);
 								if (model.isWinner()) {
 									model.wipeBoard();
-									JOptionPane.showMessageDialog(null, model.currentPlayer().name() + "has won!");
+									JOptionPane.showMessageDialog(null, model.currentPlayer().name() + " has won!");
 								}
 								model.nextTurn();
-							}
-							else {
+							} else {
 								JOptionPane.showMessageDialog(null, "This is not a valid move");
 							}
-						}
-						else {
+						} else {
 							JOptionPane.showMessageDialog(null, "This is not a valid selection");
 						}
-						//if choosing
-						//if moving
-							//click self to deselect
-							//attempting move
-							//else bad move
-						//else bad selection
 					}
 				}
 			}
@@ -130,9 +128,10 @@ public class View extends JPanel {
 					case "King":
 						board[row][col].setIcon(kingIconB);
 						break;
+					default:
+						break;
 					}
-				}
-				else if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "WHITE") {
+				} else if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "WHITE") {
 					switch (model.pieceAt(row, col).type()) {
 					case "Pawn":
 						board[row][col].setIcon(pawnIconW);
@@ -152,9 +151,10 @@ public class View extends JPanel {
 					case "King":
 						board[row][col].setIcon(kingIconW);
 						break;
+					default:
+						break;
 					}
-				}
-				else {
+				} else {
 					board[row][col].setIcon(null);
 				}
 			}

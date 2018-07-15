@@ -41,8 +41,7 @@ public class Model {
 	public void nextTurn() {
 		if (currentPlayer == player1) {
 			currentPlayer = player2;
-		}
-		else {
+		} else {
 			currentPlayer = player1;
 		}
 	}
@@ -63,17 +62,17 @@ public class Model {
 
 	
 	public boolean isValidMove(Move move) {
-		if (board[move.fromRow][move.fromColumn].isValidMove(move, board))
+		if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 	
 	public Piece pieceAt(int row, int column) {
 		if (board[row][column] == null) {
 			return null;
-		}
-		else {
+		} else {
 			return board[row][column];
 		}
 	}
@@ -91,11 +90,6 @@ public class Model {
 				}
 			}
 		}
-		if ((black == true && white == false) || (black == false && white == true)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return !(black && white);
 	}
 }

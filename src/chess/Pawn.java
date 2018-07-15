@@ -31,7 +31,7 @@ public class Pawn extends Piece {
 			}
 		}
 		//move diagonally if and only if capture
-		if (Math.abs(move.toRow-move.fromRow) == 1 && Math.abs(move.toColumn-move.fromColumn) == 1 &&
+		if (Math.abs(move.toRow - move.fromRow) == 1 && Math.abs(move.toColumn - move.fromColumn) == 1 &&
 			board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].team() != team()) {
 			if (board[move.fromRow][move.fromColumn].team() == "BLACK" && move.fromRow + 1 == move.toRow) {
 				valid = true;
