@@ -32,7 +32,14 @@ public class Knight extends Piece {
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
-		//is abs dif row ==1 & col == 2 or row == 2 and col == 1
+		
+		//check if knight is moving in "L" shape as well as the final space that the piece will occupy
+		if ((Math.abs(move.toRow - move.fromRow) == 1 && Math.abs(move.toColumn - move.fromColumn) == 2)
+			|| (Math.abs(move.toRow - move.fromRow) == 2 && Math.abs(move.toColumn - move.fromColumn) == 1)
+			&& (board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].team() != team())) {
+			return true;
+		}
+		
 		return false;
 	}
 }

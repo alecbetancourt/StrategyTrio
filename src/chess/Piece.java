@@ -8,7 +8,7 @@ package chess;
 public abstract class Piece {
 	//private Player player;
 	/**
-	 * The tema that the piece belongs to.
+	 * The team that the piece belongs to.
 	 */
 	private Team team;
 
@@ -40,15 +40,8 @@ public abstract class Piece {
 	 * @return True if the move is valid, false if not
 	 */
 	public boolean isValidMove(final Move move, final Piece[][] board) {
-		//check if moving to friendly piece
-		if (board[move.toRow][move.toColumn] != null 
-				&& board[move.toRow][move.toColumn].team().equals(team.toString())) {
-			return false;
-			///check if not moving
-		} else if (move.fromRow == move.toRow && move.fromColumn == move.toColumn) {
-			return false;
-		} else {
-			return true;
-		}
+		return !((board[move.toRow][move.toColumn] != null
+				&& board[move.toRow][move.toColumn].team().equals(team.toString()))
+				|| (move.fromRow == move.toRow && move.fromColumn == move.toColumn));
 	}
 }

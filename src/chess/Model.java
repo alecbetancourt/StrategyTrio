@@ -102,11 +102,7 @@ public class Model {
 	 * @return True if the movie is valid, false if not
 	 */
 	public boolean isValidMove(final Move move) {
-		if (board[move.fromRow][move.fromColumn].isValidMove(move, board)) {
-			return true;
-		} else {
-			return false;
-		}
+		return board[move.fromRow][move.fromColumn].isValidMove(move, board);
 	}
 	
 	/**

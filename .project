@@ -15,21 +15,9 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
-<<<<<<< HEAD
-=======
-		<buildCommand>
-			<name>edu.umd.cs.findbugs.plugin.eclipse.findbugsBuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
->>>>>>> branch 'master' of https://github.com/alecbetancourt/StrategyTrio
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
-<<<<<<< HEAD
-=======
-		<nature>edu.umd.cs.findbugs.plugin.eclipse.findbugsNature</nature>
->>>>>>> branch 'master' of https://github.com/alecbetancourt/StrategyTrio
 	</natures>
 </projectDescription>

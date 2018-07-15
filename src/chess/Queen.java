@@ -29,10 +29,41 @@ public class Queen extends Piece {
 	 * @return True if the move is valid false if not
 	 */
 	public boolean isValidMove(final Move move, final Piece[][] board) {
+		boolean valid = false;
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
-		//check if moving like rook or bishop
-		return false;
+		
+		//check final space that piece will occupy
+		if (board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].team() != team()) {
+            valid = true;
+		}
+		
+		//check if not moving like rook or bishop
+		if ((move.toRow != move.fromRow && move.toColumn != move.fromColumn)
+			&& (Math.abs(move.toRow - move.fromRow) != Math.abs(move.toColumn - move.fromColumn))) {
+        	return false;
+        }
+		
+		//check intermediate spaces if moving multiple spaces
+  		if (Math.abs(move.toRow - move.fromRow) > 1 || Math.abs(move.toColumn - move.fromColumn) > 1) {
+  			int rowOffset = 0, colOffset = 0;
+  			//check that you're moving in that direction to avoid / by zero exception
+  			if (Math.abs(move.toRow - move.fromRow) >= 1) {
+  				rowOffset = (move.toRow - move.fromRow) / Math.abs(move.toRow - move.fromRow);
+  			}
+  			if (Math.abs(move.toColumn - move.fromColumn) >= 1) {
+  				colOffset = (move.toColumn - move.fromColumn) / Math.abs(move.toColumn - move.fromColumn);
+  			}
+  			for (int i = 1; i < Math.abs(move.fromRow - move.toRow)
+				|| i < Math.abs(move.fromColumn - move.toColumn); i++) {
+  				if (board[move.fromRow + (i * rowOffset)][move.fromColumn + (i * colOffset)] == null) {
+                      valid = true;
+          		} else {
+          			return false;
+          		}
+  			}
+  		}
+		return valid;
 	}
 }
