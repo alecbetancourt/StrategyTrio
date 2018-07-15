@@ -493,6 +493,7 @@ public class Board extends JPanel {
 										tShip.setBackground(Color.GRAY);
 										tShip.setEnabled(false);
 										shipCount--;
+										select = null;
 										//if all ships have been placed
 										if (shipCount == 0) {
 											disableButtons();
