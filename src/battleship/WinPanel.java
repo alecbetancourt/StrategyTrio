@@ -73,6 +73,13 @@ public class WinPanel extends JPanel {
 	}
 
 	/**
+	 * returns the rematch button for testing.
+	 * @return rematch button
+	 */
+	public JButton getRe() {
+		return rematchButton;
+	}
+	/**
 	 * Set the rematch boolean.
 	 * @param rematch True is yes, false if no
 	 */

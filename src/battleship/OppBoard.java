@@ -188,6 +188,14 @@ public class OppBoard extends JPanel {
 	public void setFired(final boolean fired) {
 		this.fired = fired;
 	}
+	
+	/**
+	 * returns fire button for testing.
+	 * @return fire button
+	 */
+	public JButton getFire() {
+		return fire;
+	}
 
 	/**
 	 * Marks button as hit of miss depending on the boolean hit using the 
@@ -205,12 +213,28 @@ public class OppBoard extends JPanel {
 	}
 	
 	/**
+	 * Returns a give jbutton for testing.
+	 * @param x x coordinate
+	 * @param y y coordinate
+	 * @return given JButton
+	 */
+	public JButton getButton(final int x, final int y) {
+		return opp[x][y];
+	}
+	/**
+	 * Returns status text.
+	 * @return game status
+	 */
+	public String getStatus() {
+		return status.getText();
+	}
+	/**
 	 * Updates the game status displayed on the screen.
 	 * @param text the message to be displayed
 	 */
 	public void updateStatus(final String text) {
 
-		if (status.getText().equals("You lose")) {
+		if (text.equals("You lose")) {
 			status.setText("You Win!");
 		} else {
 			status.setText(text);
