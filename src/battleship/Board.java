@@ -323,6 +323,14 @@ public class Board extends JPanel {
 	}
 
 	/**
+	 * return sub for testing.
+	 * @return sub object
+	 */
+	public Ship getSub() {
+		return submarine;
+	}
+	
+	/**
 	 * Set the ready boolean.
 	 * @param ready if the player is ready or not
 	 */
@@ -405,6 +413,16 @@ public class Board extends JPanel {
 	 */
 	public void setLost(final boolean lost) {
 		this.lost = lost;
+	}
+	
+	/**
+	 * Returns a given battle button for testing.
+	 * @param x x-coordinate
+	 * @param y y coordinate
+	 * @return corresponding battlebutton
+	 */
+	public BattleButton getButton(final int x, final int y) {
+		return user[x][y];
 	}
 
 	/**

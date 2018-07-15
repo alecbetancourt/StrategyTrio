@@ -74,7 +74,7 @@ public class Ship extends JButton {
 	 * Set the amount of shots the ship can take before sinking.
 	 * @param size the number of shots to set to.
 	 */
-	public void setSize(final int size) {
+	public void setSSize(final int size) {
 		this.size = size;
 	}
 

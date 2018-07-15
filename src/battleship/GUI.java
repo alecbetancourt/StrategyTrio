@@ -101,10 +101,11 @@ public class GUI extends JFrame implements ActionListener {
 
 	/**
 	 * Constructor that calls the createMenus and NewGame methods.
+	 * @param rematch if it is a rematch or not
 	 */
-	public GUI() {
+	public GUI(final boolean rematch) {
 		createMenus();		
-		newGame(false);
+		newGame(rematch);
 	}
 
 	/**
@@ -307,6 +308,19 @@ public class GUI extends JFrame implements ActionListener {
 	}
 
 	/**
+	 * Return player board.
+	 * @param i player number
+	 * @return player board i
+	 */
+	public Board getBoard(final int i) {
+		if (i == 1) {
+			return p1;
+		} else {
+			return p2;
+		}
+	}
+	
+	/**
 	 * Allows players to place their ships, starting with player 1.
 	 */
 	public void placeShips() {
@@ -319,6 +333,7 @@ public class GUI extends JFrame implements ActionListener {
 				// Log the interruption somewhere.
 			}
 		}
+		
 
 		switchP2();
 		while (!p2.isReady()) {
@@ -412,7 +427,7 @@ public class GUI extends JFrame implements ActionListener {
 	 * @param args arguments for main
 	 */
 	public static void main(final String[] args) {
-		new GUI();
+		new GUI(false);
 	}
 }
 

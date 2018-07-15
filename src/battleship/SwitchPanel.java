@@ -85,6 +85,14 @@ public class SwitchPanel extends JPanel {
 	public String getpName() {
 		return pName;
 	}
+	
+	/**
+	 * Gets ready button for testing.
+	 * @return ready button
+	 */
+	 public JButton getReadyB() {
+		 return ready;
+	 }
 
 	/**
 	 * Set the name to display on the screen.
