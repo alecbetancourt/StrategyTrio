@@ -11,18 +11,50 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * JPanel for the chess game.
+ * @author Parker
+ *
+ */
 public class View extends JPanel {
+	/**
+	 * View ID.
+	 */
+	private static final long serialVersionUID = -2223695223616731728L;
+	/**
+	 * The model for the chess game.
+	 */
 	private Model model;
+	/**
+	 * The board for the game.
+	 */
 	private JButton[][] board;
+	/**
+	 * The current move.
+	 */
 	private Move move;
-	private ImageIcon pawnIconW, pawnIconB, rookIconW, rookIconB, knightIconW, knightIconB, bishopIconW, bishopIconB,
+	/**
+	 * All of the chess piece icons.
+	 */
+	private ImageIcon pawnIconW, pawnIconB, rookIconW, 
+	rookIconB, knightIconW, knightIconB, bishopIconW, bishopIconB,
 	queenIconW, queenIconB, kingIconW, kingIconB;
-	private static final Color BROWN = new Color(205,133,63);
-	private static final Color TAN = new Color(210,180,140);
+	/**
+	 * Brown used for background tiles.
+	 */
+	private static final Color BROWN = new Color(205, 133, 63);
+	/**
+	 * Tan used for background tiles.
+	 */
+	private static final Color TAN = new Color(210, 180, 140);
 	
 	//Will likely be deleted in favor of master UI in release 2
 	//add new game/quit function in menu options
-	public static void main(String[] args) {
+	/**
+	 * Creats the Jframe and chess panel.
+	 * @param args for main
+	 */
+	public static void main(final String[] args) {
 		JFrame frame = new JFrame("Chess");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(new View());
@@ -31,6 +63,9 @@ public class View extends JPanel {
 		frame.setVisible(true);
 	}
 	
+	/**
+	 * Creates the board and all pieces/icons.
+	 */
 	public View() {
 		model = new Model();
 		board = new JButton[8][8];
@@ -65,8 +100,17 @@ public class View extends JPanel {
 		updateBoard();
 	}
 	
+	/**
+	 * Listener for board buttons.
+	 * @author Alec
+	 *
+	 */
 	private class ButtonListener implements ActionListener {
-		public void actionPerformed(ActionEvent event) {
+		/**
+		 * Respond to button clicks.
+		 * @param event what was pressed.
+		 */
+		public void actionPerformed(final ActionEvent event) {
 			for (int row = 0; row < 8; row++) {
 				for (int col = 0; col < 8; col++) {
 					Object source = event.getSource();
@@ -81,7 +125,8 @@ public class View extends JPanel {
 							move.toRow = row;
 							move.toColumn = col;
 							System.out.println(move);
-							if (move.toRow == move.fromRow && move.toColumn == move.fromColumn) {
+							if (move.toRow == move.fromRow && move.toColumn 
+									== move.fromColumn) {
 								move = new Move();
 							} else if (model.isValidMove(move)) {
 								model.move(move);
@@ -105,6 +150,9 @@ public class View extends JPanel {
 		}
 	}
 	
+	/**
+	 * Update the look of the board after a move.
+	 */
 	private void updateBoard() {
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {

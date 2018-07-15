@@ -1,22 +1,42 @@
 package chess;
 
+/**
+ * Class for rook chess piece.
+ * @author Alec
+ *
+ */
 public class Rook extends Piece {
-	public Rook(Team team) {
+	/**
+	 * Rook constructor.
+	 * @param team the team the piece belongs to
+	 */
+	public Rook(final Team team) {
 		super(team);
 	}
 	
+	/**
+	 * Returns the name of the chess piece.
+	 * @return name of chess piece
+	 */
 	public String type() {
 		return "Rook";
 	}
 	
-	public boolean isValidMove(Move move, Piece[][] board) {
+	/**
+	 * Whether or not the last move was valid.
+	 * @param move the move that was made
+	 * @param board the current board
+	 * @return True if the move is valid false if not
+	 */
+	public boolean isValidMove(final Move move, final Piece[][] board) {
 		boolean valid = false;
 		if (!super.isValidMove(move, board)) {
 			return false;
 		}
 		
 		//check final space that piece will occupy
-		if (board[move.toRow][move.toColumn] == null || board[move.toRow][move.toColumn].team() != team()) {
+		if (board[move.toRow][move.toColumn] == null 
+				|| !(board[move.toRow][move.toColumn].team().equals(team()))) {
             valid = true;
 		}
 		

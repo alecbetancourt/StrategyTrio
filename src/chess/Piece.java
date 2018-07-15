@@ -1,29 +1,53 @@
 package chess;
 
+/**
+ * Abstract class that all piece's will inherit.
+ * @author Alec
+ *
+ */
 public abstract class Piece {
 	//private Player player;
+	/**
+	 * The tema that the piece belongs to.
+	 */
 	private Team team;
 
-	public Piece(Team team) {
+	/**
+	 * Piece constructor.
+	 * @param team the team the piece belongs to.
+	 */
+	public Piece(final Team team) {
 		this.team = team;
 	}
 
+	/**
+	 * Get the name of the piece.
+	 * @return name of piece
+	 */
 	public abstract String type();
 
+	/**
+	 * Get the team the piece belongs to.
+	 * @return team name
+	 */
 	public String team() {
 		return team.toString();
 	}
-
-	public boolean isValidMove(Move move, Piece[][] board) {
+	/**
+	 * Determines if the piece's move was valid.
+	 * @param move the attempted move
+	 * @param board the current board
+	 * @return True if the move is valid, false if not
+	 */
+	public boolean isValidMove(final Move move, final Piece[][] board) {
 		//check if moving to friendly piece
-		if (board[move.toRow][move.toColumn] != null && board[move.toRow][move.toColumn].team() == team.toString()) {
+		if (board[move.toRow][move.toColumn] != null 
+				&& board[move.toRow][move.toColumn].team().equals(team.toString())) {
 			return false;
-		}
-		//check if not moving
-		else if (move.fromRow == move.toRow && move.fromColumn == move.toColumn) {
+			///check if not moving
+		} else if (move.fromRow == move.toRow && move.fromColumn == move.toColumn) {
 			return false;
-		}
-		else {
+		} else {
 			return true;
 		}
 	}

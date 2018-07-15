@@ -7,31 +7,26 @@ package chess;
  */
 public class Knight extends Piece {
 	/**
-	 * Constructor that calls the Piece() method in the extended class Piece.
-	 *
-	 * @param team	the team that the piece is to be assigned to
+	 * Knight constructor.
+	 * @param team the team the piece belongs to
 	 */
 	public Knight(final Team team) {
 		super(team);
 	}
 	
 	/**
-	 * Returns a string of the name of the piece it is called on.
-	 *
-	 * @return "Knight"
+	 * Returns the name of the chess piece.
+	 * @return name of chess piece
 	 */
 	public String type() {
 		return "Knight";
 	}
 	
 	/**
-	 * Checks to see if move is valid using logic specific to the Knight.
-	 * 
-	 * @param move	the move to be checked
-	 * @param board the board of pieces to check against
-	 * @return <code>true</code> if the move is valid
-	 * 		   <code>false</code> otherwise
-	 *
+	 * Whether or not the last move was valid.
+	 * @param move the move that was made
+	 * @param board the current board
+	 * @return True if the move is valid false if not
 	 */
 	public boolean isValidMove(final Move move, final Piece[][] board) {
 		if (!super.isValidMove(move, board)) {
