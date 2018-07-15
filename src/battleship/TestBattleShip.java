@@ -36,7 +36,7 @@ public class TestBattleShip {
 		Ship s = new Ship("boat", 4);
 		Ship s2 = new Ship("boat", 4);
 		Ship s3 = new Ship("boat", 4);
-		Ship s4 = new Ship("boat", 4);
+
 		
 		assertFalse(b.placeShip(0, 2, 0, 0, s));
 		assertFalse(b.placeShip(2, 0, 0, 0, s));
