@@ -48,7 +48,9 @@ public class Pawn extends Piece {
 					&& move.fromRow == 1 && move.toRow == 3) 
 					|| (board[move.fromRow][move.fromColumn].team() == "WHITE" 
 					&& move.fromRow == 6 && move.toRow == 4)) {
-				if (board[(move.fromRow + move.toRow) / 2][move.fromColumn] == null) {
+				//if (board[(move.fromRow + move.toRow) / 2][move.fromColumn] == null) {
+				if (board[(move.fromRow / 2) + (move.toRow / 2) + ((move.fromRow % 2 + move.toRow % 2) / 2)]
+					[move.fromColumn] == null) {
 					valid = true;
 				}
 			}

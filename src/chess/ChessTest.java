@@ -1,12 +1,12 @@
 package chess;
 
-import org.junit.*;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertTrue;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
+//import org.junit.Before;
+//import org.junit.Test;
+/*
 public class ChessTest {
-	
 	@Before
 	public void createModel() {
 		
@@ -28,3 +28,4 @@ public class ChessTest {
 		
 	}
 }
+*/
