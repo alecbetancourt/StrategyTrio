@@ -157,27 +157,27 @@ public class Board extends JPanel {
 		//Will change setLabel to some sort of icon
 		carrier.addActionListener(listen);
 		carrier.setBackground(Color.GRAY);
-		carrier.setLabel("Carrier (5)");
+		carrier.setText("Carrier (5)");
 		add(carrier);
 
 		battleship.addActionListener(listen);
 		battleship.setBackground(Color.GRAY);
-		battleship.setLabel("Battleship (4)");
+		battleship.setText("Battleship (4)");
 		add(battleship);
 
 		submarine.addActionListener(listen);
 		submarine.setBackground(Color.GRAY);
-		submarine.setLabel("Submarine (3)");
+		submarine.setText("Submarine (3)");
 		add(submarine);
 
 		cruiser.addActionListener(listen);
 		cruiser.setBackground(Color.GRAY);
-		cruiser.setLabel("Cruiser (3)");
+		cruiser.setText("Cruiser (3)");
 		add(cruiser);
 
 		destroyer.addActionListener(listen);
 		destroyer.setBackground(Color.GRAY);
-		destroyer.setLabel("Destroyer (2)");
+		destroyer.setText("Destroyer (2)");
 		add(destroyer);
 
 	}
@@ -190,7 +190,6 @@ public class Board extends JPanel {
 	 * @param x2 the second x-coordniate 
 	 * @param y the y-coordniate 
 	 * @param tShip the ship that was placed
-	 * @throws Exception for overlapping ship placement
 	 */
 	public void fillHor(final int x1, final int x2, final int y, final Ship tShip) {
 		int tX1, tX2;
@@ -233,7 +232,6 @@ public class Board extends JPanel {
 	 * @param y2 the second y-coordniate 
 	 * @param x the x-coordniate 
 	 * @param tShip the ship that was placed
-	 * @throws Exception for overlapping ship placement
 	 */
 	public void fillVert(final int y1, final int y2, final int x, final Ship tShip) {
 		int tY1, tY2;

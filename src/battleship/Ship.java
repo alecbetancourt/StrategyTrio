@@ -43,7 +43,6 @@ public class Ship extends JButton {
 		this.name = name;
 		this.size = size;
 		used = false;
-		
 	}
 	
 	/**

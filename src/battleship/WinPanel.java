@@ -19,6 +19,10 @@ import javax.swing.JPanel;
  */
 public class WinPanel extends JPanel {
 	/**
+	 * ID for winpanel.
+	 */
+	private static final long serialVersionUID = 5517704415744654967L;
+	/**
 	 * The name of the winning player.
 	 */
 	private String pName;
