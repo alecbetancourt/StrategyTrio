@@ -1,9 +1,12 @@
 package battleship;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -54,7 +57,7 @@ public class GUI extends JFrame implements ActionListener {
 	/**
 	 * New Game option for menu.
 	 */
-	//private JMenuItem newGameItem;
+	private JMenuItem newGameItem;
 	/**
 	 * close option for menu.
 	 */
@@ -97,7 +100,25 @@ public class GUI extends JFrame implements ActionListener {
 	 * the name of the game winner.
 	 */
 	private String winner;
-	
+
+
+
+	private JButton fire1;
+
+	private JButton fire2;
+
+	private JButton ready1;
+
+	private JButton ready2;
+
+	private JButton begin1;
+
+	private JButton begin2;
+
+	private JButton rematch1;
+
+	private int targetX, targetY;
+
 
 	/**
 	 * Constructor that calls the createMenus and NewGame methods.
@@ -114,17 +135,17 @@ public class GUI extends JFrame implements ActionListener {
 	public void createMenus() {
 
 		option = new JMenu("Menu");
-		//newGameItem = new JMenuItem("New Game");
-		//newGameItem.addActionListener(this);
-//		mainMenuItem = new JMenuItem("Main Menu");
-//		mainMenuItem.addActionListener(this);
+		newGameItem = new JMenuItem("New Game");
+		newGameItem.addActionListener(this);
+		//		mainMenuItem = new JMenuItem("Main Menu");
+		//		mainMenuItem.addActionListener(this);
 		closeItem = new JMenuItem("Quit");
 		closeItem.addActionListener(this);
 
-		//New game/ main menu for R#2
+		// main menu for R#2
 		menus = new JMenuBar();
 		menus.add(option);
-		//option.add(newGameItem);
+		option.add(newGameItem);
 		//option.add(mainMenuItem);
 		option.add(closeItem);
 
@@ -142,16 +163,51 @@ public class GUI extends JFrame implements ActionListener {
 			holder = new JPanel[2];
 		}
 
-		p1 = new Board(name1);
-		p2 = new Board(name2);
+		begin1 = new JButton("Begin");
+		begin1.setBackground(Color.WHITE);
+		begin1.addActionListener(this);
 
-		p1O = new OppBoard(name2);
-		p2O = new OppBoard(name1);
+		begin2 = new JButton("Begin");
+		begin2.setBackground(Color.WHITE);
+		begin2.addActionListener(this);
 
-		p1Switch = new SwitchPanel(name1);
-		p2Switch = new SwitchPanel(name2);
+		p1 = new Board(name1, begin1);
+		p2 = new Board(name2, begin2);
+
+		fire1 = new JButton();
+		ImageIcon fireLogo = new ImageIcon("src/battleship/fireLogo.png");
+		fire1.setIcon(fireLogo);
+		fire1.setBackground(Color.RED);
+
+		fire2 = new JButton();
+		fireLogo = new ImageIcon("src/battleship/fireLogo.png");
+		fire2.setIcon(fireLogo);
+		fire2.setBackground(Color.RED);
+
+
+		fire1.addActionListener(this);
+		fire2.addActionListener(this);
+
+		p1O = new OppBoard(name2, fire1);
+		p2O = new OppBoard(name1, fire2);
+
+		ready1 = new JButton();
+		ImageIcon rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
+		ready1.setIcon(rdyIcon);
+		ready1.setBackground(Color.BLUE);
+		ready1.addActionListener(this);
+
+		ready2 = new JButton();		rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
+		ready2.setIcon(rdyIcon);
+		ready2.setBackground(Color.BLUE);
+		ready2.addActionListener(this);
+
+
+		p1Switch = new SwitchPanel(name1, ready1);
+		p2Switch = new SwitchPanel(name2, ready2);
 
 		setLayout(new GridLayout(2, 1));
+
 
 		if (!rematch) {
 			for (int i = 0; i < 2; i++) {
@@ -164,9 +220,9 @@ public class GUI extends JFrame implements ActionListener {
 		holder[0].add(p1O);
 
 		//for testing switch/win panels
-//						holder[1].add(p1Switch);
-//						end = new WinPanel("pork");
-//						holder[0].add(end);
+		//								holder[1].add(p1Switch);
+		//								end = new WinPanel("pork", rematch1);
+		//								holder[0].add(end);
 
 
 		if (!rematch) {
@@ -180,7 +236,6 @@ public class GUI extends JFrame implements ActionListener {
 		revalidate();
 		repaint();
 		hasWon = false;
-		placeShips();
 		playGame();
 	}
 
@@ -215,71 +270,10 @@ public class GUI extends JFrame implements ActionListener {
 	 * has won.
 	 */
 	public void playGame() {
-		int x, y;
-		boolean hit;
+
 		hasWon = false;
 
-		while (!hasWon) {
 
-			p1O.enableFire();
-			while (!p1O.isFired()) {
-				try {
-					Thread.yield();
-				} catch (Exception interruptedEx) {
-					// 
-				}
-			}
-			//get Targeted coordinates
-			x = p1O.getTargetX();
-			y = p1O.getTargetY();
-
-			//check user board for hit
-			hit = p2.hitMiss(x, y);
-
-			//mark square on opponent board
-			p1O.markSquare(hit, x, y);
-			p1O.updateStatus(p2.getStatus());
-			hasWon = p2.isLost();
-			if (!hasWon) {
-				switchP2();
-				p2O.enableFire();
-				while (!p2O.isFired()) {
-					try {
-						Thread.yield();
-					} catch (Exception interruptedEx) {
-						// do nothing?
-					}
-				}
-
-				x = p2O.getTargetX();
-				y = p2O.getTargetY();
-				hit = p1.hitMiss(x, y);
-				p2O.markSquare(hit, x, y);
-				p2O.updateStatus(p1.getStatus());
-				hasWon = p1.isLost();
-				if (!hasWon) {
-					switchP1();
-				}
-
-				//IDEA: add in timer and have it exit the 
-				//game when it hits zero for r #2 to solve issue
-				try {
-					Thread.yield();
-				} catch (Exception interruptedEx) {
-					// Log the interruption somewhere.
-				}
-
-
-			}
-		}
-		p1O.disableFire();
-		p2O.disableFire();
-		if (p1.isLost()) {
-			winner = name2;
-		} else {
-			winner = name1;
-		}
-		winScreen(winner);
 	}
 
 	/**
@@ -287,23 +281,26 @@ public class GUI extends JFrame implements ActionListener {
 	 * @param winner the winner's name
 	 */
 	public void winScreen(final String winner) {
-		end = new WinPanel(winner);
+		rematch1 = new JButton("Rematch?");
+		rematch1.addActionListener(this);
+		rematch1.setBackground(Color.BLUE);
+		end = new WinPanel(winner, rematch1);
 		holder[0].removeAll();
 		holder[0].add(end);
 		revalidate();
 		repaint();
-		while (!end.isRematch()) {
-			try {
-				Thread.yield();
-			} catch (Exception interruptedEx) {
-				// Log the interruption somewhere.
-			}
-		}
-		holder[0].removeAll();
-		holder[1].removeAll();
-		newGame(true);
-		revalidate();
-		repaint();
+		//		while (!end.isRematch()) {
+		//			try {
+		//				Thread.yield();
+		//			} catch (Exception interruptedEx) {
+		//				// Log the interruption somewhere.
+		//			}
+		//		}
+		//		holder[0].removeAll();
+		//		holder[1].removeAll();
+		//		newGame(true);
+		//		revalidate();
+		//		repaint();
 
 	}
 
@@ -319,32 +316,7 @@ public class GUI extends JFrame implements ActionListener {
 			return p2;
 		}
 	}
-	
-	/**
-	 * Allows players to place their ships, starting with player 1.
-	 */
-	public void placeShips() {
-		//player 1 places ships
-		
-		while (!p1.isReady()) {
-			try {
-				Thread.yield();
-			} catch (Exception interruptedEx) {
-				// Log the interruption somewhere.
-			}
-		}
-		
 
-		switchP2();
-		while (!p2.isReady()) {
-			try {
-				Thread.yield();
-			} catch (Exception interruptedEx) {
-				// 
-			}
-		}
-		switchP1();
-	}
 
 	/**
 	 * Displays a switch screen for player 1 after 
@@ -353,22 +325,6 @@ public class GUI extends JFrame implements ActionListener {
 	public void switchP2() {
 		holder[1].removeAll();
 		holder[1].add(p2Switch);
-		revalidate();
-		repaint();
-
-		while (!p2Switch.isReady()) {
-			//Googled this solution because loop was not updating
-			try {
-				Thread.yield();
-			} catch (Exception interruptedEx) {
-				// 
-			}
-		}
-		p2Switch.setReady(false);
-		holder[0].removeAll();
-		holder[1].removeAll();
-		holder[0].add(p2O);
-		holder[1].add(p2);
 		revalidate();
 		repaint();
 	}
@@ -382,22 +338,6 @@ public class GUI extends JFrame implements ActionListener {
 		holder[1].add(p1Switch);
 		revalidate();
 		repaint();
-
-		while (!p1Switch.isReady()) {
-			//Googled this solution because loop was not updating
-			try {
-				Thread.yield();
-			} catch (Exception interruptedEx) {
-				// 
-			}
-		}
-		p1Switch.setReady(false);
-		holder[0].removeAll();
-		holder[1].removeAll();
-		holder[0].add(p1O);
-		holder[1].add(p1);
-		revalidate();
-		repaint();
 	}
 
 	/**
@@ -406,16 +346,96 @@ public class GUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		//Does not work right now
-//		if (e.getSource() == newGameItem) {
-//			holder[0].removeAll();
-//			holder[1].removeAll();
-//			newGame(true);
-//			revalidate();
-//			repaint();
-//		}
+		if (e.getSource() == newGameItem) {
+			holder[0].removeAll();
+			holder[1].removeAll();
+			newGame(true);
+			revalidate();
+			repaint();
+		}
 
 		if (e.getSource() == closeItem) {
 			this.dispose();
+			revalidate();
+			repaint();
+		}
+
+		boolean hit;
+		if (e.getSource() == fire1) {
+			targetX = p1O.getTargetX();
+			targetY = p1O.getTargetY();
+			if (targetX != -1 && targetY != -1) {
+				hit = p2.hitMiss(targetX, targetY);
+
+				//mark square on opponent board
+				p1O.markSquare(hit, targetX, targetY);
+				p1O.updateStatus(p2.getStatus());
+				revalidate();
+				repaint();
+
+				if (!p2.isLost()) {
+					switchP2();
+				} else {
+					winScreen(name1);
+				}
+			}
+		}
+		if (e.getSource() == fire2) {
+			targetX = p2O.getTargetX();
+			targetY = p2O.getTargetY();
+			if (targetX != -1 && targetY != -1) {
+				hit = p1.hitMiss(targetX, targetY);
+
+				//mark square on opponent board
+				p2O.markSquare(hit, targetX, targetY);
+				p2O.updateStatus(p1.getStatus());
+				p2O.updateStatus(p1.getStatus());
+
+				if (!p1.isLost()) {
+					switchP1();
+				} else {
+					winScreen(name2);
+				}
+			}
+		}
+		if (e.getSource() == ready1) {
+			p1Switch.setReady(false);
+			holder[0].removeAll();
+			holder[1].removeAll();
+			holder[0].add(p1O);
+			holder[1].add(p1);
+			revalidate();
+			repaint();
+			p1O.enableFire();
+
+		}
+		if (e.getSource() == ready2) {
+			p2Switch.setReady(false);
+			holder[0].removeAll();
+			holder[1].removeAll();
+			holder[0].add(p2O);
+			holder[1].add(p2);
+			revalidate();
+			repaint();
+			if (p2.isReady()) {
+				p2O.enableFire();
+			}
+
+		}
+		if (e.getSource() == begin1) {
+			if (p1.isReady()) {
+				switchP2();
+			}
+		}
+		if (e.getSource() == begin2) {
+			if (p2.isReady()) {
+				switchP1();
+			}
+		}
+		if (e.getSource() == rematch1) {
+			holder[0].removeAll();
+			holder[1].removeAll();
+			newGame(true);
 			revalidate();
 			repaint();
 		}

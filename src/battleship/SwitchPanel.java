@@ -38,7 +38,7 @@ public class SwitchPanel extends JPanel {
 	/**
 	 * Listener for the ready button.
 	 */
-	private ButtonListener listen;
+//	private ButtonListener listen;
 	/**
 	 * Constraints for gridbag formating.
 	 */
@@ -53,7 +53,7 @@ public class SwitchPanel extends JPanel {
 	 * message and a ready button.
 	 * @param name the players name to be displayed
 	 */
-	public SwitchPanel(final String name) {
+	public SwitchPanel(final String name, final JButton ready) {
 		isReady = false;
 		setBackground(Color.CYAN);
 		setLayout(new GridBagLayout());
@@ -68,12 +68,8 @@ public class SwitchPanel extends JPanel {
 		con.gridy++;
 		
 		
-		listen = new ButtonListener();
-		ready = new JButton();
-		rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
-		ready.setIcon(rdyIcon);
-		ready.setBackground(Color.BLUE);
-		ready.addActionListener(listen);
+		//listen = new ButtonListener();
+		this.ready = ready;
 		add(ready, con);
 		
 		
@@ -118,23 +114,4 @@ public class SwitchPanel extends JPanel {
 		this.isReady = isRready;
 	}
 	
-	/**
-	 * Listener for the ready button.
-	 * @author Parker
-	 *
-	 */
-	private class ButtonListener implements ActionListener {
-
-		/**
-		 * Responds to button clicks on ready button.
-		 */
-		@Override
-		public void actionPerformed(final ActionEvent e) {
-			if (e.getSource() == ready) {
-				isReady = true;
-			}
-		}
-		
-	}
-
 }

@@ -34,10 +34,7 @@ public class WinPanel extends JPanel {
 	 * True if the rematch button has been hit.
 	 */
 	private boolean rematch;
-	/**
-	 * Listener for the rematch button.
-	 */
-	private ButtonListener listen;
+
 	/**
 	 * Constraints used for formating.
 	 */
@@ -48,7 +45,7 @@ public class WinPanel extends JPanel {
 	 * and adds in the rematch button and message
 	 * @param name the winning player name
 	 */
-	public WinPanel(final String name) {
+	public WinPanel(final String name, final JButton rematchButton) {
 	setRematch(false);
 	setBackground(Color.CYAN);
 	setLayout(new GridBagLayout());
@@ -61,10 +58,8 @@ public class WinPanel extends JPanel {
 	con.gridy++;
 	con.ipadx = 100;
 	con.ipady = 60;
-	listen = new ButtonListener();
-	rematchButton = new JButton("Rematch?");
-	rematchButton.addActionListener(listen);
-	rematchButton.setBackground(Color.BLUE);
+
+	this.rematchButton = rematchButton;
 	add(rematchButton, con);
 	}
 	
@@ -91,19 +86,5 @@ public class WinPanel extends JPanel {
 		this.rematch = rematch;
 	}
 
-	/**
-	 * Action listener for rematch button.
-	 * @author Parker
-	 */
-	private class ButtonListener implements ActionListener {
 
-		@Override
-		public void actionPerformed(final ActionEvent arg0) {
-			if (arg0.getSource() == rematchButton) {
-				setRematch(true);
-			}
-			
-		}
-		
-	}
 }

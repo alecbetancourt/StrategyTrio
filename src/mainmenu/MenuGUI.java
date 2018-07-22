@@ -51,6 +51,8 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * button for exiting.
 	 */
 	private JButton exit;
+	
+	private JButton tic;
 	/**
 	 * constraints for gridbag formatting.
 	 */
@@ -94,6 +96,8 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * exit button logo.
 	 */
 	private ImageIcon exitLogo;
+	
+	private ImageIcon ticLogo;
 
 	
 	//private battleship.GUI battleGUI;
@@ -110,7 +114,8 @@ public class MenuGUI extends JFrame implements ActionListener {
 		chessLogo = new ImageIcon("src/MainMenu/chessLogo.png");
 		helpLogo = new ImageIcon("src/MainMenu/helpLogo.png");
 		exitLogo = new ImageIcon("src/MainMenu/exitLogo.png");
-
+		ticLogo = new ImageIcon("src/MainMenu/ticLogo.png");
+		
 		con.gridx = 0;
 		con.gridy = 0;
 		con.ipady = 100;
@@ -143,11 +148,19 @@ public class MenuGUI extends JFrame implements ActionListener {
 		bShip.addActionListener(this);
 		screen.add(bShip, con);
 
+	
+
 		con.gridy++;
 		chess = new JButton();
 		chess.setIcon(chessLogo);
 		chess.addActionListener(this);
 		screen.add(chess, con);
+		
+		con.gridy++;
+		tic = new JButton();
+		tic.setIcon(ticLogo);
+		tic.addActionListener(this);
+		screen.add(tic, con);
 
 		con.gridy++;
 		help = new JButton();
@@ -183,7 +196,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		//doesnt work,gui wont update, probably an issue with package/import
 		if (e.getSource() == bShip) {
 			dispose();
-			//new battleship.GUI().main(null);
+			new battleship.GUI(false);
 			revalidate();
 			repaint();
 
@@ -192,31 +205,29 @@ public class MenuGUI extends JFrame implements ActionListener {
 		//Doesnt work, gui wont update, probably an issue with package/import
 		if (e.getSource() == chess) {
 			dispose();
-			//works for now, will have to make minor change to chess to get rid of warning
-
-			//new chess.View().main(null);	
-			Thread.yield();
-
-
+			new chess.ChessGUI();
 			revalidate();
 			repaint();
 		}
+		
+		if (e.getSource() == tic) {
+			dispose();
+			new tictactoe.TicGUI();
+			revalidate();
+			repaint();
+		}
+		
 		if (e.getSource() == help) {
+
+//			exit = new JButton();
+//			exit.setIcon(exitLogo);
+//			exit.addActionListener(this);
 			this.remove(screen);
 			hPanel = new HelpPanel(battleLogo, chessLogo);
 			add(hPanel);
 			revalidate();
 			repaint();
 
-			//for exit status, right now doesnt work 
-			//			while(!hPanel.getExit()) {
-			//				//Googled this solution because loop was not updating
-			//				try {
-			//					Thread.yield();
-			//				} catch (Exception interruptedEx) {
-			//					// 
-			//				}
-			//			}
 
 		}
 	}

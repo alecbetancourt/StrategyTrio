@@ -77,7 +77,7 @@ public class OppBoard extends JPanel {
 	 * 
 	 * @param name for the player name
 	 */
-	public OppBoard(final String name) {
+	public OppBoard(final String name, final JButton tFire) {
 
 		fired = false;
 		enabled = false;
@@ -89,7 +89,7 @@ public class OppBoard extends JPanel {
 		pName = new JLabel(name + "'s board", SwingConstants.CENTER);
 		status = new JLabel("Select Your Target", 
 				SwingConstants.CENTER);
-		
+		fire = tFire;
 		createBoard();
 		disableFire();
 		
@@ -131,11 +131,12 @@ public class OppBoard extends JPanel {
 		add(new JLabel(""));
 		add(new JLabel(""));
 		add(status);
-		fire = new JButton();
-		fireLogo = new ImageIcon("src/battleship/fireLogo.png");
-		fire.setIcon(fireLogo);
-		fire.setBackground(Color.RED);
-		fire.addActionListener(listen);
+//		fire = new JButton();
+//		fireLogo = new ImageIcon("src/battleship/fireLogo.png");
+//		fire.setIcon(fireLogo);
+//		fire.setBackground(Color.RED);
+//		//fire.addActionListener(listen);
+	
 		setBackground(Color.CYAN);
 		add(fire);
 	}
@@ -256,17 +257,17 @@ public class OppBoard extends JPanel {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
 			if (enabled) {
-				if (e.getSource() == fire) {
-					if (targetX != -1 && targetY != -1) {
-						opp[targetX][targetY].
-						setBackground(Color.ORANGE);
-						fire.setEnabled(false);
-						disableFire();
-						target = null;
-						//moves to next player turn
-						setFired(true);
-					}
-				} else {
+//				if (e.getSource() == fire) {
+//					if (targetX != -1 && targetY != -1) {
+//						opp[targetX][targetY].
+//						setBackground(Color.ORANGE);
+//						fire.setEnabled(false);
+//						disableFire();
+//						target = null;
+//						//moves to next player turn
+//						setFired(true);
+//					}
+//				} else {
 					for (int i = 0; i < 10; i++) {
 						for (int j = 0; j < 10; j++) {
 							if (e.getSource() == opp[i][j]) {
@@ -291,7 +292,7 @@ public class OppBoard extends JPanel {
 						}
 
 					}
-				}
+				//}
 
 			}
 		}

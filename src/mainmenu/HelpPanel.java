@@ -89,6 +89,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
 		addButtons();
+
 		bShip.setIcon(bShipLogo);
 		chess.setIcon(chessLogo);
 		exitStatus = false;

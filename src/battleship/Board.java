@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -83,7 +84,7 @@ public class Board extends JPanel {
 	 * 
 	 * @param name for the player name
 	 */
-	public Board(final String name) {
+	public Board(final String name, final JButton begin) {
 		user = new BattleButton[10][10];
 		listen = new ButtonListener();
 
@@ -104,7 +105,7 @@ public class Board extends JPanel {
 		add(new JLabel(""));
 		add(new JLabel(""));
 		add(new JLabel(""));
-		add(new JLabel(""));
+		add(begin);
 		add(pName);
 	}
 
