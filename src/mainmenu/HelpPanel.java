@@ -50,6 +50,10 @@ public class HelpPanel extends JPanel implements ActionListener {
 	 */
 	private JButton tic;
 	/**
+	 * button for connect4 help.
+	 */
+	private JButton connect;
+	/**
 	 * Help message for battleship.
 	 */
 	private static final String BHELP = "<html> Enter in player names <br/> "
@@ -73,12 +77,18 @@ public class HelpPanel extends JPanel implements ActionListener {
 	/**
 	 * Help message for chess.
 	 */
-	private static final String CHELP = "<html> chess rules </html>";
+	private static final String CHHELP = "<html> chess rules </html>";
 	/**
 	 * Help message for tic tac toe.
 	 */
-	private static final String THELP = "<html> tic rules </html>";
-	
+	private static final String THELP = "<html> Player 1 is X and Player 2 is O <br/>"
+			+ "Player 1 selects a square to mark X then player 2 selects a square to mark O. <br/>"
+			+ "This continues until one player has gotten three of their symbols in a row <br/>"
+			+ "then that player has won. </html>";
+	/**
+	 * Help message for connect4.
+	 */
+	private static final String COHELP = "<html> connect4 rules </html>";
 	/**
 	 * Constraints for GridBag formating.
 	 */
@@ -89,10 +99,11 @@ public class HelpPanel extends JPanel implements ActionListener {
 	 * @param bShipLogo logo for bship button
 	 * @param chessLogo logo for chess button
 	 * @param ticLogo logo for tic button
+	 * @param connectLogo logo for connect4 button.
 	 * @param ret Jbutton to return to main menu.
 	 */
 	public HelpPanel(final ImageIcon bShipLogo, final ImageIcon chessLogo, final ImageIcon ticLogo,
-			final JButton ret) {
+			final ImageIcon connectLogo, final JButton ret) {
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
 		exit = ret;
@@ -101,6 +112,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 		bShip.setIcon(bShipLogo);
 		chess.setIcon(chessLogo);
 		tic.setIcon(ticLogo);
+		connect.setIcon(connectLogo);
 		exitStatus = false;
 	}
 	/**
@@ -136,12 +148,13 @@ public class HelpPanel extends JPanel implements ActionListener {
 		tic = new JButton();
 		tic.addActionListener(this);
 		add(tic, con);
+		
+		con.gridy++;
+		connect = new JButton();
+		connect.addActionListener(this);
+		add(connect, con);
 			
 		con.gridy++;
-//		mainMenu = new ImageIcon("src/MainMenu/mmLogo.png");
-//		exit = new JButton();
-//		exit.setIcon(mainMenu);
-//		exit.addActionListener(this);
 		add(exit, con);
 	}
 
@@ -153,6 +166,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 		remove(bShip);
 		remove(chess);
 		remove(tic);
+		remove(connect);
 		revalidate();
 		repaint();
 	}
@@ -175,13 +189,19 @@ public class HelpPanel extends JPanel implements ActionListener {
 			h.setIcon(chess.getIcon());				
 			add(h, con);
 			con.gridy++;
-			add(new JLabel(CHELP), con);
+			add(new JLabel(CHHELP), con);
 		} else if (str.equals("tic")) {
 			JLabel h = new JLabel();
 			h.setIcon(tic.getIcon());				
 			add(h, con);
 			con.gridy++;
 			add(new JLabel(THELP), con);
+		} else if (str.equals("connect")) {
+			JLabel h = new JLabel();
+			h.setIcon(connect.getIcon());				
+			add(h, con);
+			con.gridy++;
+			add(new JLabel(COHELP), con);
 		}
 	}
 	
@@ -198,6 +218,10 @@ public class HelpPanel extends JPanel implements ActionListener {
 		if (e.getSource() == tic) {
 			removeButtons();
 			addHelp("tic");
+		}
+		if (e.getSource() == connect) {
+			removeButtons();
+			addHelp("connect");
 		}
 		//Remove exit button, pass in as param to construct have it set to mainmenu action listen
 		if (e.getSource() == exit) {

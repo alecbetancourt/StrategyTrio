@@ -1,5 +1,6 @@
 package mainmenu;
 
+import java.awt.Color;
 //import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -111,6 +112,15 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * Button for returning to main menu in help.
 	 */
 	private JButton helpRet;
+	
+	/**
+	 * Logo for connect4 button.
+	 */
+	private ImageIcon connectLogo;
+	/**
+	 * Button for connect4 game selection.
+	 */
+	private JButton connect;
 
 	/**
 	 * Menu constructor.
@@ -125,6 +135,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		helpLogo = new ImageIcon("src/MainMenu/helpLogo.png");
 		exitLogo = new ImageIcon("src/MainMenu/exitLogo.png");
 		ticLogo = new ImageIcon("src/MainMenu/ticLogo.png");
+		connectLogo = new ImageIcon("src/MainMenu/connectLogo.png");
 		
 		con.gridx = 0;
 		con.gridy = 0;
@@ -133,11 +144,10 @@ public class MenuGUI extends JFrame implements ActionListener {
 		message = new JLabel();
 		message.setIcon(logo);
 		screen.add(message, con);
-
+		screen.setBackground(Color.BLACK);
 		addButtons();
 		add(screen);
 		addMenus();
-
 		setTitle("Strategy Arcade");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
 		setJMenuBar(menus);
@@ -175,8 +185,14 @@ public class MenuGUI extends JFrame implements ActionListener {
 		screen.add(tic, con);
 		
 		//add logo for next game here
+		con.gridx++;
+		connect = new JButton();
+		connect.setIcon(connectLogo);
+		connect.addActionListener(this);
+		screen.add(connect, con);
 		
 		con.gridy++;
+		con.gridx = 0;
 		help = new JButton();
 		help.setIcon(helpLogo);
 		help.addActionListener(this);
@@ -228,17 +244,19 @@ public class MenuGUI extends JFrame implements ActionListener {
 			revalidate();
 			repaint();
 		}
+		if (e.getSource() == connect) {
+			dispose();
+			new connect4.ConnectGUI();
+			revalidate();
+			repaint();
+		}
 		
 		if (e.getSource() == help) {
-
-//			exit = new JButton();
-//			exit.setIcon(exitLogo);
-//			exit.addActionListener(this);
 			helpRet = new JButton();
 			helpRet.setIcon(exitLogo);
 			helpRet.addActionListener(this);
 			this.remove(screen);
-			hPanel = new HelpPanel(battleLogo, chessLogo, ticLogo, helpRet);
+			hPanel = new HelpPanel(battleLogo, chessLogo, ticLogo, connectLogo, helpRet);
 			add(hPanel);
 			revalidate();
 			repaint();
