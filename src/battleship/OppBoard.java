@@ -5,7 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -66,16 +65,13 @@ public class OppBoard extends JPanel {
 	 * The selected battlebutton.
 	 */
 	private BattleButton target;
-	/**
-	 * Logo for the fire button.
-	 */
-	private ImageIcon fireLogo;
 
 	/**
 	 * Constructor for the board, initializes the board creation and 
 	 * disables fire until called upon by the GUI. 
 	 * 
 	 * @param name for the player name
+	 * @param tFire button to fire a shot.
 	 */
 	public OppBoard(final String name, final JButton tFire) {
 

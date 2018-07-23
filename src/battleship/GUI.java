@@ -14,6 +14,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import mainmenu.MenuGUI;
+
 
 /**
  * Frame for the battleship game, consisting of a pair of panels
@@ -62,7 +64,10 @@ public class GUI extends JFrame implements ActionListener {
 	 * close option for menu.
 	 */
 	private JMenuItem closeItem;
-	//private JMenuItem mainMenuItem;
+	/**
+	 * MainMenu Item for menubar.
+	 */
+	private JMenuItem mainMenuItem;
 
 	/**
 	 * Holder for 2 panels/boards.
@@ -83,10 +88,7 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	private WinPanel end;
 
-	/**
-	 * Whether or not the game is ongoing.
-	 */
-	private boolean hasWon;
+
 	/**
 	 * Player 1' name.
 	 */
@@ -97,26 +99,36 @@ public class GUI extends JFrame implements ActionListener {
 	private String name2;
 
 	/**
-	 * the name of the game winner.
+	 * Player 1's fire button.
 	 */
-	private String winner;
-
-
-
 	private JButton fire1;
-
+	/**
+	 * Player 2s fire button.
+	 */
 	private JButton fire2;
-
+	/**
+	 * Player 1's ready button for switch panel.
+	 */
 	private JButton ready1;
-
+	/**
+	 * Player 2's ready button for switch panel.
+	 */
 	private JButton ready2;
-
+	/**
+	 * Player 1's begin button for user board.
+	 */
 	private JButton begin1;
-
+	/**
+	 * Player 2's begin button for user board.
+	 */
 	private JButton begin2;
-
+	/**
+	 * Button for rematch screen.
+	 */
 	private JButton rematch1;
-
+	/**
+	 * Ints for co-oordinates of firing.
+	 */
 	private int targetX, targetY;
 
 
@@ -137,8 +149,8 @@ public class GUI extends JFrame implements ActionListener {
 		option = new JMenu("Menu");
 		newGameItem = new JMenuItem("New Game");
 		newGameItem.addActionListener(this);
-		//		mainMenuItem = new JMenuItem("Main Menu");
-		//		mainMenuItem.addActionListener(this);
+		mainMenuItem = new JMenuItem("Main Menu");
+		mainMenuItem.addActionListener(this);
 		closeItem = new JMenuItem("Quit");
 		closeItem.addActionListener(this);
 
@@ -146,7 +158,7 @@ public class GUI extends JFrame implements ActionListener {
 		menus = new JMenuBar();
 		menus.add(option);
 		option.add(newGameItem);
-		//option.add(mainMenuItem);
+		option.add(mainMenuItem);
 		option.add(closeItem);
 
 	}
@@ -235,8 +247,6 @@ public class GUI extends JFrame implements ActionListener {
 		}
 		revalidate();
 		repaint();
-		hasWon = false;
-		playGame();
 	}
 
 	/**
@@ -265,16 +275,6 @@ public class GUI extends JFrame implements ActionListener {
 		}
 	}
 
-	/**
-	 * Loop of players selecting a target and firing until a player
-	 * has won.
-	 */
-	public void playGame() {
-
-		hasWon = false;
-
-
-	}
 
 	/**
 	 * Displays a win screen on the top panel for the winning player.
@@ -323,6 +323,7 @@ public class GUI extends JFrame implements ActionListener {
 	 * player 2's turn until they select ready.
 	 */
 	public void switchP2() {
+		p1O.disableFire();
 		holder[1].removeAll();
 		holder[1].add(p2Switch);
 		revalidate();
@@ -334,6 +335,7 @@ public class GUI extends JFrame implements ActionListener {
 	 * turn until they select ready.
 	 */
 	public void switchP1() {
+		p2O.disableFire();
 		holder[1].removeAll();
 		holder[1].add(p1Switch);
 		revalidate();
@@ -345,7 +347,7 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent e) {
-		//Does not work right now
+
 		if (e.getSource() == newGameItem) {
 			holder[0].removeAll();
 			holder[1].removeAll();
@@ -438,6 +440,10 @@ public class GUI extends JFrame implements ActionListener {
 			newGame(true);
 			revalidate();
 			repaint();
+		}
+		if (e.getSource() == mainMenuItem) {
+			dispose();
+			new MenuGUI();
 		}
 	}
 

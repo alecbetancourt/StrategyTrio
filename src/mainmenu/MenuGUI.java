@@ -28,6 +28,10 @@ import javax.swing.JPanel;
 public class MenuGUI extends JFrame implements ActionListener {
 
 	/**
+	 * Menu ID.
+	 */
+	private static final long serialVersionUID = 8921269292088829426L;
+	/**
 	 * Screen.
 	 */
 	private JPanel screen;
@@ -51,7 +55,9 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * button for exiting.
 	 */
 	private JButton exit;
-	
+	/**
+	 * Button for selecting tictactoe.
+	 */
 	private JButton tic;
 	/**
 	 * constraints for gridbag formatting.
@@ -96,11 +102,15 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * exit button logo.
 	 */
 	private ImageIcon exitLogo;
-	
+	/**
+	 * ImageIcon logo for tictactoe.
+	 */
 	private ImageIcon ticLogo;
-
 	
-	//private battleship.GUI battleGUI;
+	/**
+	 * Button for returning to main menu in help.
+	 */
+	private JButton helpRet;
 
 	/**
 	 * Menu constructor.
@@ -119,6 +129,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		con.gridx = 0;
 		con.gridy = 0;
 		con.ipady = 100;
+		con.gridwidth = 2;
 		message = new JLabel();
 		message.setIcon(logo);
 		screen.add(message, con);
@@ -140,6 +151,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 	public void addButtons() {
 		con.ipadx = 0;
 		con.ipady = 0;
+		con.gridwidth = 1;
 		con.fill = GridBagConstraints.HORIZONTAL;
 		con.gridy++;
 
@@ -148,27 +160,30 @@ public class MenuGUI extends JFrame implements ActionListener {
 		bShip.addActionListener(this);
 		screen.add(bShip, con);
 
-	
-
-		con.gridy++;
+		//con.gridy++;
+		con.gridx++;
 		chess = new JButton();
 		chess.setIcon(chessLogo);
 		chess.addActionListener(this);
 		screen.add(chess, con);
 		
 		con.gridy++;
+		con.gridx = 0;
 		tic = new JButton();
 		tic.setIcon(ticLogo);
 		tic.addActionListener(this);
 		screen.add(tic, con);
-
+		
+		//add logo for next game here
+		
 		con.gridy++;
 		help = new JButton();
 		help.setIcon(helpLogo);
 		help.addActionListener(this);
 		screen.add(help, con);
 
-		con.gridy++;
+		//con.gridy++;
+		con.gridx++;
 		exit = new JButton();
 		exit.setIcon(exitLogo);
 		exit.addActionListener(this);
@@ -193,16 +208,13 @@ public class MenuGUI extends JFrame implements ActionListener {
 		if (e.getSource() == exit || e.getSource() == closeItem) {
 			dispose();
 		}
-		//doesnt work,gui wont update, probably an issue with package/import
+
 		if (e.getSource() == bShip) {
 			dispose();
 			new battleship.GUI(false);
 			revalidate();
 			repaint();
-
-
 		}
-		//Doesnt work, gui wont update, probably an issue with package/import
 		if (e.getSource() == chess) {
 			dispose();
 			new chess.ChessGUI();
@@ -222,13 +234,22 @@ public class MenuGUI extends JFrame implements ActionListener {
 //			exit = new JButton();
 //			exit.setIcon(exitLogo);
 //			exit.addActionListener(this);
+			helpRet = new JButton();
+			helpRet.setIcon(exitLogo);
+			helpRet.addActionListener(this);
 			this.remove(screen);
-			hPanel = new HelpPanel(battleLogo, chessLogo);
+			hPanel = new HelpPanel(battleLogo, chessLogo, ticLogo, helpRet);
 			add(hPanel);
 			revalidate();
 			repaint();
 
 
+		}
+		if (e.getSource() == helpRet) {
+			this.remove(hPanel);
+			add(screen);
+			revalidate();
+			repaint();
 		}
 	}
 	/**

@@ -44,11 +44,11 @@ public class HelpPanel extends JPanel implements ActionListener {
 	 * Icon for help.
 	 */
 	private ImageIcon helpMenu;
-	/**
-	 * Icon for main menu.
-	 */
-	private ImageIcon mainMenu;
 
+	/**
+	 * Button for tic tac toe help.
+	 */
+	private JButton tic;
 	/**
 	 * Help message for battleship.
 	 */
@@ -73,7 +73,11 @@ public class HelpPanel extends JPanel implements ActionListener {
 	/**
 	 * Help message for chess.
 	 */
-	private static  final String CHELP = "<html> chess rules </html>";
+	private static final String CHELP = "<html> chess rules </html>";
+	/**
+	 * Help message for tic tac toe.
+	 */
+	private static final String THELP = "<html> tic rules </html>";
 	
 	/**
 	 * Constraints for GridBag formating.
@@ -84,14 +88,19 @@ public class HelpPanel extends JPanel implements ActionListener {
 	 * Creates the help panel with buttons.
 	 * @param bShipLogo logo for bship button
 	 * @param chessLogo logo for chess button
+	 * @param ticLogo logo for tic button
+	 * @param ret Jbutton to return to main menu.
 	 */
-	public HelpPanel(final ImageIcon bShipLogo, final ImageIcon chessLogo) {
+	public HelpPanel(final ImageIcon bShipLogo, final ImageIcon chessLogo, final ImageIcon ticLogo,
+			final JButton ret) {
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
+		exit = ret;
 		addButtons();
 
 		bShip.setIcon(bShipLogo);
 		chess.setIcon(chessLogo);
+		tic.setIcon(ticLogo);
 		exitStatus = false;
 	}
 	/**
@@ -122,12 +131,17 @@ public class HelpPanel extends JPanel implements ActionListener {
 		chess = new JButton();
 		chess.addActionListener(this);
 		add(chess, con);
+		
+		con.gridy++;
+		tic = new JButton();
+		tic.addActionListener(this);
+		add(tic, con);
 			
 		con.gridy++;
-		mainMenu = new ImageIcon("src/MainMenu/mmLogo.png");
-		exit = new JButton();
-		exit.setIcon(mainMenu);
-		exit.addActionListener(this);
+//		mainMenu = new ImageIcon("src/MainMenu/mmLogo.png");
+//		exit = new JButton();
+//		exit.setIcon(mainMenu);
+//		exit.addActionListener(this);
 		add(exit, con);
 	}
 
@@ -138,6 +152,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 		remove(message);
 		remove(bShip);
 		remove(chess);
+		remove(tic);
 		revalidate();
 		repaint();
 	}
@@ -155,6 +170,18 @@ public class HelpPanel extends JPanel implements ActionListener {
 			add(h, con);
 			con.gridy++;
 			add(new JLabel(BHELP), con);
+		} else if (str.equals("chess")) {
+			JLabel h = new JLabel();
+			h.setIcon(chess.getIcon());				
+			add(h, con);
+			con.gridy++;
+			add(new JLabel(CHELP), con);
+		} else if (str.equals("tic")) {
+			JLabel h = new JLabel();
+			h.setIcon(tic.getIcon());				
+			add(h, con);
+			con.gridy++;
+			add(new JLabel(THELP), con);
 		}
 	}
 	
@@ -168,8 +195,14 @@ public class HelpPanel extends JPanel implements ActionListener {
 			removeButtons();
 			addHelp("chess");
 		}
+		if (e.getSource() == tic) {
+			removeButtons();
+			addHelp("tic");
+		}
+		//Remove exit button, pass in as param to construct have it set to mainmenu action listen
 		if (e.getSource() == exit) {
-			exitStatus = true;
+			
+			new MenuGUI();
 		}
 	}
 	

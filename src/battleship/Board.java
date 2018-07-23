@@ -83,6 +83,7 @@ public class Board extends JPanel {
 	 * ship placement. 
 	 * 
 	 * @param name for the player name
+	 * @param begin Jbutton to confirm ship placement
 	 */
 	public Board(final String name, final JButton begin) {
 		user = new BattleButton[10][10];

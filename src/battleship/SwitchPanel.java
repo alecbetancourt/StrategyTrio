@@ -3,10 +3,7 @@ package battleship;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,15 +40,13 @@ public class SwitchPanel extends JPanel {
 	 * Constraints for gridbag formating.
 	 */
 	private GridBagConstraints con;
-	/**
-	 * Icon for the ready button.
-	 */
-	private ImageIcon rdyIcon;
+	
 	
 	/**
 	 * Constructor for the panel that displays a players name with a
 	 * message and a ready button.
 	 * @param name the players name to be displayed
+	 * @param ready Button for player to press when ready.
 	 */
 	public SwitchPanel(final String name, final JButton ready) {
 		isReady = false;

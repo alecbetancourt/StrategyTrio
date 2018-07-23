@@ -3,8 +3,6 @@ package battleship;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -44,6 +42,7 @@ public class WinPanel extends JPanel {
 	 * Constructor for the panel. Formats the layout using a gridbag
 	 * and adds in the rematch button and message
 	 * @param name the winning player name
+	 * @param rematchButton for players to press for a rematch.
 	 */
 	public WinPanel(final String name, final JButton rematchButton) {
 	setRematch(false);
