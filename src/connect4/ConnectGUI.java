@@ -88,6 +88,7 @@ public class ConnectGUI extends JFrame implements ActionListener {
 		screen = new ConnectPanel(select);
 		add(screen);
 		pack();
+		setTitle("Connect4");
 		setSize(800, 800);
 		setVisible(true);
 	}

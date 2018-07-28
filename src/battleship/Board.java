@@ -329,7 +329,7 @@ public class Board extends JPanel {
 	public Ship getSub() {
 		return submarine;
 	}
-	
+
 	/**
 	 * Set the ready boolean.
 	 * @param ready if the player is ready or not
@@ -361,24 +361,26 @@ public class Board extends JPanel {
 	 * @return true if the guess was a hit, false if it was a miss
 	 */
 	public boolean hitMiss(final int x, final int y) {
-		if (user[x][y].isHasShip()) {	
-			user[x][y].setHit(true);
-			user[x][y].getShip().hit();
-			status.setText(user[x][y].getShip().getName()
-					+ " hit!");
-			if (user[x][y].getShip().isDestroyed()) {
-				status.setText(user[x][y].getShip().
-						getName() + " sunk!");
-				shipCount--;
-				if (shipCount == 0) {
-					lost = true;
-					status.setText("You lose");
+		if (!user[x][y].isHit() && !user[x][y].isMiss()) {
+			if (user[x][y].isHasShip()) {	
+				user[x][y].setHit(true);
+				user[x][y].getShip().hit();
+				status.setText(user[x][y].getShip().getName()
+						+ " hit!");
+				if (user[x][y].getShip().isDestroyed()) {
+					status.setText(user[x][y].getShip().
+							getName() + " sunk!");
+					shipCount--;
+					if (shipCount == 0) {
+						lost = true;
+						status.setText("You lose");
+					}
 				}
+				return true;
 			}
-			return true;
+			user[x][y].setMiss(true);
+			status.setText("Miss!");
 		}
-		user[x][y].setMiss(true);
-		status.setText("Miss!");
 		return false;
 
 	}
@@ -414,7 +416,7 @@ public class Board extends JPanel {
 	public void setLost(final boolean lost) {
 		this.lost = lost;
 	}
-	
+
 	/**
 	 * Returns a given battle button for testing.
 	 * @param x x-coordinate

@@ -88,7 +88,12 @@ public class HelpPanel extends JPanel implements ActionListener {
 	/**
 	 * Help message for connect4.
 	 */
-	private static final String COHELP = "<html> connect4 rules </html>";
+	private static final String COHELP = "<html>Player 1 uses the black tokens and Player 2 uses red tokens.<br/>"
+			+ "Select the corresponding button at the bottom of the screen to the column you <br/>"
+			+ "want to place your token. The token will be placed at the next avalaible slot in that <br/>"
+			+ "column or it won't be placed at all if the column is full.The game continues until the<br/> "
+			+ "board is full with no winner or a player has 4 tokens placed in  a row. The game <br/> "
+			+ "can be won with 4 in a row either vertically, horizontally, or diagonally. </html>";
 	/**
 	 * Constraints for GridBag formating.
 	 */

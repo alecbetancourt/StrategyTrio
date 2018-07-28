@@ -121,6 +121,8 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * Button for connect4 game selection.
 	 */
 	private JButton connect;
+	
+
 
 	/**
 	 * Menu constructor.
@@ -129,13 +131,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		screen = new JPanel();
 		screen.setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
-		logo = new ImageIcon("src/MainMenu/logo.png");
-		battleLogo = new ImageIcon("src/MainMenu/bShipLogo.png");
-		chessLogo = new ImageIcon("src/MainMenu/chessLogo.png");
-		helpLogo = new ImageIcon("src/MainMenu/helpLogo.png");
-		exitLogo = new ImageIcon("src/MainMenu/exitLogo.png");
-		ticLogo = new ImageIcon("src/MainMenu/ticLogo.png");
-		connectLogo = new ImageIcon("src/MainMenu/connectLogo.png");
+		createLogos();
 		
 		con.gridx = 0;
 		con.gridy = 0;
@@ -144,15 +140,27 @@ public class MenuGUI extends JFrame implements ActionListener {
 		message = new JLabel();
 		message.setIcon(logo);
 		screen.add(message, con);
-		screen.setBackground(Color.BLACK);
 		addButtons();
 		add(screen);
 		addMenus();
 		setTitle("Strategy Arcade");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);      
 		setJMenuBar(menus);
-		setSize(1500, 1000);
+		setSize(1450, 1000);
 		setVisible(true);
+	}
+	
+	/**
+	 * Initializes ImageIcons for each button/label.
+	 */
+	public void createLogos() {
+		logo = new ImageIcon("src/MainMenu/logo.png");
+		battleLogo = new ImageIcon("src/MainMenu/bShipLogo.png");
+		chessLogo = new ImageIcon("src/MainMenu/chessLogo.png");
+		helpLogo = new ImageIcon("src/MainMenu/helpLogo.png");
+		exitLogo = new ImageIcon("src/MainMenu/exitLogo.png");
+		ticLogo = new ImageIcon("src/MainMenu/ticLogo.png");
+		connectLogo = new ImageIcon("src/MainMenu/connectLogo.png");
 	}
 
 	/**
@@ -170,7 +178,6 @@ public class MenuGUI extends JFrame implements ActionListener {
 		bShip.addActionListener(this);
 		screen.add(bShip, con);
 
-		//con.gridy++;
 		con.gridx++;
 		chess = new JButton();
 		chess.setIcon(chessLogo);
@@ -184,7 +191,6 @@ public class MenuGUI extends JFrame implements ActionListener {
 		tic.addActionListener(this);
 		screen.add(tic, con);
 		
-		//add logo for next game here
 		con.gridx++;
 		connect = new JButton();
 		connect.setIcon(connectLogo);
@@ -198,7 +204,6 @@ public class MenuGUI extends JFrame implements ActionListener {
 		help.addActionListener(this);
 		screen.add(help, con);
 
-		//con.gridy++;
 		con.gridx++;
 		exit = new JButton();
 		exit.setIcon(exitLogo);
@@ -260,8 +265,6 @@ public class MenuGUI extends JFrame implements ActionListener {
 			add(hPanel);
 			revalidate();
 			repaint();
-
-
 		}
 		if (e.getSource() == helpRet) {
 			this.remove(hPanel);

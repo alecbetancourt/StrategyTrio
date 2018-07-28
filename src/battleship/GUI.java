@@ -131,6 +131,10 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	private int targetX, targetY;
 
+	/**
+	 * ImageIcon for begin button.
+	 */
+	private ImageIcon beginIcon;
 
 	/**
 	 * Constructor that calls the createMenus and NewGame methods.
@@ -175,11 +179,14 @@ public class GUI extends JFrame implements ActionListener {
 			holder = new JPanel[2];
 		}
 
-		begin1 = new JButton("Begin");
+		beginIcon = new ImageIcon("src/battleship/beginLogo.png");
+		begin1 = new JButton();
+		begin1.setIcon(beginIcon);
 		begin1.setBackground(Color.WHITE);
 		begin1.addActionListener(this);
 
-		begin2 = new JButton("Begin");
+		begin2 = new JButton();
+		begin2.setIcon(beginIcon);
 		begin2.setBackground(Color.WHITE);
 		begin2.addActionListener(this);
 
@@ -209,7 +216,8 @@ public class GUI extends JFrame implements ActionListener {
 		ready1.setBackground(Color.BLUE);
 		ready1.addActionListener(this);
 
-		ready2 = new JButton();		rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
+		ready2 = new JButton();		
+		rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
 		ready2.setIcon(rdyIcon);
 		ready2.setBackground(Color.BLUE);
 		ready2.addActionListener(this);
@@ -231,18 +239,12 @@ public class GUI extends JFrame implements ActionListener {
 		holder[1].add(p1);
 		holder[0].add(p1O);
 
-		//for testing switch/win panels
-		//								holder[1].add(p1Switch);
-		//								end = new WinPanel("pork", rematch1);
-		//								holder[0].add(end);
-
-
 		if (!rematch) {
 			setTitle("Battleship");
 			this.setDefaultCloseOperation(JFrame.
 					EXIT_ON_CLOSE);      
 			setJMenuBar(menus);
-			setSize(1500, 1000);
+			setSize(1450, 900);
 			setVisible(true);
 		}
 		revalidate();
@@ -289,19 +291,6 @@ public class GUI extends JFrame implements ActionListener {
 		holder[0].add(end);
 		revalidate();
 		repaint();
-		//		while (!end.isRematch()) {
-		//			try {
-		//				Thread.yield();
-		//			} catch (Exception interruptedEx) {
-		//				// Log the interruption somewhere.
-		//			}
-		//		}
-		//		holder[0].removeAll();
-		//		holder[1].removeAll();
-		//		newGame(true);
-		//		revalidate();
-		//		repaint();
-
 	}
 
 	/**
@@ -364,6 +353,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		boolean hit;
 		if (e.getSource() == fire1) {
+			//if(p1O.isFired()) {
 			targetX = p1O.getTargetX();
 			targetY = p1O.getTargetY();
 			if (targetX != -1 && targetY != -1) {
@@ -372,6 +362,7 @@ public class GUI extends JFrame implements ActionListener {
 				//mark square on opponent board
 				p1O.markSquare(hit, targetX, targetY);
 				p1O.updateStatus(p2.getStatus());
+
 				revalidate();
 				repaint();
 
@@ -381,8 +372,10 @@ public class GUI extends JFrame implements ActionListener {
 					winScreen(name1);
 				}
 			}
+			//}
 		}
 		if (e.getSource() == fire2) {
+
 			targetX = p2O.getTargetX();
 			targetY = p2O.getTargetY();
 			if (targetX != -1 && targetY != -1) {
@@ -391,7 +384,7 @@ public class GUI extends JFrame implements ActionListener {
 				//mark square on opponent board
 				p2O.markSquare(hit, targetX, targetY);
 				p2O.updateStatus(p1.getStatus());
-				p2O.updateStatus(p1.getStatus());
+
 
 				if (!p1.isLost()) {
 					switchP1();
@@ -399,6 +392,7 @@ public class GUI extends JFrame implements ActionListener {
 					winScreen(name2);
 				}
 			}
+
 		}
 		if (e.getSource() == ready1) {
 			p1Switch.setReady(false);
@@ -427,11 +421,13 @@ public class GUI extends JFrame implements ActionListener {
 		if (e.getSource() == begin1) {
 			if (p1.isReady()) {
 				switchP2();
+				begin1.setEnabled(false);
 			}
 		}
 		if (e.getSource() == begin2) {
 			if (p2.isReady()) {
 				switchP1();
+				begin2.setEnabled(false);
 			}
 		}
 		if (e.getSource() == rematch1) {

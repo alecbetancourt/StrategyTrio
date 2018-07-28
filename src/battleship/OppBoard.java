@@ -88,10 +88,10 @@ public class OppBoard extends JPanel {
 		fire = tFire;
 		createBoard();
 		disableFire();
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Creates and formats the user board where ships are placed.
 	 */
@@ -127,12 +127,12 @@ public class OppBoard extends JPanel {
 		add(new JLabel(""));
 		add(new JLabel(""));
 		add(status);
-//		fire = new JButton();
-//		fireLogo = new ImageIcon("src/battleship/fireLogo.png");
-//		fire.setIcon(fireLogo);
-//		fire.setBackground(Color.RED);
-//		//fire.addActionListener(listen);
-	
+		//		fire = new JButton();
+		//		fireLogo = new ImageIcon("src/battleship/fireLogo.png");
+		//		fire.setIcon(fireLogo);
+		//		fire.setBackground(Color.RED);
+		//		//fire.addActionListener(listen);
+
 		setBackground(Color.CYAN);
 		add(fire);
 	}
@@ -185,7 +185,7 @@ public class OppBoard extends JPanel {
 	public void setFired(final boolean fired) {
 		this.fired = fired;
 	}
-	
+
 	/**
 	 * returns fire button for testing.
 	 * @return fire button
@@ -202,13 +202,15 @@ public class OppBoard extends JPanel {
 	 * @param y y-coordinate of target
 	 */
 	public void markSquare(final boolean hit, final int x, final int y) {
-		if (hit) {
-			opp[x][y].setHit(true);
-		} else {
-			opp[x][y].setMiss(true);
+		if (!opp[x][y].isHit()) {
+			if (hit) {
+				opp[x][y].setHit(true);
+			} else {
+				opp[x][y].setMiss(true);
+			}
 		}
 	}
-	
+
 	/**
 	 * Returns a give jbutton for testing.
 	 * @param x x coordinate
@@ -253,41 +255,41 @@ public class OppBoard extends JPanel {
 		@Override
 		public void actionPerformed(final ActionEvent e) {
 			if (enabled) {
-//				if (e.getSource() == fire) {
-//					if (targetX != -1 && targetY != -1) {
-//						opp[targetX][targetY].
-//						setBackground(Color.ORANGE);
-//						fire.setEnabled(false);
-//						disableFire();
-//						target = null;
-//						//moves to next player turn
-//						setFired(true);
-//					}
-//				} else {
-					for (int i = 0; i < 10; i++) {
-						for (int j = 0; j < 10; j++) {
-							if (e.getSource() == opp[i][j]) {
-								//resets selection
-								if (target != null) {
-									target.revertColor();
-								}
-								targetX = i;
-								targetY = j;
-								target = opp[i][j];
-								
-								//Displays selected square in 'A1, B2, C3,.." format
-								int c = (i + 65);
-								status.setText((char) c + "" + (j + 1) + " selected");
-								
-								//highlights selected button
-								if (targetX != -1 && targetY != -1) {
-									opp[targetX][targetY].setBackground(
-											Color.YELLOW);
-								}
+				//				if (e.getSource() == fire) {
+				//					if (targetX != -1 && targetY != -1) {
+				//						opp[targetX][targetY].
+				//						setBackground(Color.ORANGE);
+				//						fire.setEnabled(false);
+				//						disableFire();
+				//						target = null;
+				//						//moves to next player turn
+				//						setFired(true);
+				//					}
+				//				} else {
+				for (int i = 0; i < 10; i++) {
+					for (int j = 0; j < 10; j++) {
+						if (e.getSource() == opp[i][j]) {
+							//resets selection
+							if (target != null) {
+								target.revertColor();
+							}
+							targetX = i;
+							targetY = j;
+							target = opp[i][j];
+
+							//Displays selected square in 'A1, B2, C3,.." format
+							int c = (i + 65);
+							status.setText((char) c + "" + (j + 1) + " selected");
+
+							//highlights selected button
+							if (targetX != -1 && targetY != -1) {
+								opp[targetX][targetY].setBackground(
+										Color.YELLOW);
 							}
 						}
-
 					}
+
+				}
 				//}
 
 			}
