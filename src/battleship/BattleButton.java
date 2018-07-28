@@ -2,6 +2,7 @@ package battleship;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 //import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -34,12 +35,33 @@ public class BattleButton extends JButton {
 	 */
 	private Ship ship;
 	//	private ImageIcon hitIcon, missIcon;
-
+	/**
+	 * Icon for water image.
+	 */
+	private ImageIcon waterLogo;
+	
+	/**
+	 * Logo for hit ship.
+	 */
+	private ImageIcon hitLogo;
+	
+	/**
+	 * Logo for hit used on oppboard.
+	 */
+	private ImageIcon hitWaterLogo;
+	/**
+	 * Logo for miss.
+	 */
+	private ImageIcon missWater;
 	/**
 	 * Constructor that sets all buttons background to blue.
 	 */
 	public BattleButton() {
-		setBackground(Color.BLUE);
+		waterLogo = new ImageIcon("src/battleship/waterLogo.png");
+		hitWaterLogo = new ImageIcon("src/battleship/hitWater.png");
+		hitLogo = new ImageIcon("src/battleship/hit.png");
+		missWater = new ImageIcon("src/battleship/missWater.png");
+		setIcon(waterLogo);
 	}
 
 	/**
@@ -58,9 +80,10 @@ public class BattleButton extends JButton {
 	public void setHasShip(final boolean hasShip) {
 		this.hasShip = hasShip;
 		if (hasShip) {
+			setIcon(null);
 			setBackground(Color.GRAY);	
 		} else {
-			setBackground(Color.BLUE);
+			setIcon(waterLogo);
 		}
 	}
 
@@ -79,9 +102,10 @@ public class BattleButton extends JButton {
 	 */
 	public void setHit(final boolean hit) {
 		this.hit = hit;
-		if (hit) {
-			setBackground(Color.RED);
-			setEnabled(false);
+		if (hit && hasShip) {
+			revertColor();
+		} else if (hit) {
+			setIcon(hitWaterLogo);
 		}
 	}
 
@@ -101,8 +125,7 @@ public class BattleButton extends JButton {
 	public void setMiss(final boolean miss) {
 		this.miss = miss;
 		if (miss) {
-			setBackground(Color.WHITE);
-			setEnabled(false);
+			setIcon(missWater);
 		}
 	}
 
@@ -121,6 +144,15 @@ public class BattleButton extends JButton {
 	public Ship getShip() {
 		return ship;
 	}
+	
+	/**
+	 * Returns if a square has been hit or missed. Used by OppBoard class
+	 * to prevent double selections.
+	 * @return True if the square hasnt been guessed, false if not.
+	 */
+	public boolean isEmpty() {
+		return (!miss && !hit);
+	}
 
 	/**
 	 * Reverts a buttons color to usual. Used after a button has been
@@ -128,13 +160,18 @@ public class BattleButton extends JButton {
 	 */
 	public void revertColor() {
 		if (miss) {
-			setBackground(Color.WHITE);
+			setIcon(missWater);
 		} else if (hit) {
-			setBackground(Color.RED);
+			if (hasShip) {
+			setIcon(hitLogo);
+			} else {
+				setIcon(hitWaterLogo);
+			}
 		} else if (hasShip) {
+			setIcon(null);
 			setBackground(Color.GRAY);
 		} else {
-			setBackground(Color.BLUE);
+			setIcon(waterLogo);
 		}
 	}
 }

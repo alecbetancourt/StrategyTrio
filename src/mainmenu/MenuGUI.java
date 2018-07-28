@@ -1,7 +1,6 @@
 package mainmenu;
 
-import java.awt.Color;
-//import java.awt.Color;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -17,9 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-
-//import battleship.*;
-//import chess.*;
 
 /**
  * Main menu class.
@@ -122,6 +118,14 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 */
 	private JButton connect;
 	
+	/**
+	 * Logo for checker button.
+	 */
+	private ImageIcon checkersLogo;
+	/**
+	 * Button for checkers selection.
+	 */
+	private JButton checkers;
 
 
 	/**
@@ -161,6 +165,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 		exitLogo = new ImageIcon("src/MainMenu/exitLogo.png");
 		ticLogo = new ImageIcon("src/MainMenu/ticLogo.png");
 		connectLogo = new ImageIcon("src/MainMenu/connectLogo.png");
+		checkersLogo = new ImageIcon("src/MainMenu/checkersLogo.png");
 	}
 
 	/**
@@ -179,17 +184,18 @@ public class MenuGUI extends JFrame implements ActionListener {
 		screen.add(bShip, con);
 
 		con.gridx++;
+		checkers = new JButton();
+		checkers.setIcon(checkersLogo);
+		checkers.addActionListener(this);
+		screen.add(checkers, con);
+	
+		
+		con.gridy++;
+		con.gridx = 0;
 		chess = new JButton();
 		chess.setIcon(chessLogo);
 		chess.addActionListener(this);
 		screen.add(chess, con);
-		
-		con.gridy++;
-		con.gridx = 0;
-		tic = new JButton();
-		tic.setIcon(ticLogo);
-		tic.addActionListener(this);
-		screen.add(tic, con);
 		
 		con.gridx++;
 		connect = new JButton();
@@ -199,12 +205,21 @@ public class MenuGUI extends JFrame implements ActionListener {
 		
 		con.gridy++;
 		con.gridx = 0;
+		
+		tic = new JButton();
+		tic.setIcon(ticLogo);
+		tic.addActionListener(this);
+		screen.add(tic, con);
+		
+		con.gridx++;
 		help = new JButton();
 		help.setIcon(helpLogo);
 		help.addActionListener(this);
 		screen.add(help, con);
 
-		con.gridx++;
+		con.gridy++;
+		con.gridx = 0;
+		con.gridwidth = 2;
 		exit = new JButton();
 		exit.setIcon(exitLogo);
 		exit.addActionListener(this);
@@ -255,13 +270,19 @@ public class MenuGUI extends JFrame implements ActionListener {
 			revalidate();
 			repaint();
 		}
+		if (e.getSource() == checkers) {
+			dispose();
+			//TODO add in checkers frame
+			revalidate();
+			repaint();
+		}
 		
 		if (e.getSource() == help) {
 			helpRet = new JButton();
 			helpRet.setIcon(exitLogo);
 			helpRet.addActionListener(this);
 			this.remove(screen);
-			hPanel = new HelpPanel(battleLogo, chessLogo, ticLogo, connectLogo, helpRet);
+			hPanel = new HelpPanel(battleLogo, chessLogo, ticLogo, connectLogo, checkersLogo, helpRet);
 			add(hPanel);
 			revalidate();
 			repaint();

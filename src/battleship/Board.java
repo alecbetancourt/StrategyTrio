@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -79,6 +80,33 @@ public class Board extends JPanel {
 	private int shipCount;
 
 	/**
+	 * Icon for submarine.
+	 */
+	private ImageIcon subLogo;
+
+	/**
+	 * Icon for battleship.
+	 */
+	private ImageIcon bShipLogo;
+	/**
+	 * Icon for carrier.
+	 */
+	private ImageIcon carrierLogo;
+	/**
+	 * Icon for destroyer.
+	 */
+	private ImageIcon destroyLogo;
+	/**
+	 * Icon for cruiser.
+	 */
+	private ImageIcon cruiserLogo;
+	/**
+	 * Boolean for the ability to select buttons.
+	 */
+	private boolean canSelect;
+
+
+	/**
 	 * Constructor for the board, initializes the board creation and 
 	 * ship placement. 
 	 * 
@@ -88,25 +116,24 @@ public class Board extends JPanel {
 	public Board(final String name, final JButton begin) {
 		user = new BattleButton[10][10];
 		listen = new ButtonListener();
-
 		setReady(false);
 		shipCount = 5;
-		setBackground(Color.CYAN);
+		setBackground(Color.GRAY);
 		setLayout(new GridLayout(12, 11)); 
+		canSelect = true;
 
 		status = new JLabel("Place Your Battleships", 
 				SwingConstants.CENTER);
 		pName = new JLabel(name, SwingConstants.CENTER);
 		createBoard();		
 		createShips();
-
-		add(status);
-		//		//Need a better way to format
-		//
-		add(new JLabel(""));
-		add(new JLabel(""));
-		add(new JLabel(""));
+		setBorder(new MatteBorder(1, 0, 0, 0, Color.BLACK));
+		begin.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		add(begin);
+		add(status);
+		add(new JLabel(""));
+		add(new JLabel(""));
+		add(new JLabel(""));
 		add(pName);
 	}
 
@@ -114,19 +141,28 @@ public class Board extends JPanel {
 	 * Creates and formats the user board where ships are placed.
 	 */
 	public void createBoard() {
+		JLabel l;
 		for (int i = 0; i < 11; i++) {
 			for (int j = 0; j < 11; j++) {
 				//blank square at 0,0
 				if (j == 0 && i == 0) {
 					add(new JLabel(""));
 				} else if (i == 0) {
-					add(new JLabel("" + (j), 
-							SwingConstants.CENTER));
+					l = new JLabel("" + j,
+							SwingConstants.CENTER);
+					add(l);
+					if (j != 10) {
+						l.setBorder(new MatteBorder(0, 0, 0, 1, Color.BLACK));
+					}
 				} else if (j == 0) {
 					int c = (64 + i);
 					String s = Character.toString((char) c);
-					add(new JLabel(s,
-							SwingConstants.CENTER));
+					l = new JLabel(s,
+							SwingConstants.CENTER);
+					if (i != 10) {
+						l.setBorder(new MatteBorder(0, 0, 1, 0, Color.BLACK));
+					}
+					add(l);
 				} else {
 					user[i - 1][j - 1] = new BattleButton();
 					user[i - 1][j - 1].addActionListener(listen);
@@ -159,27 +195,37 @@ public class Board extends JPanel {
 		//Will change setLabel to some sort of icon
 		carrier.addActionListener(listen);
 		carrier.setBackground(Color.GRAY);
-		carrier.setText("Carrier (5)");
+		carrierLogo = new ImageIcon("src/battleship/carrierLogo.png");
+		carrier.setIcon(carrierLogo);
+		carrier.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		add(carrier);
 
 		battleship.addActionListener(listen);
 		battleship.setBackground(Color.GRAY);
-		battleship.setText("Battleship (4)");
+		bShipLogo = new ImageIcon("src/battleship/battleshipLogo.png");
+		battleship.setIcon(bShipLogo);
+		battleship.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		add(battleship);
 
 		submarine.addActionListener(listen);
 		submarine.setBackground(Color.GRAY);
-		submarine.setText("Submarine (3)");
+		subLogo = new ImageIcon("src/battleship/subLogo.png");
+		submarine.setIcon(subLogo);
+		submarine.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		add(submarine);
 
 		cruiser.addActionListener(listen);
 		cruiser.setBackground(Color.GRAY);
-		cruiser.setText("Cruiser (3)");
+		cruiserLogo = new ImageIcon("src/battleship/cruiserLogo.png");
+		cruiser.setIcon(cruiserLogo);
+		cruiser.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		add(cruiser);
 
 		destroyer.addActionListener(listen);
 		destroyer.setBackground(Color.GRAY);
-		destroyer.setText("Destroyer (2)");
+		destroyLogo = new ImageIcon("src/battleship/destroyLogo.png");
+		destroyer.setIcon(destroyLogo);
+		destroyer.setBorder(new MatteBorder(1, 1, 1, 1, Color.BLACK));
 		add(destroyer);
 
 	}
@@ -220,8 +266,9 @@ public class Board extends JPanel {
 			} else {
 				user[i][y].setBorder(new MatteBorder(0, 1, 0, 1, Color.BLACK));
 			}
+			user[i][y].setIcon(null);
 			user[i][y].setHasShip(true);
-			user[i][y].setEnabled(false);
+			//user[i][y].setEnabled(false);
 			user[i][y].setShip(tShip);
 		}
 	}
@@ -261,8 +308,9 @@ public class Board extends JPanel {
 				user[x][i].setBorder(new MatteBorder(1, 0, 1, 0, Color.BLACK));
 			}
 			//Colors and disables button
+			user[x][i].setIcon(null);
 			user[x][i].setHasShip(true);
-			user[x][i].setEnabled(false);
+			//user[x][i].setEnabled(false);
 			user[x][i].setShip(tShip);
 		}
 	}
@@ -468,73 +516,76 @@ public class Board extends JPanel {
 		private BattleButton select = null;
 		@Override
 		public void actionPerformed(final ActionEvent e) {
+			if (canSelect) {
+				if (e.getSource() instanceof Ship) {
 
-			if (e.getSource() instanceof Ship) {
-				if (tShip != null) {
-					//unhighlights selected ship
-					tShip.setBackground(Color.GRAY);
-					if (select != null) {
-						//unhighlights selected square
-						select.setBackground(Color.BLUE);
+					if (tShip != null) {
+						//unhighlights selected ship
+						tShip.setBackground(Color.GRAY);
+						if (select != null) {
+							//unhighlights selected square
+							select.revertColor();
+						}
 					}
+
+					//highlights ship when selected
+					tShip = (Ship) e.getSource();
+					tShip.setBackground(Color.DARK_GRAY);
+
+					//reset location on ship selection
+					x1 = -1;
+					x2 = -1;
+					y1 = -1;
+					y2 = -1;
 				}
 
-				//highlights ship when selected
-				tShip = (Ship) e.getSource();
-				tShip.setBackground(Color.DARK_GRAY);
-
-				//reset location on ship selection
-				x1 = -1;
-				x2 = -1;
-				y1 = -1;
-				y2 = -1;
-			}
-
-			if (e.getSource() instanceof BattleButton) {
-				//if a ship has been selected
-				if (tShip != null) {
-					for (int i = 0; i < 10; i++) {
-						for (int j = 0; j < 10; j++) {
-							if (e.getSource() == user[i][j]) {
-								//if this is the first square selected
-								if (x1 == -1 && y1 == -1) {
-									x1 = i;
-									y1 = j;
-									select = user[x1][y1];
-									select.setBackground(Color.GRAY);
-								} else {
-									select.setBackground(Color.BLUE);
-									x2 = i;
-									y2 = j;
-									//attempts to place the ship
-									if (placeShip(x1, x2, y2, y1, tShip)) {
-										status.setText(tShip.getName() + " "
-												+ "placed");
-										tShip.setBackground(Color.GRAY);
-										tShip.setEnabled(false);
-										shipCount--;
-										select = null;
-										//if all ships have been placed
-										if (shipCount == 0) {
-											disableButtons();
-											setReady(true);
-										}
+				if (e.getSource() instanceof BattleButton) {
+					//if a ship has been selected
+					if (tShip != null) {
+						for (int i = 0; i < 10; i++) {
+							for (int j = 0; j < 10; j++) {
+								if (e.getSource() == user[i][j]) {
+									//if this is the first square selected
+									if (x1 == -1 && y1 == -1) {
+										x1 = i;
+										y1 = j;
+										select = user[x1][y1];
+										select.setIcon(null);
+										select.setBackground(Color.GRAY);
 									} else {
-										tShip.setBackground(Color.GRAY);
-										status.setText("Invalid placement!");
+										select.revertColor();
+										x2 = i;
+										y2 = j;
+										//attempts to place the ship
+										if (placeShip(x1, x2, y2, y1, tShip)) {
+											status.setText(tShip.getName() + " "
+													+ "placed");
+											tShip.setBackground(Color.GRAY);
+											tShip.setEnabled(false);
+											shipCount--;
+											select = null;
+											//if all ships have been placed
+											if (shipCount == 0) {
+												//disableButtons();
+												setReady(true);
+											}
+										} else {
+											tShip.setBackground(Color.GRAY);
+											status.setText("Invalid placement!");
+										}
+										x1 = -1;
+										x2 = -1;
+										y1 = -1;
+										y2 = -1;
+										tShip = null;
 									}
-									x1 = -1;
-									x2 = -1;
-									y1 = -1;
-									y2 = -1;
-									tShip = null;
 								}
 							}
 						}
 					}
+				} else {
+					status.setText("Select a Ship!");
 				}
-			} else {
-				status.setText("Select a Ship!");
 			}
 		}
 

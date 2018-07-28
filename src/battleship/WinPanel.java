@@ -46,7 +46,7 @@ public class WinPanel extends JPanel {
 	 */
 	public WinPanel(final String name, final JButton rematchButton) {
 	setRematch(false);
-	setBackground(Color.CYAN);
+	setBackground(Color.GRAY);
 	setLayout(new GridBagLayout());
 	con = new GridBagConstraints();
 	con.gridx = 0;

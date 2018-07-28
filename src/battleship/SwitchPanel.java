@@ -50,7 +50,7 @@ public class SwitchPanel extends JPanel {
 	 */
 	public SwitchPanel(final String name, final JButton ready) {
 		isReady = false;
-		setBackground(Color.CYAN);
+		setBackground(Color.GRAY);
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
 		con.gridx = 0;

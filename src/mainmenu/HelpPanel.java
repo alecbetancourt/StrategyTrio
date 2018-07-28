@@ -54,6 +54,10 @@ public class HelpPanel extends JPanel implements ActionListener {
 	 */
 	private JButton connect;
 	/**
+	 * Button for checkers help.
+	 */
+	private JButton checkers;
+	/**
 	 * Help message for battleship.
 	 */
 	private static final String BHELP = "<html> Enter in player names <br/> "
@@ -77,10 +81,18 @@ public class HelpPanel extends JPanel implements ActionListener {
 	/**
 	 * Help message for chess.
 	 */
-	private static final String CHHELP = "<html> chess rules </html>";
+	//TODO write help message.
+	private static final String CSHELP = "<html> chess rules </html>";
+	
+	/**
+	 * Help message for checkers.
+	 */
+	//TODO write help message.
+	private static final String CKHELP = "<html> checkers rules </html>";
 	/**
 	 * Help message for tic tac toe.
 	 */
+	
 	private static final String THELP = "<html> Player 1 is X and Player 2 is O <br/>"
 			+ "Player 1 selects a square to mark X then player 2 selects a square to mark O. <br/>"
 			+ "This continues until one player has gotten three of their symbols in a row <br/>"
@@ -105,10 +117,11 @@ public class HelpPanel extends JPanel implements ActionListener {
 	 * @param chessLogo logo for chess button
 	 * @param ticLogo logo for tic button
 	 * @param connectLogo logo for connect4 button.
+	 * @param checkersLogo logo for checkers button.
 	 * @param ret Jbutton to return to main menu.
 	 */
 	public HelpPanel(final ImageIcon bShipLogo, final ImageIcon chessLogo, final ImageIcon ticLogo,
-			final ImageIcon connectLogo, final JButton ret) {
+			final ImageIcon connectLogo, final ImageIcon checkersLogo, final JButton ret) {
 		setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
 		exit = ret;
@@ -118,6 +131,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 		chess.setIcon(chessLogo);
 		tic.setIcon(ticLogo);
 		connect.setIcon(connectLogo);
+		checkers.setIcon(checkersLogo);
 		exitStatus = false;
 	}
 	/**
@@ -135,31 +149,44 @@ public class HelpPanel extends JPanel implements ActionListener {
 		helpMenu = new ImageIcon("src/MainMenu/helpMenuLogo.png");
 		message = new JLabel();
 		message.setIcon(helpMenu);
+		
 		con.gridx = 0;
 		con.gridy = 0;
+		con.gridwidth = 2;
 		add(message, con);
 		con.fill = GridBagConstraints.HORIZONTAL;
+		
+		con.gridwidth = 1;
 		con.gridy++;
 		bShip = new JButton();
 		bShip.addActionListener(this);
 		add(bShip, con);
 		
+		con.gridx++;
+		checkers = new JButton();
+		checkers.addActionListener(this);
+		add(checkers, con);
+		
+		con.gridx = 0;
 		con.gridy++;
 		chess = new JButton();
 		chess.addActionListener(this);
 		add(chess, con);
 		
-		con.gridy++;
-		tic = new JButton();
-		tic.addActionListener(this);
-		add(tic, con);
-		
-		con.gridy++;
+		con.gridx++;
 		connect = new JButton();
 		connect.addActionListener(this);
 		add(connect, con);
+		
+		con.gridx = 0;
+		con.gridy++;
+		tic = new JButton();
+		tic.addActionListener(this);
+		add(tic, con);	
+	
 			
 		con.gridy++;
+		con.gridwidth = 2;
 		add(exit, con);
 	}
 
@@ -172,6 +199,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 		remove(chess);
 		remove(tic);
 		remove(connect);
+		remove(checkers);
 		revalidate();
 		repaint();
 	}
@@ -194,7 +222,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 			h.setIcon(chess.getIcon());				
 			add(h, con);
 			con.gridy++;
-			add(new JLabel(CHHELP), con);
+			add(new JLabel(CSHELP), con);
 		} else if (str.equals("tic")) {
 			JLabel h = new JLabel();
 			h.setIcon(tic.getIcon());				
@@ -207,6 +235,12 @@ public class HelpPanel extends JPanel implements ActionListener {
 			add(h, con);
 			con.gridy++;
 			add(new JLabel(COHELP), con);
+		} else if (str.equals("checkers")) {
+			JLabel h = new JLabel();
+			h.setIcon(checkers.getIcon());
+			add(h, con);
+			con.gridy++;
+			add(new JLabel(CKHELP), con);
 		}
 	}
 	
@@ -227,6 +261,10 @@ public class HelpPanel extends JPanel implements ActionListener {
 		if (e.getSource() == connect) {
 			removeButtons();
 			addHelp("connect");
+		}
+		if (e.getSource() == checkers) {
+			removeButtons();
+			addHelp("checkers");
 		}
 		//Remove exit button, pass in as param to construct have it set to mainmenu action listen
 		if (e.getSource() == exit) {

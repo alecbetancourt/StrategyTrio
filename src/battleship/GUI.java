@@ -182,12 +182,12 @@ public class GUI extends JFrame implements ActionListener {
 		beginIcon = new ImageIcon("src/battleship/beginLogo.png");
 		begin1 = new JButton();
 		begin1.setIcon(beginIcon);
-		begin1.setBackground(Color.WHITE);
+		begin1.setBackground(Color.BLUE);
 		begin1.addActionListener(this);
 
 		begin2 = new JButton();
 		begin2.setIcon(beginIcon);
-		begin2.setBackground(Color.WHITE);
+		begin2.setBackground(Color.BLUE);
 		begin2.addActionListener(this);
 
 		p1 = new Board(name1, begin1);
@@ -244,7 +244,7 @@ public class GUI extends JFrame implements ActionListener {
 			this.setDefaultCloseOperation(JFrame.
 					EXIT_ON_CLOSE);      
 			setJMenuBar(menus);
-			setSize(1450, 900);
+			setSize(1450, 1000);
 			setVisible(true);
 		}
 		revalidate();
