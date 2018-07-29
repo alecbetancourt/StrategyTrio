@@ -13,6 +13,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.MatteBorder;
 
 import mainmenu.MenuGUI;
 
@@ -214,12 +215,14 @@ public class GUI extends JFrame implements ActionListener {
 		ImageIcon rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
 		ready1.setIcon(rdyIcon);
 		ready1.setBackground(Color.BLUE);
+		ready1.setBorder(new MatteBorder(3, 3, 3, 3, Color.BLACK));
 		ready1.addActionListener(this);
 
 		ready2 = new JButton();		
 		rdyIcon = new ImageIcon("src/battleship/rdyLogo.png");
 		ready2.setIcon(rdyIcon);
 		ready2.setBackground(Color.BLUE);
+		ready2.setBorder(new MatteBorder(3, 3, 3, 3, Color.BLACK));
 		ready2.addActionListener(this);
 
 

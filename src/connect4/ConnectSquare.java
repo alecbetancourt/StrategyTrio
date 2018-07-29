@@ -2,9 +2,18 @@ package connect4;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
+/**
+ * Class that extends Jlabel that represents where user would place 
+ * their tokens. 
+ * @author Parker
+ *
+ */
 public class ConnectSquare extends JLabel {
 	
+	/**
+	 * ID for connect square class.
+	 */
+	private static final long serialVersionUID = 5917240010760453358L;
 	/**
 	 * The player who's token has been placed. 0 = black, 1 = red, -1 = none.
 	 */
@@ -26,7 +35,6 @@ public class ConnectSquare extends JLabel {
 	 * Constructor for ConnectSquare class.
 	 */
 	public ConnectSquare() {
-		//not sure how to center icons
 		setHorizontalTextPosition(JLabel.CENTER);
 		setVerticalTextPosition(JLabel.CENTER);
 	}

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -55,6 +56,10 @@ public class ConnectGUI extends JFrame implements ActionListener {
 	 * Item to return to main menu.
 	 */
 	private JMenuItem mainMenu;
+	/**
+	 * Icon for place here.
+	 */
+	private ImageIcon placeIcon;
 
 	/**
 	 * GUI constructor. Adds menubar and game panel.
@@ -78,11 +83,12 @@ public class ConnectGUI extends JFrame implements ActionListener {
 		setJMenuBar(menus);
 		menus.add(fileMenu);
 
+		placeIcon = new ImageIcon("src/connect4/placeIcon.png");
 		select = new JButton[7];
 		for (int i = 0; i < 7; i++) {
 			select[i] = new JButton();
 			select[i].setBackground(Color.BLUE);
-			select[i].setText("<html> <center> Click to <br/> place </center> </htmL>");
+			select[i].setIcon(placeIcon);
 			select[i].addActionListener(this);
 		}
 		screen = new ConnectPanel(select);
