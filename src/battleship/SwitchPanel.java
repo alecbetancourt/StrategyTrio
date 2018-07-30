@@ -69,29 +69,6 @@ public class SwitchPanel extends JPanel {
 		
 		
 	}
-	/**
-	 * Get the players name.
-	 * @return String of player name
-	 */
-	public String getpName() {
-		return pName;
-	}
-	
-	/**
-	 * Gets ready button for testing.
-	 * @return ready button
-	 */
-	 public JButton getReadyB() {
-		 return ready;
-	 }
-
-	/**
-	 * Set the name to display on the screen.
-	 * @param pName player's name to set to
-	 */
-	public void setpName(final String pName) {
-		this.pName = pName;
-	}
 	
 	/**
 	 * Whether or not the player has hit the ready button.

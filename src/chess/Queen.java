@@ -35,7 +35,8 @@ public class Queen extends Piece {
 		}
 		
 		//check final space that piece will occupy
-		if (board[move.toRow][move.toColumn] == null || !(board[move.toRow][move.toColumn].team().equals(team()))) {
+		if (board[move.toRow][move.toColumn] == null 
+				|| !(board[move.toRow][move.toColumn].team().equals(team()))) {
             valid = true;
 		}
 		
@@ -53,7 +54,8 @@ public class Queen extends Piece {
   				rowOffset = (move.toRow - move.fromRow) / Math.abs(move.toRow - move.fromRow);
   			}
   			if (Math.abs(move.toColumn - move.fromColumn) >= 1) {
-  				colOffset = (move.toColumn - move.fromColumn) / Math.abs(move.toColumn - move.fromColumn);
+  				colOffset = (move.toColumn - move.fromColumn) 
+  						/ Math.abs(move.toColumn - move.fromColumn);
   			}
   			for (int i = 1; i < Math.abs(move.fromRow - move.toRow)
 				|| i < Math.abs(move.fromColumn - move.toColumn); i++) {

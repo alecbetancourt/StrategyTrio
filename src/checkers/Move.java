@@ -2,7 +2,7 @@ package checkers;
 
 /**
  * Class for keeping track of where the chess piece moves.
- * @author 
+ * @author Alec
  *
  */
 public class Move {

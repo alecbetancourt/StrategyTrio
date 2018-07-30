@@ -40,14 +40,22 @@ public class TicGUI extends JFrame implements ActionListener {
 	 * Main menu option for menu.
 	 */
 	private JMenuItem mainMenu;
+	/**
+	 * Player names.
+	 */
+	private String name1, name2;
 
 	/**
 	 * Constructor for tictactoe Frame.
+	 * @param pName1 player 1's name.
+	 * @param pName2 player 2's name.
 	 */
-	public TicGUI() {
+	public TicGUI(final String pName1, final String pName2) {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		name1 = pName1;
+		name2 = pName2;
+		
 		fileMenu = new JMenu("File");
 		quitGame = new JMenuItem("Quit");
 		newGame = new JMenuItem("New Game");
@@ -64,7 +72,7 @@ public class TicGUI extends JFrame implements ActionListener {
 		menus.add(fileMenu);
 
 		setTitle("Tic-Tac-Toe");
-		add(new Game());
+		add(new Game(pName1, pName2));
 		pack();
 		setSize(800, 800);
 		setVisible(true);
@@ -85,7 +93,7 @@ public class TicGUI extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == newGame) {
 			dispose();
-			new TicGUI();
+			new TicGUI(name1, name2);
 		}
 
 	}

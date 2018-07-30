@@ -1,4 +1,4 @@
-package connect4;
+package connectfour;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -25,11 +25,11 @@ public class ConnectSquare extends JLabel {
 	/**
 	 * ImageIcon for black token.
 	 */
-	private static final ImageIcon BLACK = new ImageIcon("src/connect4/blackIcon.png");
+	private static final ImageIcon BLACK = new ImageIcon("src/connectfour/blackIcon.png");
 	/**
 	 * ImageIcon for red token.
 	 */
-	private static final ImageIcon RED = new ImageIcon("src/connect4/redIcon.png");
+	private static final ImageIcon RED = new ImageIcon("src/connectfour/redIcon.png");
 	
 	/**
 	 * Constructor for ConnectSquare class.
@@ -58,13 +58,6 @@ public class ConnectSquare extends JLabel {
 	public int getPlayer() {
 		return player;
 	}
-	/**
-	 * Set the player who's token is in the square.
-	 * @param player 0 for black, 1 for red, -1 for none/
-	 */
-	public void setPlayer(final int player) {
-		this.player = player;
-	}
 
 	/**
 	 * Checks if a token has been placed.
@@ -72,14 +65,6 @@ public class ConnectSquare extends JLabel {
 	 */
 	public boolean isPlaced() {
 		return placed;
-	}
-
-	/**
-	 * Sets if a token was placed.
-	 * @param placed True if a token has been placed, false if not.
-	 */
-	public void setPlaced(final boolean placed) {
-		this.placed = placed;
 	}
 	
 }

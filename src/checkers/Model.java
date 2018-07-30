@@ -1,6 +1,5 @@
 package checkers;
 
-import javax.swing.JButton;
 
 /**
  * The model for the checkers game. All moves are executed through 
@@ -28,12 +27,14 @@ public class Model {
 	
 	/**
 	 * Model constructor. Creates the pieces and board.
+	 * @param n1 player 1's name.
+	 * @param n2 player 2's name.
 	 */
-	public Model() {
+	public Model(final String n1, final String n2) {
 		board = new Piece[8][8];
 		
-		player1 = new Player("player1", Team.RED);
-		player2 = new Player("player2", Team.BLACK);
+		player1 = new Player(n1, Team.RED);
+		player2 = new Player(n2, Team.BLACK);
 		currentPlayer = player1;
 		
 		for (int row = 0; row < 3; row++) {

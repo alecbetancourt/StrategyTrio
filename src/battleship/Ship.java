@@ -12,7 +12,7 @@ import javax.swing.JButton;
  * @version 0.1
  */
 public class Ship extends JButton {
-	
+
 	/**
 	 * Ship ID.
 	 */
@@ -29,11 +29,7 @@ public class Ship extends JButton {
 	 * How many times the ship has been hit.
 	 */
 	private int hits;
-	/**
-	 * Whether or not the ship has been placed.
-	 */
-	private boolean used;	
-	
+
 	/**
 	 * Constructor for Ship class.
 	 * @param name the name of the ship
@@ -42,9 +38,8 @@ public class Ship extends JButton {
 	public Ship(final String name, final int size) {
 		this.name = name;
 		this.size = size;
-		used = false;
 	}
-	
+
 	/**
 	 * Get the name of the ship.
 	 * @return String for ship name
@@ -70,30 +65,6 @@ public class Ship extends JButton {
 	}
 
 	/**
-	 * Set the amount of shots the ship can take before sinking.
-	 * @param size the number of shots to set to.
-	 */
-	public void setSSize(final int size) {
-		this.size = size;
-	}
-
-	/**
-	 * Whether or not the ship has been placed yet.
-	 * @return true if added false if removed
-	 */
-	public boolean isUsed() {
-		return used;
-	}
-
-	/**
-	 * To indicate whether the ship has been placed or possible removed.
-	 * @param used true if added false if removed
-	 */
-	public void setUsed(final boolean used) {
-		this.used = used;
-	}
-
-	/**
 	 * Whether or not a ship can still be hit.
 	 * @return True if it was sunk false if not.
 	 */
@@ -103,9 +74,9 @@ public class Ship extends JButton {
 			return true;
 		}
 		return false;
-		
+
 	}
-	
+
 	/**
 	 * Increase the amount of hits and update the color of the ship.
 	 */

@@ -49,7 +49,8 @@ public class Pawn extends Piece {
 					|| (board[move.fromRow][move.fromColumn].team() == "WHITE" 
 					&& move.fromRow == 6 && move.toRow == 4)) {
 				//if (board[(move.fromRow + move.toRow) / 2][move.fromColumn] == null) {
-				if (board[(move.fromRow / 2) + (move.toRow / 2) + ((move.fromRow % 2 + move.toRow % 2) / 2)]
+				if (board[(move.fromRow / 2) + (move.toRow / 2) 
+				          + ((move.fromRow % 2 + move.toRow % 2) / 2)]
 					[move.fromColumn] == null) {
 					valid = true;
 				}
@@ -57,7 +58,8 @@ public class Pawn extends Piece {
 		}
 		//if move diagonally if and only if capture
 		if (Math.abs(move.toRow - move.fromRow) == 1 && Math.abs(move.toColumn - move.fromColumn) == 1
-			&& board[move.toRow][move.toColumn] != null && !(board[move.toRow][move.toColumn].team().equals(team()))) {
+			&& board[move.toRow][move.toColumn] != null 
+			&& !(board[move.toRow][move.toColumn].team().equals(team()))) {
 			if (board[move.fromRow][move.fromColumn].team() == "BLACK" && move.fromRow + 1 == move.toRow) {
 				valid = true;
 			}

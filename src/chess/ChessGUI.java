@@ -25,8 +25,10 @@ public class ChessGUI extends JFrame implements ActionListener {
 	
 	/**
 	 * Construtor for chess frame.
+	 * @param name1 player 1's name.
+	 * @param name2 player 2's name.
 	 */
-	public ChessGUI() {
+	public ChessGUI(final String name1, final String name2) {
 		JMenuBar menus;
         JMenu fileMenu;
         JMenuItem quitGame;
@@ -51,7 +53,7 @@ public class ChessGUI extends JFrame implements ActionListener {
         menus.add(fileMenu);
 		
         setTitle("Chess");
-		add(new View(quitGame, newGame));
+		add(new View(quitGame, newGame, name1, name2));
 	    pack();
 		setSize(800, 800);
 		setVisible(true);

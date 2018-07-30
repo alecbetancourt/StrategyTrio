@@ -126,6 +126,23 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * Button for checkers selection.
 	 */
 	private JButton checkers;
+	
+	/**
+	 * Menu item for changing names.
+	 */
+	private JMenuItem changeName;
+	/**
+	 * Screen for changing names.
+	 */
+	private NameDialog nameScreen;
+	/**
+	 * Button to press to save names.
+	 */
+	private JButton nameSave;
+	/**
+	 * Player names.
+	 */
+	private String name1, name2;
 
 
 	/**
@@ -137,6 +154,11 @@ public class MenuGUI extends JFrame implements ActionListener {
 		con = new GridBagConstraints();
 		createLogos();
 		
+		name1 = "Player 1";
+		name2 = "Player 2";
+		nameSave = new JButton("Save");
+		nameSave.addActionListener(this);
+//		nameScreen = new NameDialog(nameSave, name1, name2);
 		con.gridx = 0;
 		con.gridy = 0;
 		con.ipady = 100;
@@ -232,10 +254,13 @@ public class MenuGUI extends JFrame implements ActionListener {
 	public void addMenus() {
 		option = new JMenu("Menu");
 		closeItem = new JMenuItem("Quit");
+		changeName = new JMenuItem("Change Names");
+		changeName.addActionListener(this);
 		closeItem.addActionListener(this);
 
 		menus = new JMenuBar();
 		menus.add(option);
+		option.add(changeName);
 		option.add(closeItem);
 	}
 
@@ -247,32 +272,32 @@ public class MenuGUI extends JFrame implements ActionListener {
 
 		if (e.getSource() == bShip) {
 			dispose();
-			new battleship.GUI(false);
+			new battleship.GUI(false, name1, name2);
 			revalidate();
 			repaint();
 		}
 		if (e.getSource() == chess) {
 			dispose();
-			new chess.ChessGUI();
+			new chess.ChessGUI(name1, name2);
 			revalidate();
 			repaint();
 		}
 		
 		if (e.getSource() == tic) {
 			dispose();
-			new tictactoe.TicGUI();
+			new tictactoe.TicGUI(name1, name2);
 			revalidate();
 			repaint();
 		}
 		if (e.getSource() == connect) {
 			dispose();
-			new connect4.ConnectGUI();
+			new connectfour.ConnectGUI(name1, name2);
 			revalidate();
 			repaint();
 		}
 		if (e.getSource() == checkers) {
 			dispose();
-			//TODO add in checkers frame
+			new checkers.CheckersGUI(name1, name2);
 			revalidate();
 			repaint();
 		}
@@ -283,12 +308,31 @@ public class MenuGUI extends JFrame implements ActionListener {
 			helpRet.addActionListener(this);
 			this.remove(screen);
 			hPanel = new HelpPanel(battleLogo, chessLogo, ticLogo, connectLogo, checkersLogo, helpRet);
+			option.remove(changeName);
 			add(hPanel);
 			revalidate();
 			repaint();
 		}
 		if (e.getSource() == helpRet) {
 			this.remove(hPanel);
+			option.remove(closeItem);
+			option.add(changeName);
+			option.add(closeItem);
+			add(screen);
+			revalidate();
+			repaint();
+		}
+		if (e.getSource() == changeName) {
+			nameScreen = new NameDialog(nameSave, name1, name2);
+			this.remove(screen);
+			add(nameScreen);
+			revalidate();
+			repaint();
+		}
+		if (e.getSource() == nameSave) {
+			name1 = nameScreen.getName1();
+			name2 = nameScreen.getName2();
+			remove(nameScreen);
 			add(screen);
 			revalidate();
 			repaint();

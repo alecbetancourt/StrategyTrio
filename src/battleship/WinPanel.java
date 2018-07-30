@@ -24,14 +24,6 @@ public class WinPanel extends JPanel {
 	 * The name of the winning player.
 	 */
 	private String pName;
-	/**
-	 * Button for the rematch option.
-	 */
-	private JButton rematchButton;
-	/**
-	 * True if the rematch button has been hit.
-	 */
-	private boolean rematch;
 
 	/**
 	 * Constraints used for formating.
@@ -45,7 +37,6 @@ public class WinPanel extends JPanel {
 	 * @param rematchButton for players to press for a rematch.
 	 */
 	public WinPanel(final String name, final JButton rematchButton) {
-	setRematch(false);
 	setBackground(Color.GRAY);
 	setLayout(new GridBagLayout());
 	con = new GridBagConstraints();
@@ -58,31 +49,8 @@ public class WinPanel extends JPanel {
 	con.ipadx = 100;
 	con.ipady = 60;
 
-	this.rematchButton = rematchButton;
-	add(rematchButton, con);
-	}
-	
-	/**
-	 * If the users want to play another game.
-	 * @return true if they want to rematch, false if not
-	 */
-	public boolean isRematch() {
-		return rematch;
-	}
 
-	/**
-	 * returns the rematch button for testing.
-	 * @return rematch button
-	 */
-	public JButton getRe() {
-		return rematchButton;
-	}
-	/**
-	 * Set the rematch boolean.
-	 * @param rematch True is yes, false if no
-	 */
-	public void setRematch(final boolean rematch) {
-		this.rematch = rematch;
+	add(rematchButton, con);
 	}
 
 

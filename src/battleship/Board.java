@@ -371,31 +371,11 @@ public class Board extends JPanel {
 	}
 
 	/**
-	 * return sub for testing.
-	 * @return sub object
-	 */
-	public Ship getSub() {
-		return submarine;
-	}
-
-	/**
 	 * Set the ready boolean.
 	 * @param ready if the player is ready or not
 	 */
 	public void setReady(final boolean ready) {
 		this.ready = ready;
-	}
-
-	/**
-	 * disables all the buttons on the board, called after all ships
-	 * have been placed.
-	 */
-	public void disableButtons() {
-		for (int i = 0; i < 10; i++) {
-			for (int j = 0; j < 10; j++) {
-				user[i][j].setEnabled(false);
-			}
-		}
 	}
 
 	/**
@@ -558,8 +538,8 @@ public class Board extends JPanel {
 										y2 = j;
 										//attempts to place the ship
 										if (placeShip(x1, x2, y2, y1, tShip)) {
-											status.setText(tShip.getName() + " "
-													+ "placed");
+											status.setText(tShip.getName()
+													+ " placed");
 											tShip.setBackground(Color.GRAY);
 											tShip.setEnabled(false);
 											shipCount--;
@@ -572,7 +552,7 @@ public class Board extends JPanel {
 										} else {
 											tShip.setBackground(Color.GRAY);
 											status.setText("Invalid placement!");
-										}
+											}
 										x1 = -1;
 										x2 = -1;
 										y1 = -1;

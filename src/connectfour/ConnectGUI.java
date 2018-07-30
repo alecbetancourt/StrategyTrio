@@ -1,4 +1,4 @@
-package connect4;
+package connectfour;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -60,12 +60,21 @@ public class ConnectGUI extends JFrame implements ActionListener {
 	 * Icon for place here.
 	 */
 	private ImageIcon placeIcon;
+	
+	/**
+	 * Player names.
+	 */
+	private String name1, name2;
 
 	/**
 	 * GUI constructor. Adds menubar and game panel.
+	 * @param pName1 player 1's name
+	 * @param pName2 player 2's name
 	 */
-	public ConnectGUI() {
+	public ConnectGUI(final String pName1, final String pName2) {
 		turn = 0;
+		name1 = pName1;
+		name2 = pName2;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		fileMenu = new JMenu("File");
@@ -83,7 +92,7 @@ public class ConnectGUI extends JFrame implements ActionListener {
 		setJMenuBar(menus);
 		menus.add(fileMenu);
 
-		placeIcon = new ImageIcon("src/connect4/placeIcon.png");
+		placeIcon = new ImageIcon("src/connectfour/placeIcon.png");
 		select = new JButton[7];
 		for (int i = 0; i < 7; i++) {
 			select[i] = new JButton();
@@ -155,7 +164,7 @@ public class ConnectGUI extends JFrame implements ActionListener {
 					if (screen.placeToken(loc, 0)) {
 						nextTurn();
 						if (checkWin()) {
-							JOptionPane.showMessageDialog(null, "Black has won");
+							JOptionPane.showMessageDialog(null, name1 + " has won");
 							remove(screen);
 							screen = new ConnectPanel(select);
 							add(screen);
@@ -169,9 +178,9 @@ public class ConnectGUI extends JFrame implements ActionListener {
 				} else {
 					if (screen.placeToken(loc, 1)) {
 						nextTurn();
-						checkWin();
+						//checkWin();
 						if (checkWin()) {
-							JOptionPane.showMessageDialog(null, "Red has won");
+							JOptionPane.showMessageDialog(null, name2 + " has won");
 							remove(screen);
 							screen = new ConnectPanel(select);
 							add(screen);
@@ -209,6 +218,6 @@ public class ConnectGUI extends JFrame implements ActionListener {
 	 * @param args arguements
 	 */
 	public static void main(final String[] args) {
-		new ConnectGUI();
+		new ConnectGUI("Player 1", "Player 2");
 	}
 }

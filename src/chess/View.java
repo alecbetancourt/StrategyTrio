@@ -58,7 +58,10 @@ public class View extends JPanel {
 	 * Tan used for background tiles.
 	 */
 	private static final Color TAN = new Color(210, 180, 140);
-	
+	/**
+	 * Player names.
+	 */
+	private String name1, name2;
 	//will likely be deleted in favor of master UI in release 2
 	//add new game/quit function in menu options
 	/**
@@ -85,7 +88,7 @@ public class View extends JPanel {
         frame.setJMenuBar(menus);
         menus.add(fileMenu);
 		
-		frame.add(new View(quitGame, newGame));
+		frame.add(new View(quitGame, newGame, "Player 1", "Player 2"));
 	    frame.pack();
 		frame.setSize(800, 800);
 		frame.setVisible(true);
@@ -96,9 +99,13 @@ public class View extends JPanel {
 	 * 
 	 * @param pquitGame quit game menu item.
 	 * @param pnewGame new game menu item
+	 * @param pName1 player 1's name.
+	 * @param pName2 player 2's name.
 	 */
-	public View(final JMenuItem pquitGame, final JMenuItem pnewGame) {
-		model = new Model();
+	public View(final JMenuItem pquitGame, final JMenuItem pnewGame, final String pName1, final String pName2) {
+		name1 = pName1;
+		name2 = pName2;
+		model = new Model(name1, name2);
 		board = new JButton[8][8];
 		move = new Move();
 		newGame = pnewGame;
@@ -154,8 +161,10 @@ public class View extends JPanel {
 				for (int col = 0; col < 8; col++) {
 					if (board[row][col] == source) {
 						if (move.fromRow == -1 && model.pieceAt(row, col) != null
-							&& model.pieceAt(row, col).team().equals(model.currentPlayer().team())) {
-							System.out.print("Piece selected: " + model.pieceAt(row, col).team() + " ");
+							&& model.pieceAt(row, col).team().
+							equals(model.currentPlayer().team())) {
+							System.out.print("Piece selected: " 
+							+ model.pieceAt(row, col).team() + " ");
 							System.out.println(model.pieceAt(row, col).type());
 							move.fromRow = row;
 							move.fromColumn = col;
@@ -172,21 +181,25 @@ public class View extends JPanel {
 								System.out.println("Valid " + move);
 								if (model.isWinner()) {
 									model.wipeBoard();
-									JOptionPane.showMessageDialog(null, model.currentPlayer().name() + " has won!");
+									JOptionPane.showMessageDialog(null,
+											model.currentPlayer().name() 
+											+ " has won!");
 								}
 								model.nextTurn();
 							} else {
-								JOptionPane.showMessageDialog(null, "This is not a valid move");
+								JOptionPane.showMessageDialog(null,
+										"This is not a valid move");
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "This is not a valid selection");
+							JOptionPane.showMessageDialog(null,
+									"This is not a valid selection");
 						}
 					}
 				}
 			}
 			//reset model if new game option is selected
             if (source == newGame) {    
-            	model = new Model();
+            	model = new Model(name1, name2);
             }
             
             //quit game if menu option was selected
@@ -227,7 +240,8 @@ public class View extends JPanel {
 					default:
 						break;
 					}
-				} else if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "WHITE") {
+				} else if (model.pieceAt(row, col) != null 
+						&& model.pieceAt(row, col).team() == "WHITE") {
 					switch (model.pieceAt(row, col).type()) {
 					case "Pawn":
 						board[row][col].setIcon(pawnIconW);

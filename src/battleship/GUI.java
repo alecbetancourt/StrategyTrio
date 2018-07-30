@@ -11,7 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.MatteBorder;
 
@@ -140,10 +139,15 @@ public class GUI extends JFrame implements ActionListener {
 	/**
 	 * Constructor that calls the createMenus and NewGame methods.
 	 * @param rematch if it is a rematch or not
+	 * @param pName1 player 1's name.
+	 * @param pName2 player 2's name.
 	 */
-	public GUI(final boolean rematch) {
+	public GUI(final boolean rematch, final String pName1, final String pName2) {
+		name1 = pName1;
+		name2 = pName2;
 		createMenus();		
 		newGame(rematch);
+		
 	}
 
 	/**
@@ -176,7 +180,6 @@ public class GUI extends JFrame implements ActionListener {
 	 */
 	public void newGame(final boolean rematch) {	
 		if (!rematch) {
-			getNames();
 			holder = new JPanel[2];
 		}
 
@@ -253,33 +256,6 @@ public class GUI extends JFrame implements ActionListener {
 		revalidate();
 		repaint();
 	}
-
-	/**
-	 * Takes user input for player names, set to default Player X if
-	 * no response is given.
-	 */
-	public void getNames() {
-		name1 = JOptionPane.showInputDialog(null,
-				"What is Player 1's name?");
-		try {
-			if (name1.equals("")) {
-				name1 = "Player 1";
-			}
-		} catch (NullPointerException ex) {
-			name1 = "Player 1";
-		}
-
-		name2 = JOptionPane.showInputDialog(null, 
-				"What is Player 2's name?");
-		try {
-			if (name2.equals("")) {
-				name2 = "Player 2";
-			}
-		} catch (NullPointerException ex) {
-			name2 = "Player 2";
-		}
-	}
-
 
 	/**
 	 * Displays a win screen on the top panel for the winning player.
@@ -452,7 +428,7 @@ public class GUI extends JFrame implements ActionListener {
 	 * @param args arguments for main
 	 */
 	public static void main(final String[] args) {
-		new GUI(false);
+		new GUI(false, "Player 1 ", "Player 2");
 	}
 }
 
