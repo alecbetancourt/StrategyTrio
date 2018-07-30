@@ -35,6 +35,8 @@ public class Piece {
 	public boolean isValidMove(final Move move, final Piece[][] board) {
 		return !((board[move.toRow][move.toColumn] != null
 				&& board[move.toRow][move.toColumn].team().equals(team.toString()))
+				|| (Math.abs(move.toRow - move.fromRow) > 1 || Math.abs(move.toColumn - move.fromColumn) > 1)
+				|| (Math.abs(move.toRow - move.fromRow) != Math.abs(move.toColumn - move.fromColumn))
 				|| (move.fromRow == move.toRow && move.fromColumn == move.toColumn));
 	}
 }

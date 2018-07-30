@@ -81,14 +81,29 @@ public class HelpPanel extends JPanel implements ActionListener {
 	/**
 	 * Help message for chess.
 	 */
-	//TODO write help message.
-	private static final String CSHELP = "<html> chess rules </html>";
+	private static final String CSHELP = "<html> First player is white, second is black. <br/>"
+			+ "Select a piece of your color to move and then select where you'd like to move it. <br/>"
+			+ "A Pawn can move one square forward to a blank space, one diagonally to capture and <br/>"
+			+ "2 squares forward on its first move only. <br/>"
+			+ "A Rook can move horizontally or vertically as many spaces as you'd like. <br/>"
+			+ "A Knight can move in an 'L' shape. <br/>"
+			+ "A Bishop can move diagonally as many spaces as you'd like. <br/>"
+			+ "A Queen can move horizontally, vertically, or diagonally as many spaces as you'd like. <br/>"
+			+ "A King can move one space in any direction. <br/>"
+			+ "After a player moves, the other player moves. <br/>"
+			+ "Both players keep moving until one captures the other player's King. <br/>"
+			+ "Once this happens, the capturer wins. </html>";
 	
 	/**
 	 * Help message for checkers.
 	 */
 	//TODO write help message.
-	private static final String CKHELP = "<html> checkers rules </html>";
+	private static final String CKHELP = "<html> First player is red, second is black. <br/>"
+			+ "Select a piece of your color to move and then select where you'd like to move it. <br/>"
+			+ "Pieces can move diagonally. <br/>"
+			+ "After a player moves, the other player moves. <br/>"
+			+ "Both players keep moving until one captures all of the other's pieces. <br/>"
+			+ "Once this happens, the capturer wins. </html>";
 	/**
 	 * Help message for tic tac toe.
 	 */

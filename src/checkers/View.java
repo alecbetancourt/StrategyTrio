@@ -47,7 +47,7 @@ public class View extends JPanel {
 	/**
 	 * Both of the piece icons.
 	 */
-	private ImageIcon pieceIconW, pieceIconB;
+	private ImageIcon pieceIconR, pieceIconB;
 	/**
 	 * Brown used for background tiles.
 	 */
@@ -101,8 +101,8 @@ public class View extends JPanel {
 		move = new Move();
 		newGame = pnewGame;
         quitGame = pquitGame;
-		pieceIconW = new ImageIcon("src/checkers/1234.png");
-		pieceIconB = new ImageIcon("src/checkers/1234.png");
+		pieceIconR = new ImageIcon("src/checkers/pieceIconR.png");
+		pieceIconB = new ImageIcon("src/checkers/pieceIconB.png");
 		
 		setLayout(new GridLayout(8, 8));
 		ButtonListener listener = new ButtonListener();
@@ -144,7 +144,7 @@ public class View extends JPanel {
 						if (move.fromRow == -1 && model.pieceAt(row, col) != null
 							&& model.pieceAt(row, col).team().equals(model.currentPlayer().team())) {
 							System.out.print("Piece selected: " + model.pieceAt(row, col).team() + " ");
-							System.out.println(model.pieceAt(row, col).type());
+							//System.out.println(model.pieceAt(row, col).type());
 							move.fromRow = row;
 							move.fromColumn = col;
 						} else if (move.fromRow != -1) {
@@ -192,52 +192,10 @@ public class View extends JPanel {
 	private void updateBoard() {
 		for (int row = 0; row < 8; row++) {
 			for (int col = 0; col < 8; col++) {
-				if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "BLACK") {
-					switch (model.pieceAt(row, col).type()) {
-					case "Pawn":
-						board[row][col].setIcon(pawnIconB);
-						break;
-					case "Rook":
-						board[row][col].setIcon(rookIconB);
-						break;
-					case "Knight":
-						board[row][col].setIcon(knightIconB);
-						break;
-					case "Bishop":
-						board[row][col].setIcon(bishopIconB);
-						break;
-					case "Queen":
-						board[row][col].setIcon(queenIconB);
-						break;
-					case "King":
-						board[row][col].setIcon(kingIconB);
-						break;
-					default:
-						break;
-					}
-				} else if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "WHITE") {
-					switch (model.pieceAt(row, col).type()) {
-					case "Pawn":
-						board[row][col].setIcon(pawnIconW);
-						break;
-					case "Rook":
-						board[row][col].setIcon(rookIconW);
-						break;
-					case "Knight":
-						board[row][col].setIcon(knightIconW);
-						break;
-					case "Bishop":
-						board[row][col].setIcon(bishopIconW);
-						break;
-					case "Queen":
-						board[row][col].setIcon(queenIconW);
-						break;
-					case "King":
-						board[row][col].setIcon(kingIconW);
-						break;
-					default:
-						break;
-					}
+				if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "RED") {
+					board[row][col].setIcon(pieceIconR);
+				} else if (model.pieceAt(row, col) != null && model.pieceAt(row, col).team() == "BLACK") {
+					board[row][col].setIcon(pieceIconB);
 				} else {
 					board[row][col].setIcon(null);
 				}

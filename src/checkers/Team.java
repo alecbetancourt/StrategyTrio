@@ -7,7 +7,7 @@ package checkers;
  */
 public enum Team {
 	/**
-	 * Black or white.
+	 * Red or black.
 	 */
-	BLACK, WHITE
+	RED, BLACK
 }
