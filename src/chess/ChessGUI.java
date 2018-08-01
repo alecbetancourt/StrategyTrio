@@ -22,7 +22,10 @@ public class ChessGUI extends JFrame implements ActionListener {
 	 * Item for returning to main menu.
 	 */
 	private JMenuItem mainMenu;
-	
+	/**
+	 * Strings for player names.
+	 */
+	private String n1, n2;
 	/**
 	 * Construtor for chess frame.
 	 * @param name1 player 1's name.
@@ -51,7 +54,8 @@ public class ChessGUI extends JFrame implements ActionListener {
         menus = new JMenuBar();
         setJMenuBar(menus);
         menus.add(fileMenu);
-		
+		n1 = name1;
+		n2 = name2;
         setTitle("Chess");
 		add(new View(quitGame, newGame, name1, name2));
 	    pack();
@@ -65,7 +69,7 @@ public class ChessGUI extends JFrame implements ActionListener {
 		// TODO Auto-generated method stub
 		if (arg0.getSource() == mainMenu) {
 			dispose();
-			new mainmenu.MenuGUI();
+			new mainmenu.MenuGUI(n1, n2);
 		}
 	}
 }

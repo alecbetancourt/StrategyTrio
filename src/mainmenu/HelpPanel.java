@@ -97,7 +97,7 @@ public class HelpPanel extends JPanel implements ActionListener {
 	/**
 	 * Help message for checkers.
 	 */
-	//TODO write help message.
+
 	private static final String CKHELP = "<html> First player is red, second is black. <br/>"
 			+ "Select a piece of your color to move and then select where you'd like to move it. <br/>"
 			+ "Pieces can move diagonally. <br/>"
@@ -280,11 +280,6 @@ public class HelpPanel extends JPanel implements ActionListener {
 		if (e.getSource() == checkers) {
 			removeButtons();
 			addHelp("checkers");
-		}
-		//Remove exit button, pass in as param to construct have it set to mainmenu action listen
-		if (e.getSource() == exit) {
-			
-			new MenuGUI();
 		}
 	}
 	

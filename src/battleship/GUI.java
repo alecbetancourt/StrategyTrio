@@ -418,7 +418,7 @@ public class GUI extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == mainMenuItem) {
 			dispose();
-			new MenuGUI();
+			new MenuGUI(name1, name2);
 		}
 	}
 

@@ -68,7 +68,7 @@ public class CheckersGUI extends JFrame implements ActionListener {
 
 		if (arg0.getSource() == mainMenu) {
 			dispose();
-			new mainmenu.MenuGUI();
+			new mainmenu.MenuGUI(name1, name2);
 			revalidate();
 			repaint();
 		}

@@ -206,7 +206,7 @@ public class ConnectGUI extends JFrame implements ActionListener {
 		}
 		if (e.getSource() == mainMenu) {
 			dispose();
-			new mainmenu.MenuGUI();
+			new mainmenu.MenuGUI(name1, name2);
 			revalidate();
 			repaint();
 		}

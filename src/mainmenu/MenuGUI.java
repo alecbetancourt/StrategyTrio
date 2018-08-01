@@ -147,15 +147,17 @@ public class MenuGUI extends JFrame implements ActionListener {
 
 	/**
 	 * Menu constructor.
+	 * @param n1 name for player 1.
+	 * @param n2 name for player 2.
 	 */
-	public MenuGUI() {
+	public MenuGUI(final String n1, final String n2) {
 		screen = new JPanel();
 		screen.setLayout(new GridBagLayout());
 		con = new GridBagConstraints();
 		createLogos();
 		
-		name1 = "Player 1";
-		name2 = "Player 2";
+		name1 = n1;
+		name2 = n2;
 		nameSave = new JButton("Save");
 		nameSave.addActionListener(this);
 //		nameScreen = new NameDialog(nameSave, name1, name2);
@@ -343,7 +345,7 @@ public class MenuGUI extends JFrame implements ActionListener {
 	 * @param args for main
 	 */
 	public static void main(final String[] args) {
-		new MenuGUI();
+		new MenuGUI("Player 1 ", "Player 2");
 	}
 }
 
