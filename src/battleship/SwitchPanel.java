@@ -63,7 +63,6 @@ public class SwitchPanel extends JPanel {
 		con.gridy++;
 		
 		
-		//listen = new ButtonListener();
 		this.ready = ready;
 		add(ready, con);
 		
